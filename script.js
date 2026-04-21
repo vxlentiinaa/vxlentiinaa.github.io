@@ -1,5 +1,3 @@
-function irA(seccion) {
-    document.getElementById(seccion).scrollIntoView({
-        behavior: "smooth"
-    });
+function activarSistema() {
+    alert(">> Sistema de contacto iniciado...");
 }
