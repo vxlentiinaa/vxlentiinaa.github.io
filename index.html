@@ -9,36 +9,49 @@
 
     <div class="grid-bg"></div>
 
-    <header>
-        <h1>VALENTINA RUZ</h1>
-        <p>Diseño Industrial + Sistemas Interactivos</p>
-    </header>
+// introduccion
+    <section class="hero">
+        <div class="hero-content">
 
-    <section class="panel">
-        <h2>01 / SOBRE MI</h2>
-        <p>Exploro la relación entre objetos, cuerpo y tecnología.</p>
+            <div class="hero-text">
+                <h1>VXLENTIINAA</h1>
+                <p class="tag">
+                    Diseñadora industrial y de sistemas interactivos
+                </p>
+
+                <p class="descripcion">
+                    Diseño de experiencias, donde el objeto, cuerpo y tecnología se cruzan.
+                </p>
+
+                <div class="buttons">
+                    <button onclick="irA('proyectos')">VER PROYECTOS</button>
+                    <button onclick="irA('contacto')">CONTACTO</button>
+                </div>
+            </div>
+
+             <div class="hero-img">
+                <img src="tu-foto.jpg" alt="Valentina">
+            </div>
+
+        </div>
     </section>
-
-    <section class="panel">
+    
+// proyectos
+    <section id="proyectos" class="panel">
         <h2>02 / PROYECTOS</h2>
 
         <div class="card">
-            <h3>SILLA ERGONÓMICA</h3>
-            <p>Rediseño de mobiliario universitario.</p>
-        </div>
-
-        <div class="card">
-            <h3>ROBOT INTERACTIVO</h3>
-            <p>Sistema de interacción con sensores.</p>
+            <h3>AND-Y</h3>
+            <p>Robot interactivo</p>
         </div>
     </section>
 
-    <section class="panel">
+// contacto
+    <section id="contacto" class="panel">
         <h2>03 / CONTACTO</h2>
-        <button onclick="activarSistema()">INICIAR CONTACTO</button>
+        <p>valentina.ruz@mail.udp.cl</p>
     </section>
 
     <script src="script.js"></script>
-
 </body>
 </html>
