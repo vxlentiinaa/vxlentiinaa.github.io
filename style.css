@@ -42,7 +42,6 @@
 .hero-img img {
     width: 250px;
     border-radius: 10px;
-    filter: grayscale(100%);
     transition: 0.3s;
 }
 
