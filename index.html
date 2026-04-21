@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Valentina Ruz | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <div class="grid-bg"></div>
 
-// introduccion
+    <!-- INTRO / SISTEMA -->
     <section class="hero">
-        <div class="hero-content">
+
+        <div class="panel hero-panel">
 
             <div class="hero-text">
                 <h1>VXLENTIINAA</h1>
-                <p class="tag">
-                    Diseñadora industrial y de sistemas interactivos
+
+                <p class="system-text">
+                    >> IDENTIDAD CARGADA <br>
+                    >> DISEÑADORA INDUSTRIAL Y DE SISTEMAS INTERACTIVOS <br>
+                    >> ESTADO: ACTIVO
                 </p>
 
-                <p class="descripcion">
-                    Diseño de experiencias, donde el objeto, cuerpo y tecnología se cruzan.
+                <p class="desc">
+                    Diseño experiencias donde el objeto, el cuerpo y la tecnología se cruzan.
                 </p>
 
                 <div class="buttons">
-                    <button onclick="irA('proyectos')">VER PROYECTOS</button>
-                    <button onclick="irA('contacto')">CONTACTO</button>
+                    <button onclick="irA('proyectos')">[ VER PROYECTOS ]</button>
+                    <button onclick="irA('contacto')">[ CONTACTO ]</button>
                 </div>
             </div>
 
-             <div class="hero-img">
+            <div class="hero-img">
                 <img src="assets/imgYo/valentina.jpg" alt="Valentina">
             </div>
 
         </div>
+
     </section>
-    
-// proyectos
+
+    <!-- PROYECTOS -->
     <section id="proyectos" class="panel">
         <h2>02 / PROYECTOS</h2>
 
@@ -44,14 +49,19 @@
             <h3>AND-Y</h3>
             <p>Robot interactivo</p>
         </div>
+
+        <div class="card">
+            <h3>ATRÁPAME SI PUEDES</h3>
+            <p>Juego interactivo</p>
+        </div>
     </section>
 
-// contacto
+    <!-- CONTACTO -->
     <section id="contacto" class="panel">
         <h2>03 / CONTACTO</h2>
-        <p>valentina.ruz@mail.udp.cl</p>
+        <p>> EMAIL: valentina.ruz@mail.udp.cl</p>
     </section>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
