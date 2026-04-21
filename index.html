@@ -3,65 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Valentina Ruz | Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="grid-bg"></div>
 
-    <!-- INTRO / SISTEMA -->
-    <section class="hero">
+    <header>
+        <h1>VALENTINA RUZ</h1>
+        <p>Diseño Industrial + Sistemas Interactivos</p>
+    </header>
 
-        <div class="panel hero-panel">
-
-            <div class="hero-text">
-                <h1>VALENTINA RUZ</h1>
-
-                <p class="system-text">
-                    >> IDENTIDAD CARGADA <br>
-                    >> DISEÑO INDUSTRIAL + SISTEMAS INTERACTIVOS <br>
-                    >> ESTADO: ACTIVO
-                </p>
-
-                <p class="desc">
-                    Diseño experiencias donde el objeto, el cuerpo y la tecnología se cruzan.
-                </p>
-
-                <div class="buttons">
-                    <button onclick="irA('proyectos')">[ VER PROYECTOS ]</button>
-                    <button onclick="irA('contacto')">[ CONTACTO ]</button>
-                </div>
-            </div>
-
-            <div class="hero-img">
-                <img src="assets/img/valentina.jpg" alt="Valentina">
-            </div>
-
-        </div>
-
+    <section class="panel">
+        <h2>01 / SOBRE MI</h2>
+        <p>Exploro la relación entre objetos, cuerpo y tecnología.</p>
     </section>
 
-    <!-- PROYECTOS -->
-    <section id="proyectos" class="panel">
+    <section class="panel">
         <h2>02 / PROYECTOS</h2>
 
         <div class="card">
-            <h3>OBJETO 01: SILLA ERGONÓMICA</h3>
-            <p>Interfaz cuerpo–mobiliario.</p>
+            <h3>SILLA ERGONÓMICA</h3>
+            <p>Rediseño de mobiliario universitario.</p>
         </div>
 
         <div class="card">
-            <h3>OBJETO 02: ROBOT INTERACTIVO</h3>
+            <h3>ROBOT INTERACTIVO</h3>
             <p>Sistema de interacción con sensores.</p>
         </div>
     </section>
 
-    <!-- CONTACTO -->
-    <section id="contacto" class="panel">
+    <section class="panel">
         <h2>03 / CONTACTO</h2>
-        <p>> EMAIL: valentina@email.com</p>
+        <button onclick="activarSistema()">INICIAR CONTACTO</button>
     </section>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
