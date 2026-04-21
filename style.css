@@ -5,7 +5,7 @@ body {
     font-family: "Courier New", monospace;
 }
 
-/* GRILLA */
+/* GRID tipo blueprint */
 .grid-bg {
     position: fixed;
     width: 100%;
@@ -17,67 +17,15 @@ body {
     z-index: -1;
 }
 
-/* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+header {
+    text-align: center;
+    padding: 60px 20px;
 }
 
-.hero-panel {
-    display: flex;
-    gap: 60px;
-    max-width: 1000px;
-    align-items: center;
-}
-
-/* TEXTO */
 h1 {
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 }
 
-.system-text {
-    color: #00ff99;
-    margin: 15px 0;
-    line-height: 1.6;
-}
-
-.desc {
-    opacity: 0.7;
-    max-width: 400px;
-}
-
-/* BOTONES */
-button {
-    background: none;
-    border: 1px solid #00ff99;
-    color: #00ff99;
-    padding: 10px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #00ff99;
-    color: black;
-}
-
-/* IMAGEN */
-.hero-img img {
-    width: 260px;
-    border-radius: 10px;
-    filter: grayscale(100%) contrast(120%);
-    transition: 0.3s;
-}
-
-.hero-img img:hover {
-    filter: grayscale(0%);
-    box-shadow: 0 0 20px #00ff99;
-}
-
-/* PANEL GENERAL */
 .panel {
     border: 1px solid rgba(0,255,150,0.2);
     margin: 20px;
@@ -85,7 +33,7 @@ button:hover {
     position: relative;
 }
 
-/* ESQUINAS TECNICAS */
+/* efecto esquina técnica */
 .panel::before {
     content: "";
     position: absolute;
@@ -97,7 +45,6 @@ button:hover {
     left: 0;
 }
 
-/* CARDS */
 .card {
     border: 1px solid rgba(255,255,255,0.1);
     padding: 15px;
@@ -105,7 +52,22 @@ button:hover {
     transition: 0.3s;
 }
 
+/* hover tipo glow */
 .card:hover {
     border-color: #00ff99;
     box-shadow: 0 0 10px #00ff99;
+}
+
+button {
+    background: none;
+    border: 1px solid #00ff99;
+    color: #00ff99;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00ff99;
+    color: black;
 }
