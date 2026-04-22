@@ -54,10 +54,10 @@ background-size: 50px 50px;
 
 /* TEXTO */
 .hero-content h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   margin: 0;
   letter-spacing: 2px;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .subtitle {
