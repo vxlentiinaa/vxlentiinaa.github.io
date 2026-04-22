@@ -4,11 +4,7 @@ body {
   background-color: #0a0a0a;
   color: #eaeaea;
   font-family: 'Space Mono', monospace;
-
-background-image:
-  linear-gradient(rgba(0,255,200,0.08) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(0,255,200,0.08) 1px, transparent 1px);
-
+  
 /* controla la cantidad de grilla */
 background-size: 50px 50px; 
 }
@@ -18,7 +14,8 @@ background-size: 50px 50px;
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 10%;
   position: relative;
   overflow: hidden;
 }
@@ -26,30 +23,9 @@ background-size: 50px 50px;
 /* GRID */
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1fr; /* UNA sola columna */
   width: 80%;
   max-width: 1200px;
-  align-items: center;
-}
-
-/* IMAGEN */
-.hero-image {
-  display: flex;
-  justify-content: center;
-}
-
-.hero-image img {
-  width: 200px;           /* tamaño controlado */
-  height: auto;
-  border: 1px solid rgba(0,200,150,0.3);
-  filter: grayscale(100%) contrast(110%);
-  transition: 0.4s ease;
-}
-
-.hero-image img:hover {
-  filter: grayscale(0%) contrast(120%);
-  box-shadow: 0 0 20px rgba(0,255,150,0.6);
 }
 
 /* LOGO TIPO UI */
@@ -78,32 +54,24 @@ background-size: 50px 50px;
 
 /* TEXTO */
 .hero-content h1 {
-  font-size: 2.4rem;
-  margin: 0;
+  font-size: 2.8rem;
+  margin: 10px 0;
   letter-spacing: 2px;
-  color: #ffffff !important;
 }
 
-.small{
-  letter-spacing:5px;
-  font-size:0.8rem;
-  color: #00ffcc;
-  font-weight:bold;
+.small {
+  letter-spacing: 6px;
+  font-size: 0.7rem;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #00ffcc;
-  margin: 12px 0 28px;
-  font-size: 0.85rem;
-  letter-spacing: 1.5px;
+  margin: 10px 0 20px;
+  font-size: 0.8rem;
 }
 
 .description {
-  color: #aaa;
-  line-height: 1.6;
-  max-width: 380px;
-  font-size: 0.75rem;
-
+  margin-top: 10px;
 }
 
 /* BOTÓN */
