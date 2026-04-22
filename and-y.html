@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>AND-Y</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #00ff88;
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      border: 1px solid #00ff88;
+      padding: 30px;
+      position: relative;
+    }
+
+    /* líneas tipo diagrama */
+    .container::before,
+    .container::after {
+      content: "";
+      position: absolute;
+      background: #00ff88;
+    }
+
+    .container::before {
+      width: 2px;
+      height: 100px;
+      top: -50px;
+      left: 20px;
+    }
+
+    .container::after {
+      height: 2px;
+      width: 100px;
+      bottom: -20px;
+      right: 20px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: normal;
+      margin: 5px 0;
+      opacity: 0.8;
+    }
+
+    .section {
+      margin-top: 40px;
+      border-top: 1px solid #00ff88;
+      padding-top: 20px;
+    }
+
+    .label {
+      font-size: 12px;
+      opacity: 0.6;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    p {
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .volver {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: #00ff88;
+      text-decoration: none;
+      border: 1px solid #00ff88;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .volver:hover {
+      background: #00ff88;
+      color: black;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<a href="../index.html" class="volver">← volver</a>
+
+<div class="container">
+
+  <h1>AND-Y</h1>
+  <h2>Robot interactivo programado con Arduino IDE</h2>
+  <h2>Interacción digital — 2025</h2>
+
+  <div class="section">
+    <div class="label">Concepto</div>
+    <p>
+      And-y te invita a reflexionar de forma lúdica y humorística sobre nuestra relación con las máquinas.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="label">Descripción</div>
+    <p>
+      And-y detecta qué tan cerca estás de él y responde mediante distintos comportamientos:
+      te saluda, tiembla de nervios o levanta su brazo para entregarte datos curiosos.
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
