@@ -78,7 +78,7 @@ background-size: 50px 50px;
 
 /* TEXTO */
 .hero-content h1 {
-  font-size: 2rem;
+  font-size: 2.4rem;
   margin: 0;
   letter-spacing: 2px;
   color: #ffffff !important;
@@ -86,15 +86,16 @@ background-size: 50px 50px;
 
 .subtitle {
   color: #00ffcc;
-  margin: 10px 0 20px;
-  font-size: 0.9rem;
+  margin: 12px 0 28px;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
 }
 
 .description {
   color: #aaa;
   line-height: 1.6;
-  max-width: 400px;
-  font-size: 0.8rem;
+  max-width: 380px;
+  font-size: 0.75rem;
 
 }
 
