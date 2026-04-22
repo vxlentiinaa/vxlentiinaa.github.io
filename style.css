@@ -52,6 +52,30 @@ background-size: 50px 50px;
   box-shadow: 0 0 20px rgba(0,255,150,0.6);
 }
 
+/* LOGO TIPO UI */
+.logo-box {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+
+  color: #ffffff;
+  border: 1px solid rgba(0,255,200,0.5);
+
+  background: rgba(0, 255, 200, 0.05);
+  backdrop-filter: blur(4px);
+
+  transition: 0.3s ease;
+}
+
+/* HOVER */
+.logo-box:hover {
+  color: #000;
+  background: #00ffcc;
+  box-shadow: 0 0 12px #00ffcc;
+}
+
 /* TEXTO */
 .hero-content h1 {
   font-size: 2rem;
@@ -116,4 +140,52 @@ background-size: 50px 50px;
   top: 0;
   width: 1px;
   height: 100%;
+}
+
+/* ───────── UI ESQUINAS ───────── */
+
+.ui-corners {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.corner {
+  position: absolute;
+  padding: 20px;
+  pointer-events: auto;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+/* BOTÓN ABOUT (coherente con .btn) */
+.corner-link {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+
+  color: #00ffcc;
+  border: 1px solid rgba(0,255,200,0.5);
+  background: rgba(0, 255, 200, 0.05);
+
+  transition: 0.3s ease;
+}
+
+.corner-link:hover {
+  background: #00ffcc;
+  color: black;
+  box-shadow: 0 0 10px #00ffcc;
 }
