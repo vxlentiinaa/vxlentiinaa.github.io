@@ -40,7 +40,7 @@ background-size: 50px 50px;
 }
 
 .hero-image img {
-  width: 200px;           /* 👈 tamaño controlado */
+  width: 200px;           /* tamaño controlado */
   height: auto;
   border: 1px solid rgba(0,200,150,0.3);
   filter: grayscale(100%) contrast(110%);
@@ -87,12 +87,15 @@ background-size: 50px 50px;
 .subtitle {
   color: #00ffcc;
   margin: 10px 0 20px;
+  font-size: 0.9rem;
 }
 
 .description {
   color: #aaa;
   line-height: 1.6;
   max-width: 400px;
+  font-size: 0.8rem;
+
 }
 
 /* BOTÓN */
