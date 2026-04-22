@@ -84,6 +84,13 @@ background-size: 50px 50px;
   color: #ffffff !important;
 }
 
+.small{
+  letter-spacing:5px;
+  font-size:0.8rem;
+  color: #00ffcc;
+  font-weight:bold;
+}
+
 .subtitle {
   color: #00ffcc;
   margin: 12px 0 28px;
