@@ -49,5 +49,20 @@
     <a href="about.html" class="about-big">ABOUT</a>
   </section>
 
+  <!-- esto es de js, la animación -->
+<script>
+  const aboutSection = document.querySelector('.about-section');
+
+  window.addEventListener('scroll', () => {
+    const trigger = window.innerHeight * 0.8;
+    const top = aboutSection.getBoundingClientRect().top;
+
+    if (top < trigger) {
+      aboutSection.classList.add('visible');
+    }
+  });
+</script>
+  
 </body>
+  
 </html>
