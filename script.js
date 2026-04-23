@@ -18,23 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const matrix = document.querySelector('.matrix-bg');
 
   function generateMatrix() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-    const columns = Math.floor(width / 12);
-    const rows = Math.floor(height / 18);
+  const fontSize = 14;
 
-    let text = '';
+  const columns = Math.ceil(width / fontSize);
+  const rows = Math.ceil(height / fontSize);
 
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        text += Math.random() > 0.5 ? '0' : '1';
-      }
-      text += '\n';
+  let text = '';
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      text += Math.random() > 0.5 ? '0' : '1';
     }
-
-    matrix.textContent = text;
+    text += '\n';
   }
+
+  matrix.textContent = text;
+  
+  window.addEventListener("resize", generateMatrix);
+}
 
   // IMPORTANTE: ejecutar una vez al cargar
   generateMatrix();
