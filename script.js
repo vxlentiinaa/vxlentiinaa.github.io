@@ -17,32 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // MATRIX
   const matrix = document.querySelector('.matrix-bg');
 
-  function generateMatrix() {
+function generarMatrix() {
   const width = window.innerWidth;
   const height = window.innerHeight;
 
   const fontSize = 14;
-    
-  const columns = Math.ceil(width / fontSize);
-  const rows = Math.ceil(height / fontSize);
-    
-  let text = '';
+  const cols = Math.floor(width / fontSize);
+  const rows = Math.floor(height / fontSize);
 
-  for (let i = 0; i < rows; i++) {
-   for (let j = 0; j < columns; j++) {
-     text += Math.random() > 0.5 ? '0' : '1';
+  let output = "";
+
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      output += Math.random() > 0.5 ? "1" : "0";
     }
-    text += '\n';
+    output += "\n";
   }
 
-  matrix.textContent = text;
-  }
-  
-  window.addEventListener("resize", generateMatrix);
+  matrix.textContent = output;
 }
 
-  // IMPORTANTE: ejecutar una vez al cargar
-  generateMatrix();
+// ejecutar al cargar
+generarMatrix();
+
+// importante: recalcular si cambias tamaño pantalla
+window.addEventListener("resize", generarMatrix);
 
   // micro movimiento
   setInterval(generateMatrix, 400);
