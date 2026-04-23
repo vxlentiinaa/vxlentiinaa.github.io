@@ -174,3 +174,65 @@ body {
   background: #00ffcc;
   box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
+
+/* ───────── FONDO NÚMEROS ───────── */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  color: rgba(255,255,255,0.08);
+  font-size: 14px;
+  line-height: 14px;
+  white-space: pre;
+
+  font-family: monospace;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ───────── SCANNER NEÓN ───────── */
+.scanner {
+  position: fixed;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 20%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0,255,200,0.15),
+    rgba(0,255,200,0.6),
+    rgba(0,255,200,0.15),
+    transparent
+  );
+
+  box-shadow: 0 0 20px #00ffcc;
+
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ───────── ANIMACIÓN ───────── */
+
+@keyframes scan {
+  0% {
+    top: -20%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+/* ─── CORRECCIÓN DE CAPAS ──── */
+.hero,
+.about-section,
+.ui-corners {
+  position: relative;
+  z-index: 2;
+}
