@@ -1,36 +1,40 @@
-// ABOUT SCROLL
-const aboutSection = document.querySelector('.about-section');
+document.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener('scroll', () => {
-  const trigger = window.innerHeight * 0.8;
-  const top = aboutSection.getBoundingClientRect().top;
+  // ABOUT SCROLL
+  const aboutSection = document.querySelector('.about-section');
 
-  if (top < trigger) {
-    aboutSection.classList.add('visible');
-  }
-});
+  window.addEventListener('scroll', () => {
+    const trigger = window.innerHeight * 0.8;
+    const top = aboutSection.getBoundingClientRect().top;
 
-// MATRIX
-const matrix = document.querySelector('.matrix-bg');
-
-function generateMatrix() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  const columns = Math.floor(width / 10);
-  const rows = Math.floor(height / 14);
-
-  let text = '';
-
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < columns; j++) {
-      text += Math.random() > 0.5 ? '0' : '1';
+    if (top < trigger) {
+      aboutSection.classList.add('visible');
     }
-    text += '\n';
+  });
+
+  // MATRIX
+  const matrix = document.querySelector('.matrix-bg');
+
+  function generateMatrix() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const columns = Math.floor(width / 10);
+    const rows = Math.floor(height / 14);
+
+    let text = '';
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        text += Math.random() > 0.5 ? '0' : '1';
+      }
+      text += '\n';
+    }
+
+    matrix.textContent = text;
   }
 
-  matrix.textContent = text;
-}
+  generateMatrix();
+  window.addEventListener('resize', generateMatrix);
 
-generateMatrix();
-window.addEventListener('resize', generateMatrix);
+});
