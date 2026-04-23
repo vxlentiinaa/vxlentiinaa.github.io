@@ -11,17 +11,16 @@ body {
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 10%;
+  justify-content: center; /* 🔥 antes: flex-start */
+  text-align: center; /* 🔥 centramos texto */
   position: relative;
   overflow: hidden;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 80%;
-  max-width: 1200px;
+/* ───────── CONTENIDO ───────── */
+.hero-content {
+  z-index: 2;
+  max-width: 600px;
 }
 
 /* ───────── LOGO ───────── */
@@ -45,26 +44,35 @@ body {
 }
 
 /* ───────── TEXTO ───────── */
-.hero-content h1 {
-  font-size: 2.8rem;
-  margin: 10px 0;
-  letter-spacing: 2px;
-}
 
+/* pequeño arriba */
 .small {
   letter-spacing: 6px;
   font-size: 0.7rem;
   margin-bottom: 10px;
+  color: #888;
 }
 
+/* TÍTULO PRINCIPAL */
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin: 10px 0;
+  letter-spacing: 8px;
+  color: #ffffff;
+}
+
+/* subtítulo */
 .subtitle {
-  margin: 10px 0 20px;
-  font-size: 0.8rem;
+  margin: 15px 0;
+  font-size: 0.85rem;
   color: #00ffcc;
 }
 
+/* descripción */
 .description {
   margin-top: 10px;
+  color: #aaa;
+  font-size: 0.8rem;
 }
 
 /* ───────── BOTÓN ───────── */
@@ -88,28 +96,6 @@ body {
 .glow {
   color: #00ffcc;
   text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
-}
-
-/* ───────── LÍNEAS HERO ───────── */
-.hero-lines::before,
-.hero-lines::after {
-  content: "";
-  position: absolute;
-  background: rgba(0,255,200,0.2);
-}
-
-.hero-lines::before {
-  top: 20%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-}
-
-.hero-lines::after {
-  left: 30%;
-  top: 0;
-  width: 1px;
-  height: 100%;
 }
 
 /* ───────── UI ESQUINAS ───────── */
@@ -168,7 +154,7 @@ body {
 /* ───────── LÍNEA NEÓN ───────── */
 .neon-line {
   width: 80%;
-  height: 2px;
+  height: 1px;
   margin: 100px auto 40px;
   background: #00ffcc;
   box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
@@ -199,33 +185,28 @@ body {
   top: -10%;
   left: 0;
   width: 100%;
-  height: 8%; /* MÁS DELGADO */
+  height: 6%; /* más fino */
 
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(0,255,200,0.1),
-    rgba(0,255,200,0.5),
-    rgba(0,255,200,0.1),
+    rgba(0,255,200,0.08),
+    rgba(0,255,200,0.4),
+    rgba(0,255,200,0.08),
     transparent
   );
 
-  box-shadow: 0 0 15px #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
 
-  animation: scan 8s linear infinite; /* MÁS LENTO */
+  animation: scan 20s linear infinite; /* más lento */
   pointer-events: none;
   z-index: 1;
 }
 
 /* ───────── ANIMACIÓN ───────── */
-
 @keyframes scan {
-  0% {
-    top: -20%;
-  }
-  100% {
-    top: 100%;
-  }
+  0% { top: -20%; }
+  100% { top: 100%; }
 }
 
 /* ─── CORRECCIÓN DE CAPAS ──── */
