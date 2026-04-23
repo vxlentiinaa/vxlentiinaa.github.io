@@ -12,3 +12,15 @@ window.addEventListener('scroll', () => {
     aboutSection.classList.add('visible');
   }
 });
+
+<script>
+const matrix = document.querySelector('.matrix-bg');
+
+let text = '';
+for (let i = 0; i < 5000; i++) {
+  text += Math.random() > 0.5 ? '0' : '1';
+  if (i % 100 === 0) text += '\n';
+}
+
+matrix.textContent = text;
+</script>
