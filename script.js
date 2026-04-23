@@ -15,26 +15,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // MATRIX
   const matrix = document.querySelector('.matrix-bg');
 
-  function generateMatrix() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+function generateMatrix() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-    const columns = Math.floor(width / 10);
-    const rows = Math.floor(height / 14);
+  const columns = Math.floor(width / 10);
+  const rows = Math.floor(height / 14);
 
-    let text = '';
+  let text = '';
 
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+
+      // micro variación visual
+      const random = Math.random();
+
+      if (random > 0.98) {
+        text += '<span class="bright">1</span>';
+      } else if (random > 0.96) {
+        text += '<span class="dim">0</span>';
+      } else {
         text += Math.random() > 0.5 ? '0' : '1';
       }
-      text += '\n';
-    }
 
-    matrix.textContent = text;
+    }
+    text += '<br>';
   }
 
-  generateMatrix();
-  window.addEventListener('resize', generateMatrix);
-
+  matrix.innerHTML = text;
 });
