@@ -62,16 +62,30 @@
 
   <!-- MATRIX JS -->
   <script>
-    const matrix = document.querySelector('.matrix-bg');
+const matrix = document.querySelector('.matrix-bg');
 
-    let text = '';
-    for (let i = 0; i < 5000; i++) {
+function generateMatrix() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const columns = Math.floor(width / 10);
+  const rows = Math.floor(height / 14);
+
+  let text = '';
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
       text += Math.random() > 0.5 ? '0' : '1';
-      if (i % 100 === 0) text += '\n';
     }
+    text += '\n';
+  }
 
-    matrix.textContent = text;
-  </script>
+  matrix.textContent = text;
+}
+
+generateMatrix();
+window.addEventListener('resize', generateMatrix);
+</script>
 
 </body>
 </html>
