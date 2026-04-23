@@ -22,18 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const height = window.innerHeight;
 
   const fontSize = 14;
-
+    
   const columns = Math.ceil(width / fontSize);
   const rows = Math.ceil(height / fontSize);
     
   let text = '';
 
   for (let i = 0; i < rows; i++) {
-  for (let j = 0; j < columns; j++) {
-    text += Math.random() > 0.5 ? '0' : '1';
-    line += Math.random() > 0.5 ? '0' : '1';
+   for (let j = 0; j < columns; j++) {
+     text += Math.random() > 0.5 ? '0' : '1';
     }
-    text += line + '\n';
+    text += '\n';
   }
 
   matrix.textContent = text;
