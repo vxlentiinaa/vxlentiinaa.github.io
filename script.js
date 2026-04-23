@@ -1,7 +1,4 @@
-function activarSistema() {
-    alert(">> Sistema de contacto iniciado...");
-}
-
+// ABOUT SCROLL
 const aboutSection = document.querySelector('.about-section');
 
 window.addEventListener('scroll', () => {
@@ -13,14 +10,27 @@ window.addEventListener('scroll', () => {
   }
 });
 
-<script>
+// MATRIX
 const matrix = document.querySelector('.matrix-bg');
 
-let text = '';
-for (let i = 0; i < 5000; i++) {
-  text += Math.random() > 0.5 ? '0' : '1';
-  if (i % 100 === 0) text += '\n';
+function generateMatrix() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const columns = Math.floor(width / 10);
+  const rows = Math.floor(height / 14);
+
+  let text = '';
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      text += Math.random() > 0.5 ? '0' : '1';
+    }
+    text += '\n';
+  }
+
+  matrix.textContent = text;
 }
 
-matrix.textContent = text;
-</script>
+generateMatrix();
+window.addEventListener('resize', generateMatrix);
