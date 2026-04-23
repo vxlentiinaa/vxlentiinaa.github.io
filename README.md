@@ -2,8 +2,10 @@
 
 ---
 
-Hola!!
+<img src="./hola/hola.png" alt="saludo" width="100">
 
 Soy `Valentina Ruz`, mi usuario es @vxlentiinaa
 
 Y te presento mi portafolio :)
+
+---
