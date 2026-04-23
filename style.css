@@ -68,13 +68,6 @@ body {
   color: #00ffcc;
 }
 
-/* descripción */
-.description {
-  margin-top: 10px;
-  color: #aaa;
-  font-size: 0.8rem;
-}
-
 /* ───────── BOTÓN ───────── */
 .btn {
   display: inline-block;
