@@ -18,24 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const matrix = document.querySelector('.matrix-bg');
 
   function generateMatrix() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const charWidth = 8;
+  const charHeight = 14;
 
-  const fontSize = 14;
-
-  const columns = Math.ceil(width / fontSize);
-  const rows = Math.ceil(height / fontSize);
+  const columns = Math.ceil(window.innerWidth / charWidth);
+  const rows = Math.ceil(window.innerHeight / charHeight);
 
   let text = '';
 
   for (let i = 0; i < rows; i++) {
+    let line = '';
     for (let j = 0; j < columns; j++) {
-      text += Math.random() > 0.5 ? '0' : '1';
+      line += Math.random() > 0.5 ? '0' : '1';
     }
-    text += '\n';
+    text += line + '\n';
   }
 
   matrix.textContent = text;
+  }
   
   window.addEventListener("resize", generateMatrix);
 }
