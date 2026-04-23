@@ -4,12 +4,10 @@ body {
   background-color: #0a0a0a;
   color: #eaeaea;
   font-family: 'Space Mono', monospace;
-  
-/* controla la cantidad de grilla */
-background-size: 60px 60px; 
+  background-size: 60px 60px;
 }
 
-/* HERO */
+/* ───────── HERO ───────── */
 .hero {
   height: 100vh;
   display: flex;
@@ -20,39 +18,34 @@ background-size: 60px 60px;
   overflow: hidden;
 }
 
-/* GRID */
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr; /* UNA sola columna */
+  grid-template-columns: 1fr;
   width: 80%;
   max-width: 1200px;
 }
 
-/* LOGO TIPO UI */
+/* ───────── LOGO ───────── */
 .logo-box {
   display: inline-block;
   padding: 6px 12px;
   font-size: 0.75rem;
   letter-spacing: 2px;
   text-decoration: none;
-
   color: #ffffff;
   border: 1px solid rgba(0,255,200,0.5);
-
   background: rgba(0, 255, 200, 0.05);
   backdrop-filter: blur(4px);
-
   transition: 0.3s ease;
 }
 
-/* HOVER */
 .logo-box:hover {
   color: #000;
   background: #00ffcc;
   box-shadow: 0 0 12px #00ffcc;
 }
 
-/* TEXTO */
+/* ───────── TEXTO ───────── */
 .hero-content h1 {
   font-size: 2.8rem;
   margin: 10px 0;
@@ -75,7 +68,7 @@ background-size: 60px 60px;
   margin-top: 10px;
 }
 
-/* BOTÓN */
+/* ───────── BOTÓN ───────── */
 .btn {
   display: inline-block;
   margin-top: 20px;
@@ -92,13 +85,13 @@ background-size: 60px 60px;
   box-shadow: 0 0 10px #00ffcc;
 }
 
-/* EFECTO GLOW TEXTO */
+/* ───────── EFECTOS ───────── */
 .glow {
   color: #00ffcc;
   text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
 }
 
-/* LÍNEAS TIPO DIAGRAMA */
+/* ───────── LÍNEAS HERO ───────── */
 .hero-lines::before,
 .hero-lines::after {
   content: "";
@@ -106,7 +99,6 @@ background-size: 60px 60px;
   background: rgba(0,255,200,0.2);
 }
 
-/* línea horizontal */
 .hero-lines::before {
   top: 20%;
   left: 0;
@@ -114,7 +106,6 @@ background-size: 60px 60px;
   height: 1px;
 }
 
-/* línea vertical */
 .hero-lines::after {
   left: 30%;
   top: 0;
@@ -122,17 +113,7 @@ background-size: 60px 60px;
   height: 100%;
 }
 
-/* línea de separación*/
-.neon-line {
-  width: 80%;
-  height: 2px;
-  margin: 100px auto 40px;
-  background: #00ffcc;
-  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-}
-
 /* ───────── UI ESQUINAS ───────── */
-
 .ui-corners {
   position: fixed;
   top: 0;
@@ -158,10 +139,18 @@ background-size: 60px 60px;
   right: 0;
 }
 
-/* BOTÓN ABOUT */
+/* ───────── SECCIÓN ABOUT (INDEX) ───────── */
 .about-section {
   text-align: center;
-  padding: 100px 20px;
+  padding: 120px 20px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.6s ease;
+}
+
+.about-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .about-big {
@@ -176,19 +165,12 @@ background-size: 60px 60px;
   color: #ffffff;
   text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
-.about-section {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 0.6s ease;
-}
 
-.about-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.corner-link:hover {
+/* ───────── LÍNEA NEÓN ───────── */
+.neon-line {
+  width: 80%;
+  height: 2px;
+  margin: 100px auto 40px;
   background: #00ffcc;
-  color: black;
-  box-shadow: 0 0 10px #00ffcc;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
