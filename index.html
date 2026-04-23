@@ -5,26 +5,26 @@
   <title>Valentina Ruz</title>
   <link rel="stylesheet" href="style.css">
 </head>
-  
+
 <body>
+
+  <!-- FONDO MATRIX -->
+  <div class="matrix-bg"></div>
+  <div class="scanner"></div>
 
   <!-- UI ESQUINAS -->
   <div class="ui-corners">
-
-    <!-- LOGO -->
     <div class="corner top-left">
       <a href="index.html" class="logo-box">vxle</a>
     </div>
-
   </div>
-    
+
   <!-- HERO -->
   <header class="hero">
     <div class="hero-grid">
-      
-      <!-- TEXTO -->
+
       <div class="hero-content">
-        <p class="small">PORTAFOLIO 2026</p>
+        <p class="small">Portafolio 2026</p>
         <h1>VXLENTIINAA</h1>
         <p class="subtitle">Diseñadora Industrial y de sistemas interactivos</p>
 
@@ -37,35 +37,41 @@
 
     </div>
 
-    <!-- LÍNEAS -->
     <div class="hero-lines"></div>
   </header>
 
-  <!-- ESTO VA FUERA DEL HEADER -->
+  <!-- ABOUT -->
   <section class="about-section">
     <div class="neon-line"></div>
-
-    <!-- CAMBIO IMPORTANTE AQUÍ -->
     <a href="about.html" class="about-big">ABOUT</a>
   </section>
 
-  <!-- esto es de js, la animación -->
-<script>
-  const aboutSection = document.querySelector('.about-section');
+  <!-- ANIMACIÓN ABOUT -->
+  <script>
+    const aboutSection = document.querySelector('.about-section');
 
-  window.addEventListener('scroll', () => {
-    const trigger = window.innerHeight * 0.8;
-    const top = aboutSection.getBoundingClientRect().top;
+    window.addEventListener('scroll', () => {
+      const trigger = window.innerHeight * 0.8;
+      const top = aboutSection.getBoundingClientRect().top;
 
-    if (top < trigger) {
-      aboutSection.classList.add('visible');
+      if (top < trigger) {
+        aboutSection.classList.add('visible');
+      }
+    });
+  </script>
+
+  <!-- MATRIX JS -->
+  <script>
+    const matrix = document.querySelector('.matrix-bg');
+
+    let text = '';
+    for (let i = 0; i < 5000; i++) {
+      text += Math.random() > 0.5 ? '0' : '1';
+      if (i % 100 === 0) text += '\n';
     }
-  });
-</script>
 
-  <div class="matrix-bg"></div>
-<div class="scanner"></div>
-  
+    matrix.textContent = text;
+  </script>
+
 </body>
-  
 </html>
