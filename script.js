@@ -18,18 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const matrix = document.querySelector('.matrix-bg');
 
   function generateMatrix() {
-  const charWidth = 8;
-  const charHeight = 14;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-  const columns = Math.ceil(window.innerWidth / charWidth);
-  const rows = Math.ceil(window.innerHeight / charHeight);
+  const fontSize = 14;
 
+  const columns = Math.ceil(width / fontSize);
+  const rows = Math.ceil(height / fontSize);
+    
   let text = '';
 
   for (let i = 0; i < rows; i++) {
-    let line = '';
-    for (let j = 0; j < columns; j++) {
-      line += Math.random() > 0.5 ? '0' : '1';
+  for (let j = 0; j < columns; j++) {
+    text += Math.random() > 0.5 ? '0' : '1';
+    line += Math.random() > 0.5 ? '0' : '1';
     }
     text += line + '\n';
   }
