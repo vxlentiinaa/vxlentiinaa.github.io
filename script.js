@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     matrix.textContent = text;
   }
 
-  // 🔥 IMPORTANTE: ejecutar una vez al cargar
+  // IMPORTANTE: ejecutar una vez al cargar
   generateMatrix();
 
   // micro movimiento
