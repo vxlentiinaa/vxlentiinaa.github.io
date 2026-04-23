@@ -1,2 +1,9 @@
 # vxlentiinaa.github.io
-Portfolio of Valentina Ruz, industrial design student at Diego Portales University
+
+---
+
+Hola!!
+
+Soy `Valentina Ruz`, mi usuario es @vxlentiinaa
+
+Y te presento mi portafolio :)
