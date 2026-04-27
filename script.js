@@ -217,6 +217,175 @@ new p5(function(p) {
 };
 
 }, 'sPIral-canvas');
+
+// VISUALIZACIÓN AND-Y RUNNER
+  new p5(function(p) {
+  let andy;
+  let gravedad = 0.9;
+  let velocidadY = 0;
+  let sueloY;
+  let sparkles = [];
+  let obstaculos = [];
+  let frameSpawn = 0;
+  let andyGif;
+  let musica;
+  let musicaIniciada = false;
+  let score = 0;
+  let juegoIniciado = false;
+  let speed = 6;
+  let gameOver = false;
+
+  p.preload = function() {
+    andyGif = p.loadImage("assets/And-y/andyy.gif");
+    musica = p.loadSound("assets/And-y/musica.mp3");
+  };
+
+  p.setup = function() {
+    let container = document.getElementById('andy-canvas');
+    let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('andy-canvas');
+    p.userStartAudio();
+    sueloY = p.height - 100;
+    andy = { x: 100, y: sueloY, size: 60, enSuelo: true };
+    for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
+  };
+
+  p.draw = function() {
+    p.background(255, 240, 120);
+
+    if (!juegoIniciado) {
+      for (let s of sparkles) { s.update(); s.show(); }
+      p.textAlign(p.CENTER);
+      p.fill(255, 29, 158);
+      p.textSize(14);
+      p.text("Press ENTER to start", p.width / 2, p.height / 2);
+      return;
+    }
+
+    for (let s of sparkles) { s.update(); s.show(); }
+
+    if (musicaIniciada && musica.isPlaying()) musica.rate(1);
+
+    if (gameOver) {
+      p.textAlign(p.CENTER);
+      p.fill(255);
+      p.textSize(20);
+      p.text("Game Over!!", p.width / 2, p.height / 2 - 40);
+      p.fill(255, 29, 158);
+      p.textSize(14);
+      p.text("Score: " + p.floor(score), p.width / 2, p.height / 2);
+      p.fill(255);
+      p.text("Press SPACE to restart", p.width / 2, p.height / 2 + 40);
+      return;
+    }
+
+    p.stroke(255);
+    p.line(0, sueloY + 30, p.width, sueloY + 30);
+
+    velocidadY += gravedad;
+    andy.y += velocidadY;
+    if (andy.y >= sueloY) {
+      andy.y = sueloY;
+      velocidadY = 0;
+      andy.enSuelo = true;
+    }
+
+    p.image(andyGif, andy.x, andy.y - 80, 40, 94);
+
+    score += 0.05;
+    speed = 6 + score * 0.01;
+    p.textAlign(p.LEFT);
+    p.fill(255);
+    p.textSize(14);
+    p.text("Score: " + p.floor(score), 20, 30);
+
+    let intervaloSpawn = p.max(30, 90 - score * 0.5);
+    frameSpawn++;
+    if (frameSpawn > intervaloSpawn) {
+      obstaculos.push(new Obstaculo());
+      frameSpawn = 0;
+    }
+
+    for (let i = obstaculos.length - 1; i >= 0; i--) {
+      obstaculos[i].update();
+      obstaculos[i].show();
+      if (
+        andy.x < obstaculos[i].x + obstaculos[i].w &&
+        andy.x + andy.size > obstaculos[i].x &&
+        andy.y > sueloY - obstaculos[i].h
+      ) {
+        gameOver = true;
+      }
+      if (obstaculos[i].x < -100) obstaculos.splice(i, 1);
+    }
+  };
+
+  p.keyPressed = function() {
+    if (!juegoIniciado) {
+      juegoIniciado = true;
+      if (!musicaIniciada) {
+        if (!musica.isPlaying()) musica.loop();
+        musica.setVolume(0.3);
+        musicaIniciada = true;
+      }
+      return;
+    }
+
+    if (p.key === " ") {
+      if (gameOver) {
+        gameOver = false;
+        score = 0;
+        speed = 6;
+        obstaculos = [];
+        frameSpawn = 0;
+        andy.y = sueloY;
+        velocidadY = 0;
+        andy.enSuelo = true;
+        if (!musica.isPlaying()) musica.loop();
+        musicaIniciada = true;
+      } else if (andy.enSuelo) {
+        velocidadY = -15;
+        andy.enSuelo = false;
+      }
+    }
+  };
+
+  class Obstaculo {
+    constructor() {
+      this.w = 40;
+      this.h = 30;
+      this.x = p.width;
+      this.y = sueloY;
+    }
+    update() { this.x -= speed; }
+    show() {
+      p.fill(255, 29, 158);
+      p.noStroke();
+      p.rect(this.x, this.y - this.h, this.w, this.h);
+    }
+  }
+
+  class Sparkle {
+    constructor() {
+      this.x = p.random(p.width);
+      this.y = p.random(p.height);
+      this.size = p.random(10, 20);
+      this.speed = p.random(0.2, 0.8);
+      this.alpha = p.random(100, 255);
+    }
+    update() {
+      this.y -= this.speed;
+      if (this.y < 0) { this.y = p.height; this.x = p.random(p.width); }
+    }
+    show() {
+      p.fill(255, 29, 158, this.alpha);
+      p.noStroke();
+      p.textSize(this.size);
+      p.text("₊⊹", this.x, this.y);
+    }
+  }
+
+}, 'andy-canvas');
   
 });
 
