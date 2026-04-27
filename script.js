@@ -321,7 +321,9 @@ new p5(function(p) {
   };
 
   p.keyPressed = function() {
-     e.preventDefault();
+    if (p.key === " ") {
+    e.preventDefault(); // ← solo bloquea el espacio
+    }
     
     if (!juegoIniciado) {
       juegoIniciado = true;
