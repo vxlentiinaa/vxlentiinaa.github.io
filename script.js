@@ -159,11 +159,12 @@ new p5(function(p) {
   let ultimoTiempo = 0;
 
   p.setup = function() {
-    let canvas = p.createCanvas(250, 250);
-    canvas.parent('sPIral-canvas');
-    p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(14);
-  };
+  let container = document.getElementById('sPIral-canvas');
+  let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+  canvas.parent('sPIral-canvas');
+  p.textAlign(p.CENTER, p.CENTER);
+  p.textSize(14);
+};
 
   p.draw = function() {
     p.background(0);
@@ -212,7 +213,8 @@ new p5(function(p) {
   }
 
   p.windowResized = function() {
-  p.resizeCanvas(250, 250);
+  let container = document.getElementById('sPIral-canvas');
+  p.resizeCanvas(container.offsetWidth, container.offsetHeight);
 };
 
 }, 'sPIral-canvas');
