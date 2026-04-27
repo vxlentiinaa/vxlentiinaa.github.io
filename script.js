@@ -97,5 +97,55 @@ window.addEventListener("load", function () {
   // El cursor crosshair ya está definido en CSS.
   // Si quieres añadir un cursor personalizado con canvas,
   // puedes hacerlo aquí.
+  
+new p5(function(p) {
+  let fondo, hada, x = 0, y = 0, particulas = [];
 
+  p.preload = function() {
+    fondo = p.loadImage("assets/spiral/fondo.gif");
+    hada  = p.loadImage("assets/spiral/janisEstatica.gif");
+  };
+
+  p.setup = function() {
+    let canvas = p.createCanvas(
+      document.getElementById("spiral-canvas").offsetWidth,
+      document.getElementById("spiral-canvas").offsetHeight
+    );
+    canvas.parent("spiral-canvas");
+    p.noCursor();
+  };
+
+  p.draw = function() {
+    p.image(fondo, 0, 0, p.width, p.height);
+    x = p.lerp(x, p.mouseX, 0.1);
+    y = p.lerp(y, p.mouseY, 0.1);
+    let tamaño = 200;
+    particulas.push(new Particula(p, x, y));
+    for (let i = particulas.length - 1; i >= 0; i--) {
+      particulas[i].update();
+      particulas[i].show();
+      if (particulas[i].alpha <= 0) particulas.splice(i, 1);
+    }
+    p.image(hada, x - tamaño / 2, y - tamaño / 2, tamaño, tamaño);
+  };
+
+  class Particula {
+    constructor(p, x, y) {
+      this.p = p; this.x = x; this.y = y;
+      this.vx = p.random(-0.5, 0.5);
+      this.vy = p.random(-1, -0.2);
+      this.alpha = 255;
+      this.size = p.random(4, 10);
+    }
+    update() { this.x += this.vx; this.y += this.vy; this.alpha -= 1; }
+    show() {
+      this.p.noStroke();
+      this.p.fill(255, 29, 158, this.alpha);
+      this.p.circle(this.x, this.y, this.size);
+    }
+  }
+}, "spiral-canvas");
+  
 });
+
+
