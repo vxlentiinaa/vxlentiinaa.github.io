@@ -108,13 +108,11 @@ new p5(function(p) {
   };
 
   p.setup = function() {
-    let canvas = p.createCanvas(
-      document.getElementById("AtrapameSiPuedes-canvas").offsetWidth,
-      document.getElementById("AtrapameSiPuedes-canvas").offsetHeight
-    );
-    canvas.parent("AtrapameSiPuedes-canvas");
-    p.noCursor();
-  };
+  let contenedor = document.getElementById("AtrapameSiPuedes-canvas");
+  let canvas = p.createCanvas(contenedor.offsetWidth, contenedor.offsetWidth * 0.625);
+  canvas.parent("AtrapameSiPuedes-canvas");
+  p.noCursor();
+};
 
   p.draw = function() {
     p.image(fondo, 0, 0, p.width, p.height);
