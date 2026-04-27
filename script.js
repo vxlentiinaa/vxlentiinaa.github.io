@@ -228,8 +228,8 @@ new p5(function(p) {
   let obstaculos = [];
   let frameSpawn = 0;
   let andyGif;
-  // let musica;
-  // let musicaIniciada = false;
+  let musica;
+  let musicaIniciada = false;
   let score = 0;
   let juegoIniciado = false;
   let speed = 6;
@@ -237,7 +237,7 @@ new p5(function(p) {
 
   p.preload = function() {
     andyGif = p.loadImage("assets/And-y/andyy.gif");
-    // musica = p.loadSound("assets/And-y/musica.mp3");
+    musica = p.loadSound("assets/And-y/musica.mp3");
   };
 
   p.setup = function() {
@@ -264,7 +264,7 @@ new p5(function(p) {
 
     for (let s of sparkles) { s.update(); s.show(); }
 
-    //if (musicaIniciada && musica.isPlaying()) musica.rate(1);
+    if (musicaIniciada && musica.isPlaying()) musica.rate(1);
 
     if (gameOver) {
       p.textAlign(p.CENTER);
@@ -323,10 +323,10 @@ new p5(function(p) {
   p.mousePressed = function() {
   if (!juegoIniciado) {
     juegoIniciado = true;
-    //if (!musicaIniciada) {
-    // if (!musica.isPlaying()) musica.loop();
-    //  musica.setVolume(0.3);
-    // musicaIniciada = true;
+    if (!musicaIniciada) {
+    if (!musica.isPlaying()) musica.loop();
+    musica.setVolume(0.3);
+    musicaIniciada = true;
     }
     return;
   }
@@ -339,8 +339,8 @@ new p5(function(p) {
         andy.y = sueloY;
         velocidadY = 0;
         andy.enSuelo = true;
-       // if (!musica.isPlaying()) musica.loop();
-       // musicaIniciada = true;
+       if (!musica.isPlaying()) musica.loop();
+       musicaIniciada = true;
       } else if (andy.enSuelo) {
         velocidadY = -15;
         andy.enSuelo = false;
