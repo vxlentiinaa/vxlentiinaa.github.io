@@ -474,3 +474,8 @@ body {
     padding: 60px 24px;
   }
 }
+
+.accent-pink {
+  color: var(--pink);
+  text-shadow: 0 0 30px rgba(255, 29, 158, 0.4);
+}
