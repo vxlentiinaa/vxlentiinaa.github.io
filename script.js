@@ -321,10 +321,6 @@ new p5(function(p) {
   };
 
   p.keyPressed = function() {
-    if (p.key === " ") {
-    e.preventDefault(); // ← solo bloquea el espacio
-    }
-    
     if (!juegoIniciado) {
       juegoIniciado = true;
       if (!musicaIniciada) {
