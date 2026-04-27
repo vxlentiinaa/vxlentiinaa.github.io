@@ -340,11 +340,25 @@ new p5(function(p) {
         velocidadY = 0;
         andy.enSuelo = true;
        if (!musica.isPlaying()) musica.loop();
+        //if (musica.isPlaying()) musica.stop();
        musicaIniciada = true;
       } else if (andy.enSuelo) {
         velocidadY = -15;
         andy.enSuelo = false;
       }
+  };
+    
+  p.mouseOut = function() {
+    if (musica.isPlaying()) musica.stop();
+    musicaIniciada = false;
+  };
+
+  p.mouseOver = function() {
+    if (juegoIniciado && !gameOver && !musicaIniciada) {
+      musica.loop();
+      musica.setVolume(0.1);
+      musicaIniciada = true;
+    }
   };
 
   class Obstaculo {
