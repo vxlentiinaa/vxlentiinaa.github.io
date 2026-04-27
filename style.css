@@ -479,3 +479,7 @@ body {
   color: var(--pink);
   text-shadow: 0 0 30px rgba(255, 29, 158, 0.4);
 }
+#AtrapameSiPuedes-canvas {
+  width: 30%;
+  aspect-ratio: 16/10;
+}
