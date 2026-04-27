@@ -258,7 +258,7 @@ new p5(function(p) {
       p.textAlign(p.CENTER);
       p.fill(255, 29, 158);
       p.textSize(14);
-      p.text("Press ENTER to start", p.width / 2, p.height / 2);
+      p.text("Press CLICK to start", p.width / 2, p.height / 2);
       return;
     }
 
@@ -275,7 +275,7 @@ new p5(function(p) {
       p.textSize(14);
       p.text("Score: " + p.floor(score), p.width / 2, p.height / 2);
       p.fill(255);
-      p.text("Press SPACE to restart", p.width / 2, p.height / 2 + 40);
+      p.text("Press CLICK to restart", p.width / 2, p.height / 2 + 40);
       return;
     }
 
@@ -320,18 +320,16 @@ new p5(function(p) {
     }
   };
 
-  p.keyPressed = function() {
-    if (!juegoIniciado) {
-      juegoIniciado = true;
-      if (!musicaIniciada) {
-        if (!musica.isPlaying()) musica.loop();
-        musica.setVolume(0.3);
-        musicaIniciada = true;
-      }
-      return;
+  p.mousePressed = function() {
+  if (!juegoIniciado) {
+    juegoIniciado = true;
+    if (!musicaIniciada) {
+      if (!musica.isPlaying()) musica.loop();
+      musica.setVolume(0.3);
+      musicaIniciada = true;
     }
-
-    if (p.key === " ") {
+    return;
+  }
       if (gameOver) {
         gameOver = false;
         score = 0;
@@ -347,7 +345,6 @@ new p5(function(p) {
         velocidadY = -15;
         andy.enSuelo = false;
       }
-    }
   };
 
   class Obstaculo {
@@ -386,13 +383,5 @@ new p5(function(p) {
   }
 
 }, 'andy-canvas');
-  
-});
-
-window.addEventListener('keydown', function(e) {
-  if (e.key === ' ' && e.target === document.body) {
-    e.preventDefault();
-  }
-});
 });
 
