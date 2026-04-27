@@ -97,21 +97,22 @@ window.addEventListener("load", function () {
   // El cursor crosshair ya está definido en CSS.
   // Si quieres añadir un cursor personalizado con canvas,
   // puedes hacerlo aquí.
-  
+
+// VISUALIZACIÓN ATRAPAME SI PUEDES
 new p5(function(p) {
   let fondo, hada, x = 0, y = 0, particulas = [];
 
   p.preload = function() {
-    fondo = p.loadImage("assets/spiral/fondo.gif");
-    hada  = p.loadImage("assets/spiral/janisEstatica.gif");
+    fondo = p.loadImage("assets/AtrapameSiPuedes/fondo.gif");
+    hada  = p.loadImage("assets/AtrapameSiPuedes/janisEstatica.gif");
   };
 
   p.setup = function() {
     let canvas = p.createCanvas(
-      document.getElementById("spiral-canvas").offsetWidth,
-      document.getElementById("spiral-canvas").offsetHeight
+      document.getElementById("AtrapameSiPuedes-canvas").offsetWidth,
+      document.getElementById("AtrapameSiPuedes-canvas").offsetHeight
     );
-    canvas.parent("spiral-canvas");
+    canvas.parent("AtrapameSiPuedes-canvas");
     p.noCursor();
   };
 
@@ -144,7 +145,7 @@ new p5(function(p) {
       this.p.circle(this.x, this.y, this.size);
     }
   }
-}, "spiral-canvas");
+}, "AtrapameSiPuedes-canvas");
   
 });
 
