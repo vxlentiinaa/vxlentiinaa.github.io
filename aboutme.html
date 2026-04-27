@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>about me — Valentina Ruz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =============================================
+       ABOUT ME — estilos específicos
+       ============================================= */
+
+    /* FONDO con líneas diagonales sutiles */
+    .about-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 60px,
+        rgba(34, 255, 123, 0.02) 60px,
+        rgba(34, 255, 123, 0.02) 61px
+      );
+    }
+
+    /* LAYOUT PRINCIPAL */
+    #about-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* NAV VOLVER */
+    .about-nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      opacity: 0.6;
+      transition: opacity 0.2s, text-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    .nav-label {
+      font-size: 0.7rem;
+      color: rgba(240, 240, 240, 0.2);
+      letter-spacing: 3px;
+    }
+
+    /* CONTENIDO CENTRAL */
+    .about-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: center;
+      padding: 60px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* COLUMNA IZQUIERDA */
+    .about-left {
+      padding-right: 80px;
+      border-right: 1px solid rgba(34, 255, 123, 0.1);
+      animation: slideLeft 0.9s ease forwards;
+    }
+
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .about-tag {
+      font-size: 0.72rem;
+      color: var(--pink);
+      letter-spacing: 4px;
+      margin-bottom: 32px;
+      opacity: 0.8;
+    }
+
+    .about-title {
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--white);
+      margin-bottom: 36px;
+    }
+
+    .about-title .name-accent {
+      display: block;
+      color: var(--green);
+      text-shadow: 0 0 30px rgba(34, 255, 123, 0.25);
+    }
+
+    .about-desc {
+      font-size: 0.88rem;
+      color: rgba(240, 240, 240, 0.6);
+      line-height: 2;
+      max-width: 440px;
+      font-style: italic;
+    }
+
+    .about-desc em {
+      color: var(--green);
+      font-style: normal;
+      opacity: 0.9;
+    }
+
+    /* TAGS DE INTERÉS */
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+    }
+
+    .interest-tag {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      border: 1px solid rgba(34, 255, 123, 0.25);
+      color: rgba(34, 255, 123, 0.7);
+      transition: border-color 0.2s, color 0.2s, text-shadow 0.2s;
+      cursor: default;
+    }
+
+    .interest-tag:hover {
+      border-color: var(--green);
+      color: var(--green);
+      text-shadow: 0 0 6px rgba(34, 255, 123, 0.4);
+    }
+
+    /* COLUMNA DERECHA */
+    .about-right {
+      padding-left: 80px;
+      animation: slideRight 0.9s ease 0.2s both;
+    }
+
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* FOTO PLACEHOLDER */
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      max-width: 340px;
+      margin: 0 auto;
+      position: relative;
+      display: block;
+    }
+
+    .photo-inner {
+      width: 100%;
+      height: 100%;
+      background: var(--dark);
+      border: 1px solid rgba(34, 255, 123, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .photo-inner:hover {
+      border-color: rgba(34, 255, 123, 0.35);
+    }
+
+    /* Esquinas decorativas */
+    .photo-inner::before,
+    .photo-inner::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--green);
+      border-style: solid;
+      opacity: 0.4;
+    }
+
+    .photo-inner::before {
+      top: 12px;
+      left: 12px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .photo-inner::after {
+      bottom: 12px;
+      right: 12px;
+      border-width: 0 1px 1px 0;
+    }
+
+    .photo-text {
+      font-size: 0.7rem;
+      color: rgba(34, 255, 123, 0.25);
+      letter-spacing: 3px;
+      text-align: center;
+    }
+
+    .photo-icon {
+      font-size: 2rem;
+      opacity: 0.15;
+    }
+
+    /* Decoración: número flotante */
+    .photo-number {
+      position: absolute;
+      bottom: -20px;
+      right: -16px;
+      font-size: 8rem;
+      font-weight: 700;
+      color: rgba(34, 255, 123, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -4px;
+    }
+
+    /* DATOS RÁPIDOS bajo la foto */
+    .quick-info {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(34, 255, 123, 0.07);
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+    }
+
+    .info-label {
+      color: var(--pink);
+      opacity: 0.6;
+    }
+
+    .info-value {
+      color: rgba(240, 240, 240, 0.55);
+      text-align: right;
+    }
+
+    /* FOOTER ABOUT */
+    .about-footer {
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(34, 255, 123, 0.07);
+    }
+
+    .footer-links-about {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links-about a {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      transition: opacity 0.2s, text-shadow 0.2s;
+    }
+
+    .footer-links-about a:hover {
+      opacity: 1;
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    .footer-copy-about {
+      font-size: 0.65rem;
+      color: rgba(240, 240, 240, 0.15);
+      letter-spacing: 2px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .about-main {
+        grid-template-columns: 1fr;
+        padding: 40px 24px;
+        gap: 60px;
+      }
+
+      .about-left {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(34, 255, 123, 0.1);
+        padding-bottom: 40px;
+      }
+
+      .about-right {
+        padding-left: 0;
+      }
+
+      .about-nav {
+        padding: 20px 24px;
+      }
+
+      .about-footer {
+        padding: 24px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .footer-links-about {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DESTELLOS -->
+  <div id="sparkles-container"></div>
+
+  <!-- FONDO DIAGONAL -->
+  <div class="about-bg"></div>
+
+  <!-- MENÚ LATERAL (el mismo del index) -->
+  <div id="side-menu">
+    <div id="close-menu">✕</div>
+    <a href="index.html">home</a>
+    <a href="aboutme.html" class="active-link">about me</a>
+    <div class="menu-item" id="projects-toggle">
+      <span class="indicator">⊹</span> projects
+    </div>
+    <div id="projects-submenu">
+      <a href="index.html#andy">01. AND-Y</a>
+      <a href="index.html#spiral">02. sPIral</a>
+      <a href="index.html#atrapame">03. AtrápameSipuedes</a>
+    </div>
+  </div>
+
+  <!-- PÁGINA ABOUT -->
+  <div id="about-page">
+
+    <!-- NAV -->
+    <nav class="about-nav">
+      <a href="index.html" class="back-link">← volver</a>
+      <span class="nav-label">// about me</span>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <main class="about-main">
+
+      <!-- IZQUIERDA: texto -->
+      <div class="about-left">
+        <p class="about-tag">// who am i</p>
+        <h1 class="about-title">
+          Hola, soy
+          <span class="name-accent">Valentina<br>Ruz</span>
+        </h1>
+        <p class="about-desc">
+          Soy estudiante de 4to año de <em>Diseño, mención Industrial</em>, en la
+          Universidad Diego Portales. En este tiempo me ha gustado mucho el
+          <em>diseño de interacción</em>, aprender nuevas tecnologías y cómo
+          nos relacionamos con ella.
+        </p>
+
+        <div class="interests">
+          <span class="interest-tag">diseño de interacción</span>
+          <span class="interest-tag">UX / UI</span>
+          <span class="interest-tag">diseño industrial</span>
+          <span class="interest-tag">nuevas tecnologías</span>
+          <span class="interest-tag">web design</span>
+          <span class="interest-tag">prototipado</span>
+        </div>
+      </div>
+
+      <!-- DERECHA: foto + datos -->
+      <div class="about-right">
+        <div class="photo-frame">
+          <div class="photo-inner">
+            <span class="photo-icon">⊹</span>
+            <p class="photo-text">tu foto aquí</p>
+            <div class="photo-number">V</div>
+          </div>
+        </div>
+
+        <div class="quick-info">
+          <div class="info-row">
+            <span class="info-label">universidad</span>
+            <span class="info-value">Diego Portales</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">carrera</span>
+            <span class="info-value">Diseño Industrial</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">año</span>
+            <span class="info-value">4to año</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">ubicación</span>
+            <span class="info-value">Santiago, Chile</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="about-footer">
+      <div class="footer-links-about">
+        <a href="mailto:tuemail@email.com">email</a>
+        <a href="https://github.com/tuusuario" target="_blank">github</a>
+        <a href="https://linkedin.com/in/tuusuario" target="_blank">linkedin</a>
+      </div>
+      <span class="footer-copy-about">made with ⊹ — 2025</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
