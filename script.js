@@ -144,6 +144,78 @@ new p5(function(p) {
     }
   }
 }, "AtrapameSiPuedes-canvas");
+
+// VISUALIZACIÓN sPIral
+new p5(function(p) {
+  let poema = "Noche de otoño… Se marchita el corazón, un espejo en la mano.";
+  let autor = "--- Tōshi Akao";
+  let letrasDibujadas = [];
+  let index = 0;
+  let angulo = 0;
+  let radio = 8;
+  let pasoAngulo = 0.4;
+  let pasoRadio = 0.6;
+  let fase = 0;
+  let ultimoTiempo = 0;
+
+  p.setup = function() {
+    let canvas = p.createCanvas(p.windowWidth / 2, 400);
+    canvas.parent('sPIral-canvas');
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textSize(14);
+  };
+
+  p.draw = function() {
+    p.background(0);
+    p.translate(p.width / 2, p.height / 2);
+
+    for (let l of letrasDibujadas) {
+      p.push();
+      p.translate(l.x, l.y);
+      p.rotate(l.angulo);
+      p.fill(255);
+      p.text(l.char, 0, 0);
+      p.pop();
+    }
+
+    if (p.millis() - ultimoTiempo > 80) {
+      agregarLetra();
+      ultimoTiempo = p.millis();
+    }
+  };
+
+  function agregarLetra() {
+    let textoActual = fase === 0 ? poema : autor;
+
+    if (index < textoActual.length) {
+      let c = textoActual.charAt(index);
+      let x = p.cos(angulo) * radio;
+      let y = p.sin(angulo) * radio;
+      letrasDibujadas.push({ x, y, angulo, char: c });
+      angulo += pasoAngulo;
+      radio += pasoRadio;
+      index++;
+    } else {
+      if (fase === 0) {
+        fase = 1;
+        index = 0;
+        ultimoTiempo = p.millis() + 800;
+      } else {
+        fase = 0;
+        index = 0;
+        letrasDibujadas = [];
+        angulo = 0;
+        radio = 8;
+        ultimoTiempo = p.millis() + 800;
+      }
+    }
+  }
+
+  p.windowResized = function() {
+    p.resizeCanvas(p.windowWidth / 2, 400);
+  };
+
+}, 'sPIral-canvas');
   
 });
 
