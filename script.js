@@ -390,8 +390,9 @@ new p5(function(p) {
 });
 
 window.addEventListener('keydown', function(e) {
-  if (e.key === ' ') {
+  if (e.key === ' ' && e.target === document.body) {
     e.preventDefault();
   }
+});
 });
 
