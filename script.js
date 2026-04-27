@@ -244,6 +244,12 @@ new p5(function(p) {
     sueloY = p.height - 100;
     andy = { x: 100, y: sueloY, size: 25, enSuelo: true };
     for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
+    
+    canvas.elt.addEventListener('click', function() {
+    if (!juegoIniciado) {
+      juegoIniciado = true;
+      return;
+    }
   };
 
   p.draw = function() {
@@ -314,13 +320,6 @@ new p5(function(p) {
     }
   };
 
-p.mousePressed = function() {
-  if (p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) return;
-
-  if (!juegoIniciado) {
-    juegoIniciado = true;
-    return;
-  }
       if (gameOver) {
         gameOver = false;
         score = 0;
