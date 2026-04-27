@@ -159,7 +159,7 @@ new p5(function(p) {
   let ultimoTiempo = 0;
 
   p.setup = function() {
-    let canvas = p.createCanvas(300, 300);
+    let canvas = p.createCanvas(250, 250);
     canvas.parent('sPIral-canvas');
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(14);
@@ -212,7 +212,7 @@ new p5(function(p) {
   }
 
   p.windowResized = function() {
-  p.resizeCanvas(300, 300);
+  p.resizeCanvas(250, 250);
 };
 
 }, 'sPIral-canvas');
