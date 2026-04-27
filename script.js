@@ -107,11 +107,10 @@ new p5(function(p) {
     hada  = p.loadImage("assets/AtrapameSiPuedes/janisEstatica.gif");
   };
 
-  p.setup = function() {
-  let contenedor = document.getElementById("AtrapameSiPuedes-canvas");
-  let canvas = p.createCanvas(contenedor.offsetWidth, contenedor.offsetWidth * 0.625);
-  canvas.parent("AtrapameSiPuedes-canvas");
-  p.noCursor();
+ p.setup = function() {
+  let container = document.getElementById('AtrapameSiPuedes-canvas');
+  let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+  canvas.parent('AtrapameSiPuedes-canvas');
 };
 
   p.draw = function() {
