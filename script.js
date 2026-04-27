@@ -321,6 +321,8 @@ new p5(function(p) {
   };
 
   p.keyPressed = function() {
+     e.preventDefault();
+    
     if (!juegoIniciado) {
       juegoIniciado = true;
       if (!musicaIniciada) {
@@ -389,4 +391,9 @@ new p5(function(p) {
   
 });
 
+window.addEventListener('keydown', function(e) {
+  if (e.key === ' ') {
+    e.preventDefault();
+  }
+});
 
