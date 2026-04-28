@@ -246,6 +246,8 @@ new p5(function(p) {
     for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
 
     canvas.elt.addEventListener('click', function() {
+      e.stopPropagation();
+      
       if (!juegoIniciado) {
         juegoIniciado = true;
         return;
