@@ -219,7 +219,7 @@ new p5(function(p) {
 }, 'sPIral-canvas');
 
 // VISUALIZACIÓN AND-Y RUNNER
-  new p5(function(p) {
+new p5(function(p) {
   let andy;
   let gravedad = 0.9;
   let velocidadY = 0;
@@ -244,12 +244,26 @@ new p5(function(p) {
     sueloY = p.height - 100;
     andy = { x: 100, y: sueloY, size: 25, enSuelo: true };
     for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
-    
+
     canvas.elt.addEventListener('click', function() {
-    if (!juegoIniciado) {
-      juegoIniciado = true;
-      return;
-    }
+      if (!juegoIniciado) {
+        juegoIniciado = true;
+        return;
+      }
+      if (gameOver) {
+        gameOver = false;
+        score = 0;
+        speed = 6;
+        obstaculos = [];
+        frameSpawn = 0;
+        andy.y = sueloY;
+        velocidadY = 0;
+        andy.enSuelo = true;
+      } else if (andy.enSuelo) {
+        velocidadY = -15;
+        andy.enSuelo = false;
+      }
+    });
   };
 
   p.draw = function() {
@@ -318,21 +332,6 @@ new p5(function(p) {
       }
       if (obstaculos[i].x < -100) obstaculos.splice(i, 1);
     }
-  };
-
-      if (gameOver) {
-        gameOver = false;
-        score = 0;
-        speed = 6;
-        obstaculos = [];
-        frameSpawn = 0;
-        andy.y = sueloY;
-        velocidadY = 0;
-        andy.enSuelo = true;
-      } else if (andy.enSuelo) {
-        velocidadY = -15;
-        andy.enSuelo = false;
-      }
   };
 
   class Obstaculo {
