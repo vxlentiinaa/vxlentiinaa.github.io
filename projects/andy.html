@@ -91,66 +91,96 @@
       0%, 100% { opacity: 0.6; } 50% { opacity: 1; }
     }
 
-    /* HERO */
+    /* =============================================
+       HERO — SPLIT SCREEN
+       ============================================= */
     #hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
     }
-    .hero-grid {
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 50px 60px 60px;
+      position: relative; z-index: 2;
+      border-right: 1px solid rgba(34,255,123,0.1);
+    }
+    .hero-grid-bg {
       position: absolute; inset: 0;
       background-image:
         linear-gradient(rgba(34,255,123,0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(34,255,123,0.04) 1px, transparent 1px);
       background-size: 60px 60px; z-index: 0;
     }
-    .hero-content {
+    .hero-left-content {
       position: relative; z-index: 2;
-      text-align: center; padding: 40px;
       animation: heroFadeIn 1.2s ease forwards;
     }
     @keyframes heroFadeIn {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero-label {
-      font-size: 0.85rem; color: var(--pink);
-      letter-spacing: 3px; margin-bottom: 16px; opacity: 0.8;
-    }
     .hero-back {
-      font-size: 0.75rem; color: rgba(34,255,123,0.5);
-      letter-spacing: 2px; margin-bottom: 32px;
+      font-size: 0.72rem; color: rgba(34,255,123,0.5);
+      letter-spacing: 2px; margin-bottom: 48px;
       display: inline-block; text-decoration: none;
       transition: color 0.2s, text-shadow 0.2s;
     }
     .hero-back:hover { color: var(--green); text-shadow: 0 0 8px var(--green); }
-    .hero-number {
-      font-size: 0.75rem; color: var(--pink);
-      letter-spacing: 4px; opacity: 0.5; margin-bottom: 12px;
+    .hero-label {
+      font-size: 0.72rem; color: var(--pink);
+      letter-spacing: 4px; margin-bottom: 16px; opacity: 0.7;
     }
     .hero-name {
-      font-size: clamp(4rem, 14vw, 11rem);
-      font-weight: 700; line-height: 0.9;
-      letter-spacing: -4px; color: var(--white);
-      text-transform: uppercase;
+      font-size: clamp(4.5rem, 9vw, 8rem);
+      font-weight: 700; line-height: 0.88;
+      letter-spacing: -3px; color: var(--white);
+      text-transform: uppercase; margin-bottom: 32px;
     }
     .hero-name .accent-green {
       color: var(--green);
-      text-shadow: 0 0 40px rgba(34,255,123,0.4);
+      text-shadow: 0 0 40px rgba(34,255,123,0.35);
     }
     .hero-tagline {
-      font-size: 0.82rem; color: rgba(255,255,255,0.5);
-      letter-spacing: 3px; margin-top: 28px; font-style: italic;
-      max-width: 560px; margin-left: auto; margin-right: auto;
-      line-height: 1.7;
+      font-size: 0.78rem; color: rgba(255,255,255,0.5);
+      letter-spacing: 2px; font-style: italic;
+      line-height: 1.8; max-width: 360px;
+      margin-bottom: 48px;
+    }
+    .hero-meta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-meta-pill {
+      font-size: 0.65rem; color: var(--green);
+      border: 1px solid rgba(34,255,123,0.25);
+      padding: 5px 12px; letter-spacing: 2px;
     }
     .hero-scroll {
-      font-size: 0.75rem; color: var(--green);
-      letter-spacing: 2px; margin-top: 60px; opacity: 0.5;
+      font-size: 0.72rem; color: var(--green);
+      letter-spacing: 2px; margin-top: 40px; opacity: 0.4;
       animation: scrollBlink 2s ease-in-out infinite;
     }
     @keyframes scrollBlink {
-      0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; }
+      0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; }
+    }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: brightness(0.75);
+      transition: filter 0.4s ease;
+    }
+    .hero-right:hover img { filter: brightness(0.9); }
+    .hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .hero-right-label {
+      position: absolute; bottom: 24px; right: 24px;
+      font-size: 0.62rem; color: rgba(34,255,123,0.5);
+      letter-spacing: 3px; z-index: 2;
     }
     .scanner {
       position: absolute; bottom: 0; left: 0;
@@ -163,7 +193,31 @@
       50% { opacity: 0.6; transform: scaleX(1); }
     }
 
-    /* CONTENIDO */
+    /* =============================================
+       GALERÍA — TIRA ANCHO COMPLETO
+       ============================================= */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+    .gallery-strip .gallery-item {
+      overflow: hidden; aspect-ratio: 3/4;
+      transition: opacity 0.3s;
+    }
+    .gallery-strip:hover .gallery-item { opacity: 0.5; }
+    .gallery-strip .gallery-item:hover { opacity: 1; }
+    .gallery-strip .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-strip .gallery-item:hover img { transform: scale(1.06); }
+
+    /* =============================================
+       CONTENIDO
+       ============================================= */
     .page-content {
       max-width: 1100px; margin: 0 auto;
       padding: 100px 60px; position: relative; z-index: 2;
@@ -173,15 +227,23 @@
       letter-spacing: 4px; opacity: 0.7; margin-bottom: 40px;
     }
 
-    /* INTRO */
-    .intro-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: start;
+    /* INTRO — 3 COLUMNAS */
+    .intro-section {
       padding-bottom: 100px;
       border-bottom: 1px solid rgba(34,255,123,0.08);
     }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 180px;
+      gap: 60px; align-items: start;
+    }
+    .intro-meta { display: flex; flex-direction: column; gap: 24px; }
+    .meta-item { border-left: 2px solid rgba(34,255,123,0.3); padding-left: 16px; }
+    .meta-key { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 0.7; margin-bottom: 6px; }
+    .meta-val { font-size: 0.75rem; color: rgba(240,240,240,0.65); line-height: 1.6; }
+    .meta-val.green { color: var(--green); }
     .intro-text h2 {
-      font-size: 1.6rem; color: var(--white);
+      font-size: 1.5rem; color: var(--white);
       font-weight: 700; margin-bottom: 24px;
       letter-spacing: -1px; line-height: 1.3;
     }
@@ -190,54 +252,16 @@
       font-size: 0.83rem; color: rgba(255,255,255,0.5);
       line-height: 2; margin-bottom: 16px;
     }
-    .intro-meta { display: flex; flex-direction: column; gap: 20px; }
-    .meta-item {
-      border-left: 2px solid rgba(34,255,123,0.3);
-      padding-left: 20px;
+    .intro-deco { text-align: right; padding-top: 8px; }
+    .intro-deco-num {
+      font-size: 6rem; font-weight: 700;
+      color: rgba(34,255,123,0.06);
+      line-height: 1; letter-spacing: -4px; user-select: none;
     }
-    .meta-key {
-      font-size: 0.65rem; color: var(--pink);
-      letter-spacing: 3px; opacity: 0.7; margin-bottom: 6px;
+    .intro-deco-label {
+      font-size: 0.6rem; color: var(--pink);
+      letter-spacing: 3px; opacity: 0.4; margin-top: 8px;
     }
-    .meta-val { font-size: 0.82rem; color: rgba(240,240,240,0.7); line-height: 1.6; }
-    .meta-val.green { color: var(--green); }
-
-    .corner-tag {
-      position: absolute; font-size: 0.6rem;
-      color: var(--pink); letter-spacing: 2px; opacity: 0.4;
-    }
-    .corner-tag.tl { top: 12px; left: 12px; }
-    .corner-tag.br { bottom: 12px; right: 12px; }
-
-     /* GALERÍA */
-    .andy-main-img {
-      width: 100%; margin-top: 8px;
-      border: 1px solid rgba(34,255,123,0.12);
-      overflow: hidden;
-    }
-    .andy-main-img img {
-      width: 100%; display: block;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    .andy-main-img:hover img { transform: scale(1.02); }
-    .andy-gallery {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; margin-top: 2px;
-    }
-    .gallery-item {
-      overflow: hidden;
-      border: 1px solid rgba(34,255,123,0.08);
-      aspect-ratio: 1;
-      transition: border-color 0.3s;
-    }
-    .gallery-item:hover { border-color: rgba(34,255,123,0.3); }
-    .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      transition: transform 0.4s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.05); }
 
     /* FASES */
     .fases-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
@@ -347,8 +371,14 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-right { height: 50vw; }
+      .hero-left { padding: 80px 24px 48px; }
+      .hero-name { letter-spacing: -2px; }
+      .gallery-strip { grid-template-columns: repeat(3,1fr); }
       .page-content { padding: 60px 24px; }
       .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+      .intro-deco { display: none; }
       .fases-grid { grid-template-columns: 1fr; }
       .proceso-grid { grid-template-columns: 1fr; }
       .equipo-grid { grid-template-columns: repeat(2,1fr); }
@@ -356,7 +386,6 @@
       .dialogo-tag { text-align: left; }
       .footer-links { flex-direction: column; gap: 20px; align-items: center; }
       #footer { padding: 60px 24px; }
-      .hero-name { letter-spacing: -2px; }
       .codigo-tabs { flex-wrap: wrap; }
     }
   </style>
@@ -373,36 +402,51 @@
   </div>
   <div id="menu-hint">☰</div>
 
-  <!-- HERO -->
+  <!-- HERO SPLIT SCREEN -->
   <section id="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-      <p class="hero-label">// proyecto 01</p>
-      <a class="hero-back" href="../index.html">← volver al portafolio</a>
-      <div class="hero-number">AND-Y — 2025</div>
-      <h1 class="hero-name">AND-Y</span></h1>
-      <p class="hero-tagline">
-        un pequeño robot de 11 cm que te invita a reflexionar<br>
-        de forma lúdica sobre nuestra relación con las máquinas.
-      </p>
-      <div class="hero-scroll">scroll ↓</div>
+    <div class="hero-left">
+      <div class="hero-grid-bg"></div>
+      <div class="hero-left-content">
+        <a class="hero-back" href="../index.html">← volver al portafolio</a>
+        <p class="hero-label">// proyecto 01 — 2025</p>
+        <h1 class="hero-name">AND<span class="accent-green">-Y</span></h1>
+        <p class="hero-tagline">
+          un pequeño robot de 11 cm que te invita a reflexionar
+          de forma lúdica sobre nuestra relación con las máquinas.
+        </p>
+        <div class="hero-meta-row">
+          <span class="hero-meta-pill">Arduino IDE</span>
+          <span class="hero-meta-pill">C++</span>
+          <span class="hero-meta-pill">11 cm</span>
+        </div>
+        <div class="hero-scroll">scroll ↓</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="../assets/And-y/vistaExplo.PNG" alt="AND-Y robot" />
+      <div class="hero-right-overlay"></div>
+      <span class="hero-right-label">AND-Y v1.0</span>
     </div>
     <div class="scanner"></div>
   </section>
+
+  <!-- GALERÍA TIRA HORIZONTAL -->
+  <div class="gallery-strip">
+    <div class="gallery-item"><img src="../assets/And-y/andy-01.jpeg" alt="AND-Y detalle" /></div>
+    <div class="gallery-item"><img src="../assets/And-y/andy-02.jpeg" alt="AND-Y detalle" /></div>
+    <div class="gallery-item"><img src="../assets/And-y/andy-03.JPG" alt="AND-Y detalle" /></div>
+    <div class="gallery-item"><img src="../assets/And-y/andy-04.JPG" alt="AND-Y detalle" /></div>
+    <div class="gallery-item"><img src="../assets/And-y/andy-05.JPG" alt="AND-Y detalle" /></div>
+    <div class="gallery-item"><img src="../assets/And-y/andy-10.jpg" alt="AND-Y detalle" /></div>
+  </div>
 
   <!-- CONTENIDO -->
   <div class="page-content">
 
     <!-- INTRO -->
-    <section style="padding-top:0;">
+    <section class="intro-section">
       <p class="section-label">// sobre el proyecto</p>
       <div class="intro-grid">
-        <div class="intro-text">
-          <h2>Un robot que <span>te saluda</span> según qué tan cerca estás.</h2>
-          <p>AND-Y nació del encargo de crear una máquina saludadora. Somos estudiantes del Taller de Diseño de Máquinas Computacionales de la Universidad Diego Portales, donde relacionamos el diseño con la programación y la interacción persona-máquina.</p>
-          <p>Mediante un sensor ultrasónico, AND-Y detecta la distancia de quien se acerca y responde con comportamientos distintos: tiembla de nervios, reproduce audios de voz y levanta su brazo para compartir datos curiosos.</p>
-          <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ aprendimos a programar hace solo 3 meses.</p>
-        </div>
         <div class="intro-meta">
           <div class="meta-item">
             <div class="meta-key">// contexto</div>
@@ -410,7 +454,7 @@
           </div>
           <div class="meta-item">
             <div class="meta-key">// hardware</div>
-            <div class="meta-val">Arduino R4 Minima · Sensor HC-SR04 · ServoMotor SG90 · DFPlayer Mini · Motor vibrador · </div>
+            <div class="meta-val">Arduino R4 Minima · Sensor HC-SR04 · ServoMotor SG90 · DFPlayer Mini · Motor vibrador</div>
           </div>
           <div class="meta-item">
             <div class="meta-key">// software</div>
@@ -418,23 +462,22 @@
           </div>
           <div class="meta-item">
             <div class="meta-key">// tamaño</div>
-            <div class="meta-val">11 cm</div>
+            <div class="meta-val green">11 cm</div>
           </div>
           <div class="meta-item">
             <div class="meta-key">// evento</div>
             <div class="meta-val">Festival Primavera Hacker 2025</div>
           </div>
-          <div class="andy-main-img">
-            <img src="../assets/And-y/vistaExplo.PNG" alt="vista explo" />
-          </div>
-        <div class="andy-gallery">
-            <div class="gallery-item"><img src="../assets/And-y/andy-01.jpeg" alt="AND-Y detalle" /></div>
-            <div class="gallery-item"><img src="../assets/And-y/andy-02.jpeg" alt="AND-Y detalle" /></div>
-            <div class="gallery-item"><img src="../assets/And-y/andy-03.JPG" alt="AND-Y detalle" /></div>
-            <div class="gallery-item"><img src="../assets/And-y/andy-04.JPG" alt="AND-Y detalle" /></div>
-            <div class="gallery-item"><img src="../assets/And-y/andy-05.JPG" alt="AND-Y detalle" /></div>
-            <div class="gallery-item"><img src="../assets/And-y/andy-10.jpg" alt="AND-Y detalle" /></div>
-          </div>
+        </div>
+        <div class="intro-text">
+          <h2>Un robot que <span>te saluda</span> según qué tan cerca estás.</h2>
+          <p>AND-Y nació del encargo de crear una máquina saludadora. Somos estudiantes del Taller de Diseño de Máquinas Computacionales de la Universidad Diego Portales, donde relacionamos el diseño con la programación y la interacción persona-máquina.</p>
+          <p>Mediante un sensor ultrasónico, AND-Y detecta la distancia de quien se acerca y responde con comportamientos distintos: tiembla de nervios, reproduce audios de voz y levanta su brazo para compartir datos curiosos.</p>
+          <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ aprendimos a programar hace solo 3 meses.</p>
+        </div>
+        <div class="intro-deco">
+          <div class="intro-deco-num">01</div>
+          <div class="intro-deco-label">AND-Y</div>
         </div>
       </div>
     </section>
@@ -690,7 +733,6 @@
   </footer>
 
   <script>
-    // MENÚ
     const menuHint = document.getElementById('menu-hint');
     const sideMenu = document.getElementById('side-menu');
     const closeMenu = document.getElementById('close-menu');
@@ -701,7 +743,6 @@
         sideMenu.classList.remove('open');
     });
 
-    // SPARKLES
     const container = document.getElementById('sparkles-container');
     function createSparkle() {
       const s = document.createElement('div');
@@ -717,7 +758,6 @@
     setInterval(createSparkle, 600);
     for (let i = 0; i < 12; i++) createSparkle();
 
-    // TABS
     function showTab(id, btn) {
       document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
