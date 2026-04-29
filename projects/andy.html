@@ -88,7 +88,7 @@
       animation: hintPulse 3s ease-in-out infinite;
     }
     @keyframes hintPulse {
-      0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; }
+      0%, 100% { opacity: 0.6; } 50% { opacity: 1; }
     }
 
     /* HERO */
@@ -139,7 +139,7 @@
       text-shadow: 0 0 40px rgba(34,255,123,0.4);
     }
     .hero-tagline {
-      font-size: 0.82rem; color: rgba(240,240,240,0.4);
+      font-size: 0.82rem; color: rgba(255,255,255,0.5);
       letter-spacing: 3px; margin-top: 28px; font-style: italic;
       max-width: 560px; margin-left: auto; margin-right: auto;
       line-height: 1.7;
@@ -187,7 +187,7 @@
     }
     .intro-text h2 span { color: var(--green); }
     .intro-text p {
-      font-size: 0.83rem; color: rgba(240,240,240,0.55);
+      font-size: 0.83rem; color: rgba(255,255,255,0.5);
       line-height: 2; margin-bottom: 16px;
     }
     .intro-meta { display: flex; flex-direction: column; gap: 20px; }
@@ -375,7 +375,7 @@
       <p class="hero-label">// proyecto 01</p>
       <a class="hero-back" href="../index.html">← volver al portafolio</a>
       <div class="hero-number">AND-Y — 2025</div>
-      <h1 class="hero-name">AND<span class="accent-green">-Y</span></h1>
+      <h1 class="hero-name">AND-Y</span></h1>
       <p class="hero-tagline">
         un pequeño robot de 11 cm que te invita a reflexionar<br>
         de forma lúdica sobre nuestra relación con las máquinas.
@@ -394,18 +394,18 @@
       <div class="intro-grid">
         <div class="intro-text">
           <h2>Un robot que <span>te saluda</span> según qué tan cerca estás.</h2>
-          <p>AND-Y nació del encargo de crear una máquina saludadora. Somos el equipo ANDlid, estudiantes del Taller de Diseño de Máquinas Computacionales de la Universidad Diego Portales, donde relacionamos el diseño con la programación y la interacción persona-máquina.</p>
+          <p>AND-Y nació del encargo de crear una máquina saludadora. Somos estudiantes del Taller de Diseño de Máquinas Computacionales de la Universidad Diego Portales, donde relacionamos el diseño con la programación y la interacción persona-máquina.</p>
           <p>Mediante un sensor ultrasónico, AND-Y detecta la distancia de quien se acerca y responde con comportamientos distintos: tiembla de nervios, reproduce audios de voz y levanta su brazo para compartir datos curiosos.</p>
           <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ aprendimos a programar hace solo 3 meses.</p>
         </div>
         <div class="intro-meta">
           <div class="meta-item">
             <div class="meta-key">// contexto</div>
-            <div class="meta-val">UDP · Taller Máquinas Computacionales DIS8645 · Primavera 2025</div>
+            <div class="meta-val">UDP · Taller Máquinas Computacionales DIS8645</div>
           </div>
           <div class="meta-item">
             <div class="meta-key">// hardware</div>
-            <div class="meta-val">Arduino R4 Minima · Sensor HC-SR04 · ServoMotor SG90 · DFPlayer Mini · Motor vibrador</div>
+            <div class="meta-val">Arduino R4 Minima · Sensor HC-SR04 · ServoMotor SG90 · DFPlayer Mini · Motor vibrador · </div>
           </div>
           <div class="meta-item">
             <div class="meta-key">// software</div>
@@ -413,24 +413,14 @@
           </div>
           <div class="meta-item">
             <div class="meta-key">// tamaño</div>
-            <div class="meta-val green">11 cm</div>
+            <div class="meta-val">11 cm</div>
           </div>
           <div class="meta-item">
             <div class="meta-key">// evento</div>
-            <div class="meta-val">Primavera Hacker-25</div>
+            <div class="meta-val">Festival Primavera Hacker 2025</div>
           </div>
           <div class="robot-visual">
-            <span class="corner-tag tl">AND-Y v1.0</span>
-            <div class="robot-ascii"> ┌──────────┐
- │  O    O  │
- │    ──    │
- │  ──────  │
- └────┬─────┘
-   ┌──┴───┐
-   │ ~~~~ │
-   └──────┘
-  /|      |\
- ⊹          ⊹</div>
+            <div class="assets/And-y/vistaExplo.PNG"></div>
             <span class="corner-tag br">ARDUINO R4</span>
           </div>
         </div>
@@ -483,19 +473,11 @@
         </div>
         <div class="dialogo-item">
           <div class="dialogo-tag">FASE 03</div>
-          <div class="dialogo-text">"<strong>La nube no existe</strong>, son computadores de otro."</div>
-        </div>
-        <div class="dialogo-item">
-          <div class="dialogo-tag">FASE 03</div>
           <div class="dialogo-text">"Los datos <strong>nunca se borran</strong>, sólo se esconden."</div>
         </div>
         <div class="dialogo-item">
           <div class="dialogo-tag">FASE 03</div>
           <div class="dialogo-text">"El <strong>error 404</strong> es mi manera de hacerme el leso."</div>
-        </div>
-        <div class="dialogo-item">
-          <div class="dialogo-tag">FASE 03</div>
-          <div class="dialogo-text">"<strong>El primer mouse era de madera.</strong>"</div>
         </div>
       </div>
     </section>
@@ -519,8 +501,6 @@
           <tr><td>Reproductor MP3</td><td>DFPlayer Mini</td><td>Reproduce los audios de voz</td></tr>
           <tr><td>Altavoz</td><td>Mini Parlante 3W</td><td>Salida de audio</td></tr>
           <tr><td>Tarjeta SD</td><td>255gb</td><td>Almacena los archivos de audio</td></tr>
-          <tr><td>Mini Protoboard</td><td>400 puntos</td><td>Conexión de componentes</td></tr>
-          <tr><td>Transistor MOSFET</td><td>IRFZ44n</td><td>Control del motor vibrador</td></tr>
         </tbody>
       </table>
     </section>
@@ -656,17 +636,17 @@
         <div class="equipo-card">
           <div class="equipo-initial">Y</div>
           <div class="equipo-name">Yamna Carrión</div>
-          <div class="equipo-role">diseño carcasa · código</div>
+          <div class="equipo-role">código · github</div>
         </div>
         <div class="equipo-card">
           <div class="equipo-initial">S</div>
           <div class="equipo-name">Sofía Cartes</div>
-          <div class="equipo-role">github · código · testing</div>
+          <div class="equipo-role">código · github</div>
         </div>
         <div class="equipo-card">
           <div class="equipo-initial">M</div>
           <div class="equipo-name">Millaray Millar</div>
-          <div class="equipo-role">modelado 3D · MP3</div>
+          <div class="equipo-role">modelado 3D</div>
         </div>
         <div class="equipo-card">
           <div class="equipo-initial">V</div>
@@ -680,7 +660,7 @@
         </div>
       </div>
       <p style="font-size:0.72rem; color:rgba(240,240,240,0.25); margin-top:24px; letter-spacing:2px; text-align:center;">
-        al final del día todas complementamos en todos los roles ⊹
+        todas complementamos en todos los roles ⊹
       </p>
     </section>
 
@@ -690,11 +670,11 @@
   <footer id="footer">
     <p class="footer-text">// let's connect</p>
     <div class="footer-links">
-      <a href="mailto:valeruzp@gmail.com">email</a>
+      <a href="valeruzp@gmail.com">email</a>
       <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
       <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
     </div>
-    <p class="footer-copy">made with github ⊹ — 2026</p>
+    <p class="footer-copy">made with github ⊹ 2026</p>
   </footer>
 
   <script>
