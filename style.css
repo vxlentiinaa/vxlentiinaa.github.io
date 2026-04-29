@@ -1466,3 +1466,8 @@ body {
   width: 100% !important;
   height: 100% !important;
 }
+
+.gallery-strip {
+  position: relative;
+  z-index: 2;
+}
