@@ -45,8 +45,8 @@ body {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: rgba(34, 255, 123, 0.2);
-  filter: drop-shadow(0 0 4px rgba(34, 255, 123, 0.2));
+  background: rgba(34, 255, 123, 0.05);
+  filter: drop-shadow(0 0 4px rgba(34, 255, 123, 0.05));
   image-rendering: pixelated;
   animation: sparkleMove linear infinite;
 }
@@ -55,7 +55,7 @@ body {
 .sparkle::after {
   content: "";
   position: absolute;
-  background: rgba(34, 255, 123, 0.2);
+  background: rgba(34, 255, 123, 0.05);
 }
 
 .sparkle::before {
