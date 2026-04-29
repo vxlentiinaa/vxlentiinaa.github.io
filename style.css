@@ -188,7 +188,7 @@ body {
   position: fixed;
   top: 18px;
   left: 18px;
-  color: rgba(34, 255, 123, 0.4);
+  color: rgba(34, 255, 123, 1);
   font-size: 1.4rem;
   font-family: var(--mono);
   z-index: 9000;
@@ -198,8 +198,8 @@ body {
 }
 
 @keyframes hintPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* =============================================
