@@ -5,7 +5,7 @@ window.addEventListener("load", function () {
   // =============================================
   const container = document.getElementById("sparkles-container");
   if (container) {
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 20; i++) {
       const s = document.createElement("div");
       s.className = "sparkle";
       s.style.top = Math.random() * 100 + "vh";
@@ -373,4 +373,3 @@ new p5(function(p) {
 
 }, 'andy-canvas');
 });
-
