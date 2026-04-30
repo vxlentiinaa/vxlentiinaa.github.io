@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>projects — Valentina Ruz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =============================================
+       PROJECTS PAGE — estilos específicos
+       ============================================= */
+
+    #projects-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* NAV */
+    .projects-nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      opacity: 0.6;
+      transition: opacity 0.2s, text-shadow 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    .nav-label {
+      font-size: 0.7rem;
+      color: rgba(240, 240, 240, 0.2);
+      letter-spacing: 3px;
+    }
+
+    /* HEADER */
+    .projects-header {
+      padding: 40px 48px 0;
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .projects-tag {
+      font-size: 0.72rem;
+      color: var(--pink);
+      letter-spacing: 4px;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .projects-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .projects-title .accent {
+      color: var(--green);
+      text-shadow: 0 0 30px rgba(34, 255, 123, 0.25);
+    }
+
+    .projects-count {
+      font-size: 0.72rem;
+      color: rgba(240, 240, 240, 0.3);
+      letter-spacing: 3px;
+      margin-top: 12px;
+    }
+
+    .projects-count span {
+      color: var(--green);
+    }
+
+    /* FILTROS */
+    .filters-bar {
+      padding: 40px 48px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s ease 0.1s both;
+    }
+
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: rgba(34, 255, 123, 0.5);
+      background: none;
+      border: 1px solid rgba(34, 255, 123, 0.15);
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      color: var(--green);
+      border-color: rgba(34, 255, 123, 0.4);
+    }
+
+    .filter-btn.active {
+      color: var(--black);
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(34, 255, 123, 0.15);
+      margin: 0 4px;
+    }
+
+    /* GRILLA */
+    .projects-grid {
+      padding: 48px 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      animation: fadeUp 0.9s ease 0.2s both;
+    }
+
+    /* TARJETA */
+    .project-card {
+      background: var(--dark);
+      border: 1px solid rgba(34, 255, 123, 0.06);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+      position: relative;
+      text-decoration: none;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: rgba(34, 255, 123, 0.3);
+    }
+
+    /* imagen */
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.8);
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+
+    .project-card:hover .card-img img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    /* placeholder si no hay imagen */
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(34, 255, 123, 0.1);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      position: relative;
+    }
+
+    .card-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(34, 255, 123, 0.02));
+    }
+
+    /* overlay al hacer hover */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-overlay-text {
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px var(--green);
+    }
+
+    /* info */
+    .card-info {
+      padding: 24px;
+    }
+
+    .card-category {
+      font-size: 0.62rem;
+      color: var(--pink);
+      letter-spacing: 3px;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+
+    .card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .card-name {
+      color: var(--green);
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .card-tag {
+      font-size: 0.6rem;
+      color: rgba(34, 255, 123, 0.6);
+      border: 1px solid rgba(34, 255, 123, 0.2);
+      padding: 3px 8px;
+      letter-spacing: 1px;
+    }
+
+    /* número esquina */
+    .card-number {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 0.62rem;
+      color: rgba(34, 255, 123, 0.3);
+      letter-spacing: 2px;
+      z-index: 2;
+    }
+
+    /* OCULTO al filtrar */
+    .project-card.hidden {
+      display: none;
+    }
+
+    /* MENSAJE sin resultados */
+    .no-results {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 0;
+      font-size: 0.8rem;
+      color: rgba(240, 240, 240, 0.2);
+      letter-spacing: 3px;
+    }
+
+    /* FOOTER */
+    .projects-footer {
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(34, 255, 123, 0.07);
+    }
+
+    .footer-links-p {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links-p a {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      transition: opacity 0.2s, text-shadow 0.2s;
+    }
+
+    .footer-links-p a:hover {
+      opacity: 1;
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    .footer-copy-p {
+      font-size: 0.65rem;
+      color: rgba(240, 240, 240, 0.15);
+      letter-spacing: 2px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 40px 24px 60px;
+      }
+      .projects-nav,
+      .projects-header,
+      .filters-bar {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .projects-footer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+        text-align: center;
+      }
+      .footer-links-p {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DESTELLOS -->
+  <div id="sparkles-container"></div>
+
+  <div id="projects-page">
+
+    <!-- NAV -->
+    <nav class="projects-nav">
+      <a href="index.html" class="back-link">← volver</a>
+      <span class="nav-label">// projects</span>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="projects-header">
+      <p class="projects-tag">// todos los proyectos</p>
+      <h1 class="projects-title">work <span class="accent">⊹</span></h1>
+      <p class="projects-count">mostrando <span id="visible-count">10</span> proyectos</p>
+    </header>
+
+    <!-- FILTROS -->
+    <div class="filters-bar">
+      <button class="filter-btn active" data-filter="todos">todos</button>
+      <div class="filter-divider"></div>
+      <button class="filter-btn" data-filter="diseño interacción">diseño interacción</button>
+      <button class="filter-btn" data-filter="madera">madera</button>
+      <button class="filter-btn" data-filter="metal">metal</button>
+      <button class="filter-btn" data-filter="pvc">pvc</button>
+    </div>
+
+    <!-- GRILLA -->
+    <main class="projects-grid" id="projects-grid">
+
+      <!-- DISEÑO INTERACCIÓN -->
+      <a class="project-card" href="projects/andy.html" data-category="diseño interacción">
+        <span class="card-number">01</span>
+        <div class="card-img">
+          <img src="assets/And-y/afiche.JPG" alt="AND-Y" />
+          <div class="card-overlay"><span class="card-overlay-text">ver proyecto →</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-category">diseño interacción</p>
+          <h3 class="card-name">AND-Y</h3>
+          <div class="card-tags">
+            <span class="card-tag">Arduino</span>
+            <span class="card-tag">C++</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="diseño interacción">
+        <span class="card-number">02</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">diseño interacción</p>
+          <h3 class="card-name">sPIral</h3>
+          <div class="card-tags">
+            <span class="card-tag">p5.js</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="diseño interacción">
+        <span class="card-number">03</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">diseño interacción</p>
+          <h3 class="card-name">AtrápameSipuedes</h3>
+          <div class="card-tags">
+            <span class="card-tag">p5.js</span>
+            <span class="card-tag">Arduino</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- MADERA -->
+      <a class="project-card" href="#" data-category="madera">
+        <span class="card-number">04</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">madera</p>
+          <h3 class="card-name">velador</h3>
+          <div class="card-tags">
+            <span class="card-tag">madera</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="madera">
+        <span class="card-number">05</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">madera</p>
+          <h3 class="card-name">penguin lamp</h3>
+          <div class="card-tags">
+            <span class="card-tag">madera</span>
+            <span class="card-tag">iluminación</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="madera">
+        <span class="card-number">06</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">madera</p>
+          <h3 class="card-name">ágape amarillo</h3>
+          <div class="card-tags">
+            <span class="card-tag">madera</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- METAL -->
+      <a class="project-card" href="#" data-category="metal">
+        <span class="card-number">07</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">metal</p>
+          <h3 class="card-name">shard parlante</h3>
+          <div class="card-tags">
+            <span class="card-tag">metal</span>
+            <span class="card-tag">audio</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="metal">
+        <span class="card-number">08</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">metal</p>
+          <h3 class="card-name">cerro abajo</h3>
+          <div class="card-tags">
+            <span class="card-tag">metal</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" data-category="metal">
+        <span class="card-number">09</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">metal</p>
+          <h3 class="card-name">kubik rack</h3>
+          <div class="card-tags">
+            <span class="card-tag">metal</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- PVC -->
+      <a class="project-card" href="#" data-category="pvc">
+        <span class="card-number">10</span>
+        <div class="card-img-placeholder">⊹</div>
+        <div class="card-info">
+          <p class="card-category">pvc</p>
+          <h3 class="card-name">metamorfosis</h3>
+          <div class="card-tags">
+            <span class="card-tag">pvc</span>
+            <span class="card-tag">juego didáctico</span>
+          </div>
+        </div>
+      </a>
+
+      <p class="no-results" id="no-results">// no hay proyectos en esta categoría</p>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="projects-footer">
+      <div class="footer-links-p">
+        <a href="mailto:valecamiruz@gmail.com">email</a>
+        <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
+        <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
+      </div>
+      <span class="footer-copy-p">made with ⊹ — 2026</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // =============================================
+    // FILTROS
+    // =============================================
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".project-card");
+    const visibleCount = document.getElementById("visible-count");
+    const noResults = document.getElementById("no-results");
+
+    function filterProjects(category) {
+      let count = 0;
+      cards.forEach(card => {
+        const match = category === "todos" || card.dataset.category === category;
+        card.classList.toggle("hidden", !match);
+        if (match) count++;
+      });
+      visibleCount.textContent = count;
+      noResults.style.display = count === 0 ? "block" : "none";
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        filterProjects(btn.dataset.filter);
+      });
+    });
+
+    // Leer filtro desde URL si viene del menú
+    const params = new URLSearchParams(window.location.search);
+    const urlFilter = params.get("filter");
+    if (urlFilter) {
+      const matchBtn = [...filterBtns].find(b => b.dataset.filter === urlFilter);
+      if (matchBtn) {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        matchBtn.classList.add("active");
+        filterProjects(urlFilter);
+      }
+    }
+
+    // Animación de entrada para las tarjetas
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }, i * 60);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(20px)";
+      card.style.transition = "opacity 0.5s ease, transform 0.5s ease, border-color 0.3s";
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
