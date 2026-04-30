@@ -23,9 +23,11 @@
       <span class="indicator">⊹</span> projects
     </div>
     <div id="projects-submenu">
-      <a href="#andy">01. AND-Y</a>
-      <a href="#spiral">02. sPIral</a>
-      <a href="#atrapame">03. AtrápameSipuedes</a>
+      <a href="projects.html?filter=todos">todos</a>
+      <a href="projects.html?filter=diseño interacción">interacción</a>
+      <a href="projects.html?filter=madera">madera</a>
+      <a href="projects.html?filter=metal">metal</a>
+      <a href="projects.html?filter=pvc">pvc</a>
     </div>
   </div>
 
@@ -45,56 +47,26 @@
 
   <!-- PROYECTOS -->
   <section id="projects">
-    <h2 class="section-title">// projects</h2>
-
-    <!-- AND-Y -->
-    <div class="project-block" id="andy">
-      <div class="project-number">01</div>
-      <div class="project-info">
-        <h3 class="project-name">AND-Y</h3>
-        <p class="project-desc">Robot que te invita a reflexionar de forma lúdica y humorística sobre nuestra relación con las máquinas. 
-          Detecta qué tan cerca estás de él y responde mediante distintos comportamientos: te saluda, tiembla de nervios o levanta su brazo para entregarte datos curiosos.</p>
-        <div class="project-tags">
-          <span class="tag">Arduino IDE</span>
-          <span class="tag">Sensores</span>
-        </div>
-        <a class="project-link" href="projects/andy.html">ver proyecto →</a>
-      </div>
-      <div id="andy-canvas" class="project-img-placeholder"></div>
-    </div>
-
-    <!-- sPIral -->
-    <div class="project-block" id="spiral">
-      <div class="project-number">02</div>
-      <div class="project-info">
-        <h3 class="project-name">sPIral</h3>
-        <p class="project-desc">Dispositivo interactivo que muestra poemas en una pantalla OLED. A través del giro de un potenciómetro, el usuario puede recorrer tres fases:
-          1. Visualización del poema en formato de espiral.
-          2. Presentación del nombre del autor.
-          3. Exhibición de un dibujo que representa el poema.</p>
-        <div class="project-tags">
-          <span class="tag">OLED</span>
-          <span class="tag">Arduino IDE</span>
-        </div>
-        <a class="project-link" href="#">ver proyecto →</a>
-      </div>
-      <div id="sPIral-canvas" class="project-iframe project-img-placeholder"></div>
-    </div>
-
-    <!-- AtrápameSipuedes -->
-<div class="project-block" id="atrapame">
-  <div class="project-number">03</div>
-  <div class="project-info">
-    <h3 class="project-name">AtrápameSipuedes</h3>
-    <p class="project-desc">Juego interactivo individual que frustra al usuario mediante controles poco intuitivos. 
-      Funciona como tipo totém, donde el jugador experimenta un "casi logro". Los personajes son inspirados en el equipo docente.</p>
-    <div class="project-tags">
-      <span class="tag">p5.js</span>
-      <span class="tag">Arduino IDE</span>
-    </div>
-    <a class="project-link" href="#">ver proyecto →</a>
+  <h2 class="section-title">// projects</h2>
+  
+  <div class="ver-mas-container">
+    <a href="projects.html" class="ver-mas-btn">ver todos los proyectos ⊹</a>
   </div>
-  <div id="AtrapameSiPuedes-canvas" class="project-iframe project-img-placeholder"></div>
+</section>
+
+  <div class="visuals-grid">
+  <div class="visual-item">
+    <div id="andy-canvas" class="visual-canvas"></div>
+    <span class="visual-label">01. AND-Y</span>
+  </div>
+  <div class="visual-item">
+    <div id="sPIral-canvas" class="visual-canvas"></div>
+    <span class="visual-label">02. sPIral</span>
+  </div>
+  <div class="visual-item visual-full">
+    <div id="AtrapameSiPuedes-canvas" class="visual-canvas"></div>
+    <span class="visual-label">03. AtrápameSiPuedes</span>
+  </div>
 </div>
 
   <!-- FOOTER -->
