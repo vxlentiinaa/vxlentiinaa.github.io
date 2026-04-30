@@ -25,6 +25,10 @@
       overflow-x: hidden;
       cursor: crosshair;
     }
+    #hero, .gallery-strip, .page-content, #footer {
+  position: relative;
+  z-index: 1;
+}
 
     /* SPARKLES */
     #sparkles-container {
@@ -54,42 +58,6 @@
       20%  { opacity: 1; transform: scale(2); }
       50%  { opacity: 1; transform: translateX(30px) scale(1); }
       100% { opacity: 0; transform: translateX(60px) scale(1); }
-    }
-
-    /* MENÚ LATERAL */
-    #side-menu {
-      position: fixed; top: 0; left: -260px;
-      width: 260px; height: 100vh;
-      background: var(--black);
-      border-right: 1px solid rgba(34,255,123,0.15);
-      transition: left 0.35s cubic-bezier(0.77,0,0.175,1);
-      z-index: 9999; font-family: var(--mono);
-      display: flex; flex-direction: column;
-      justify-content: center; padding-left: 40px;
-    }
-    #side-menu.open { left: 0; }
-    #side-menu a {
-      color: var(--green); text-decoration: none;
-      font-size: 1.5rem; margin: 16px 0;
-      letter-spacing: 1px; transition: text-shadow 0.2s;
-    }
-    #side-menu a:hover { text-shadow: 0 0 10px var(--green); }
-    #close-menu {
-      position: absolute; top: 20px; right: 20px;
-      color: var(--green); font-size: 1.6rem;
-      cursor: pointer; transition: 0.2s;
-    }
-    #close-menu:hover { color: white; text-shadow: 0 0 8px var(--green); }
-    #menu-hint {
-      position: fixed; top: 18px; left: 18px;
-      color: rgba(34,255,123,0.4); font-size: 1.4rem;
-      font-family: var(--mono); z-index: 9000;
-      pointer-events: auto; cursor: pointer;
-      letter-spacing: -1px;
-      animation: hintPulse 3s ease-in-out infinite;
-    }
-    @keyframes hintPulse {
-      0%, 100% { opacity: 0.6; } 50% { opacity: 1; }
     }
 
     /* =============================================
@@ -167,8 +135,11 @@
     }
     .hero-right { position: relative; overflow: hidden; }
     .hero-right img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+      width: 90%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
       filter: brightness(0.75);
       transition: filter 0.4s ease;
     }
@@ -179,10 +150,14 @@
       z-index: 1;
     }
     .hero-right-label {
-      position: absolute; bottom: 24px; right: 24px;
+      position: absolute; bottom: 20px; right: 24px;
       font-size: 0.62rem; color: rgba(34,255,123,0.5);
-      letter-spacing: 3px; z-index: 2;
+      letter-spacing: 2px; 
+      z-index: 2;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
     }
+    
     .scanner {
       position: absolute; bottom: 0; left: 0;
       width: 100%; height: 2px;
@@ -389,29 +364,83 @@
       #footer { padding: 60px 24px; }
       .codigo-tabs { flex-wrap: wrap; }
     }
+    /* RECONOCIMIENTO */
+.reconocimiento-section {
+  padding: 100px 0;
+  border-top: 1px solid rgba(34,255,123,0.08);
+}
+
+.reconocimiento-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.reconocimiento-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.reconocimiento-titulo span {
+  color: var(--green);
+  text-shadow: 0 0 20px rgba(34,255,123,0.3);
+}
+
+.reconocimiento-desc {
+  font-size: 0.82rem;
+  color: rgba(240,240,240,0.5);
+  line-height: 2;
+}
+
+.reconocimiento-fotos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.reco-img {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border: 1px solid rgba(34,255,123,0.1);
+  transition: border-color 0.3s;
+}
+
+.reco-img:hover {
+  border-color: rgba(34,255,123,0.35);
+}
+
+.reco-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.8);
+  transition: transform 0.5s ease, filter 0.3s;
+}
+
+.reco-img:hover img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
   </style>
 </head>
 <body>
 
   <div id="sparkles-container"></div>
 
-  <div id="side-menu">
-    <div id="close-menu">✕</div>
-    <a href="../index.html">home</a>
-    <a href="../aboutme.html">about me</a>
-    <a href="../index.html#projects">⊹ projects</a>
-      <span class="indicator">⊹</span> projects
-    </div>
-  </div>
-  <div id="menu-hint">☰</div>
-
   <!-- HERO SPLIT SCREEN -->
   <section id="hero">
     <div class="hero-left">
       <div class="hero-grid-bg"></div>
       <div class="hero-left-content">
-        <a class="hero-back" href="../index.html">← volver al portafolio</a>
-        <p class="hero-label">// proyecto 01 — 2025</p>
+        <a class="hero-back" href="../projects.html">← volver a todos los proyectos</a>
+        <p class="hero-label">// DIS8645 — 2025</p>
         <h1 class="hero-name">AND<span class="accent-green">-Y</span></h1>
         <p class="hero-tagline">
           un pequeño robot de 11 cm que te invita a reflexionar
@@ -420,13 +449,13 @@
         <div class="hero-meta-row">
           <span class="hero-meta-pill">Arduino IDE</span>
           <span class="hero-meta-pill">C++</span>
-          <span class="hero-meta-pill">11 cm</span>
+          <span class="hero-meta-pill">3D</span>
         </div>
         <div class="hero-scroll">scroll ↓</div>
       </div>
     </div>
     <div class="hero-right">
-      <img src="../assets/And-y/afiche.JPG" alt="AND-Y robot" width="600" />
+      <img src="../assets/And-y/afiche.JPG" alt="AND-Y robot"/>
       <div class="hero-right-overlay"></div>
       <span class="hero-right-label" style="color: var(--pink);">hecho por: TontoPerico</span>
     </div>
@@ -722,6 +751,22 @@
       </p>
     </section>
 
+    <!-- RECONOCIMIENTO -->
+<section class="reconocimiento-section">
+  <p class="section-label">// reconocimiento</p>
+  <div class="reconocimiento-grid">
+    <div class="reconocimiento-texto">
+      <h2 class="reconocimiento-titulo">Primavera <span>Hacker</span> 2025</h2>
+      <p class="reconocimiento-desc">Expositoras seleccionadas en el 6° festival de cultura, arte y tecnología. AND-Y fue presentado los días 5 y 6 de Diciembre en Casa Palacio, Santiago, Chile.</p>
+    </div>
+    <div class="reconocimiento-fotos">
+      <div class="reco-img"><img src="../assets/And-y/feria-01.JPG" alt="Primavera Hacker 2025" /></div>
+      <div class="reco-img"><img src="../assets/And-y/feria-02.JPG" alt="Primavera Hacker 2025" /></div>
+      <div class="reco-img"><img src="../assets/And-y/phacker.gif" alt="Primavera Hacker 2025" /></div>
+    </div>
+  </div>
+</section>
+
   </div>
 
   <!-- FOOTER -->
@@ -736,37 +781,29 @@
   </footer>
 
   <script>
-    const menuHint = document.getElementById('menu-hint');
-    const sideMenu = document.getElementById('side-menu');
-    const closeMenu = document.getElementById('close-menu');
-    menuHint.addEventListener('click', () => sideMenu.classList.toggle('open'));
-    closeMenu.addEventListener('click', () => sideMenu.classList.remove('open'));
-    document.addEventListener('click', e => {
-      if (!sideMenu.contains(e.target) && e.target !== menuHint)
-        sideMenu.classList.remove('open');
-    });
+  // SPARKLES
+  const container = document.getElementById('sparkles-container');
+  function createSparkle() {
+    const s = document.createElement('div');
+    s.classList.add('sparkle');
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    const dur = 3 + Math.random() * 4;
+    s.style.animationDuration = dur + 's';
+    s.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(s);
+    setTimeout(() => s.remove(), (dur + 3) * 1000);
+  }
+  setInterval(createSparkle, 1500);
+  for (let i = 0; i < 10; i++) createSparkle();
 
-    const container = document.getElementById('sparkles-container');
-    function createSparkle() {
-      const s = document.createElement('div');
-      s.classList.add('sparkle');
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.top = Math.random() * 100 + 'vh';
-      const dur = 3 + Math.random() * 4;
-      s.style.animationDuration = dur + 's';
-      s.style.animationDelay = Math.random() * 3 + 's';
-      container.appendChild(s);
-      setTimeout(() => s.remove(), (dur + 3) * 1000);
-    }
-    setInterval(createSparkle, 600);
-    for (let i = 0; i < 12; i++) createSparkle();
-
-    function showTab(id, btn) {
-      document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('tab-' + id).classList.add('active');
-      btn.classList.add('active');
-    }
-  </script>
+  // TABS
+  function showTab(id, btn) {
+    document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
 </body>
 </html>
