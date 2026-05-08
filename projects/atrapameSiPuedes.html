@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AtrápameSipuedes — Proyecto 03</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #22ff7b;
+      --pink: #ff1d9e;
+      --black: #000000;
+      --dark: #0a0a0a;
+      --white: #f0f0f0;
+      --mono: 'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--mono);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    #hero, .gallery-strip, .page-content, #footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SPARKLES */
+    #sparkles-container {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sparkle {
+      position: absolute; width: 4px; height: 4px;
+      background: rgba(34,255,123,0.1);
+      filter: drop-shadow(0 0 4px rgba(34,255,123,0.1));
+      animation: sparkleMove linear infinite;
+    }
+    .sparkle::before {
+      content: ""; position: absolute;
+      width: 4px; height: 12px; top: -4px; left: 0;
+      background: rgba(34,255,123,0.1);
+    }
+    .sparkle::after {
+      content: ""; position: absolute;
+      width: 12px; height: 4px; top: 0; left: -4px;
+      background: rgba(34,255,123,0.1);
+    }
+    @keyframes sparkleMove {
+      0%   { opacity: 0; transform: translateX(0) scale(1); }
+      20%  { opacity: 1; transform: scale(2); }
+      50%  { opacity: 1; transform: translateX(30px) scale(1); }
+      100% { opacity: 0; transform: translateX(60px) scale(1); }
+    }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 50px 60px 60px;
+      position: relative; z-index: 2;
+      border-right: 1px solid rgba(34,255,123,0.1);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,29,158,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,29,158,0.03) 1px, transparent 1px);
+      background-size: 60px 60px; z-index: 0;
+    }
+    .hero-left-content {
+      position: relative; z-index: 2;
+      animation: heroFadeIn 1.2s ease forwards;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-back {
+      font-size: 0.72rem; color: rgba(34,255,123,0.8);
+      letter-spacing: 2px; margin-bottom: 48px;
+      display: inline-block; text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .hero-back:hover { color: var(--green); text-shadow: 0 0 8px var(--green); }
+    .hero-label {
+      font-size: 0.72rem; color: var(--pink);
+      letter-spacing: 4px; margin-bottom: 16px; opacity: 1;
+    }
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 700; line-height: 0.95;
+      letter-spacing: -2px; color: var(--white);
+      margin-bottom: 32px;
+    }
+    .hero-name .accent-green {
+      color: var(--green);
+      text-shadow: 0 0 40px rgba(34,255,123,0.35);
+    }
+    .hero-tagline {
+      font-size: 0.78rem; color: rgba(255,255,255,0.8);
+      letter-spacing: 2px; font-style: normal;
+      line-height: 1.8; max-width: 360px;
+      margin-bottom: 48px;
+    }
+    .hero-meta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-meta-pill {
+      font-size: 0.65rem; color: var(--green);
+      border: 1px solid rgba(34,255,123,0.3);
+      padding: 5px 12px; letter-spacing: 2px;
+    }
+    .hero-scroll {
+      font-size: 0.72rem; color: var(--green);
+      letter-spacing: 2px; margin-top: 40px; opacity: 0.4;
+      animation: scrollBlink 2s ease-in-out infinite;
+    }
+    @keyframes scrollBlink {
+      0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; }
+    }
+    .hero-right { position: relative; overflow: hidden; background: var(--dark); display: flex; align-items: center; justify-content: center; }
+    .hero-right img {
+      width: 90%; height: 100%;
+      object-fit: contain; display: block;
+      margin: 0 auto;
+      filter: brightness(0.8);
+      transition: filter 0.4s ease;
+    }
+    .hero-right:hover img { filter: brightness(1); }
+
+    .hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .hero-right-label {
+      position: absolute; bottom: 24px; right: 24px;
+      font-size: 0.62rem; color: rgba(34,255,123,1);
+      letter-spacing: 3px; z-index: 2;
+      writing-mode: vertical-rl;
+    }
+    .scanner {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      animation: scan 4s ease-in-out infinite; z-index: 3;
+    }
+    @keyframes scan {
+      0%, 100% { opacity: 0; transform: scaleX(0.2); }
+      50% { opacity: 0.6; transform: scaleX(1); }
+    }
+
+    /* GALERÍA */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+    .gallery-strip .gallery-item {
+      overflow: hidden; aspect-ratio: 4/3;
+      transition: opacity 0.3s;
+    }
+    .gallery-strip:hover .gallery-item { opacity: 0.5; }
+    .gallery-strip .gallery-item:hover { opacity: 1; }
+    .gallery-strip .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-strip .gallery-item:hover img { transform: scale(1.06); }
+
+    /* CONTENIDO */
+    .page-content {
+      max-width: 1100px; margin: 0 auto;
+      padding: 100px 60px; position: relative; z-index: 2;
+    }
+    .section-label {
+      font-size: 0.75rem; color: var(--pink);
+      letter-spacing: 4px; opacity: 1; margin-bottom: 40px;
+    }
+
+    /* INTRO */
+    .intro-section {
+      padding-bottom: 100px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 180px;
+      gap: 60px; align-items: start;
+    }
+    .intro-meta { display: flex; flex-direction: column; gap: 24px; }
+    .meta-item { border-left: 2px solid rgba(34,255,123,0.5); padding-left: 16px; }
+    .meta-key { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 0.8; margin-bottom: 6px; }
+    .meta-val { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.6; }
+    .meta-val.green { color: var(--green); }
+    .intro-text h2 {
+      font-size: 1.5rem; color: var(--white);
+      font-weight: 700; margin-bottom: 24px;
+      letter-spacing: -1px; line-height: 1.3;
+    }
+    .intro-text h2 span { color: var(--pink); }
+    .intro-text p {
+      font-size: 0.83rem; color: rgba(255,255,255,0.8);
+      line-height: 2; margin-bottom: 16px;
+    }
+    .intro-deco { text-align: right; padding-top: 8px; }
+    .intro-deco-num {
+      font-size: 6rem; font-weight: 700;
+      color: rgba(34,255,123,0.5);
+      line-height: 1; letter-spacing: -4px; user-select: none;
+    }
+    .intro-deco-label {
+      font-size: 0.6rem; color: var(--pink);
+      letter-spacing: 3px; opacity: 1; margin-top: 8px;
+    }
+
+    /* INPUTS / OUTPUTS */
+    .io-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+    .io-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 40px; position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .io-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .io-card.inputs::before { background: var(--green); }
+    .io-card.outputs::before { background: var(--green); }
+    .io-card:hover { border-color: rgba(34,255,123,0.3); }
+    .io-card:hover::before { opacity: 1; }
+    .io-title {
+      font-size: 0.72rem; letter-spacing: 4px; margin-bottom: 28px;
+    }
+    .io-title.green { color: var(--green); }
+    .io-title.pink { color: var(--pink); }
+    .io-list { display: flex; flex-direction: column; gap: 14px; }
+    .io-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.78rem; color: rgba(240,240,240,0.8); line-height: 1.6;
+    }
+    .io-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+    .io-dot.green { background: var(--green); }
+    .io-dot.pink { background: var(--pink); opacity: 0.8; }
+
+    /* COMPONENTES */
+    .componentes-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .comp-table { margin-top: 48px; width: 100%; border-collapse: collapse; }
+    .comp-table th {
+      font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; text-align: left;
+      padding: 0 0 20px 0; opacity: 0.7; border-bottom: 1px solid rgba(34,255,123,0.15);
+    }
+    .comp-table td {
+      font-size: 0.78rem; color: rgba(240,240,240,0.8); padding: 18px 0;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(34,255,123,0.08); vertical-align: top;
+    }
+    .comp-table td:first-child { color: var(--green); padding-right: 30px; }
+    .comp-table td:last-child { color: rgba(240,240,240,0.8); font-size: 0.78rem; }
+
+    /* HADAS */
+    .hadas-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .hadas-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 48px; }
+    .hada-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 30px 20px; text-align: center; transition: border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .hada-card:hover { border-color: rgba(34,255,123,0.3); }
+    .hada-img {
+      width: 150px; height: 150px; object-fit: contain;
+      display: block; margin: 0 auto 16px;
+      image-rendering: pixelated;
+    }
+    .hada-name { font-size: 0.8rem; color: var(--white); letter-spacing: 1px; margin-bottom: 6px; }
+    .hada-role { font-size: 0.62rem; color: var(--pink); letter-spacing: 2px; opacity: 0.8; }
+
+    /* PROCESO */
+    .proceso-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .proceso-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 48px; }
+    .proceso-item {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 40px; transition: border-color 0.3s;
+    }
+    .proceso-item:hover { border-color: rgba(34,255,123,0.3); }
+    .proceso-num { font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; margin-bottom: 20px; opacity: 0.8; }
+    .proceso-title { font-size: 0.9rem; color: var(--green); margin-bottom: 16px; letter-spacing: 1px; }
+    .proceso-desc { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.9; }
+
+    /* EQUIPO */
+    .equipo-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .equipo-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 2px; margin-top: 48px; }
+    .equipo-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 24px 16px; text-align: center; transition: border-color 0.3s;
+    }
+    .equipo-card:hover { border-color: rgba(34,255,123,0.25); }
+    .equipo-initial { font-size: 2rem; color: var(--green); font-weight: 700; margin-bottom: 16px; text-shadow: 0 0 20px rgba(34,255,123,0.5); }
+    .equipo-name { font-size: 0.7rem; color: rgba(240,240,240,0.8); letter-spacing: 1px; margin-bottom: 6px; line-height: 1.4; }
+    .equipo-role { font-size: 0.62rem; color: var(--pink); letter-spacing: 2px; opacity: 0.8; }
+
+    /* VIDEO */
+    .video-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .video-wrap {
+      margin-top: 48px;
+      border: 1px solid rgba(34,255,123,0.1);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16/9;
+      max-width: 800px;
+    }
+    .video-wrap iframe {
+      width: 100%; height: 100%;
+      border: none; display: block;
+    }
+
+    /* FOOTER */
+    #footer { border-top: 1px solid rgba(34,255,123,0.1); padding: 80px 60px; text-align: center; position:relative; z-index: 2; }
+    .footer-text { font-size: 0.8rem; color: var(--green); letter-spacing: 4px; margin-bottom: 40px; opacity: 0.7; }
+    .footer-links { display: flex; gap: 40px; justify-content: center; margin-bottom: 50px; }
+    .footer-links a { color: var(--pink); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; opacity: 0.7; transition: opacity 0.2s, text-shadow 0.2s; }
+    .footer-links a:hover { opacity: 1; text-shadow: 0 0 8px var(--pink); }
+    .footer-copy { font-size: 0.7rem; color: rgba(240,240,240,0.5); letter-spacing: 2px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-right { height: 50vw; }
+      .hero-left { padding: 80px 24px 48px; }
+      .gallery-strip { grid-template-columns: repeat(3,1fr); }
+      .page-content { padding: 60px 24px; }
+      .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+      .intro-deco { display: none; }
+      .io-grid { grid-template-columns: 1fr; }
+      .hadas-grid { grid-template-columns: repeat(2,1fr); }
+      .proceso-grid { grid-template-columns: 1fr; }
+      .equipo-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-links { flex-direction: column; gap: 20px; align-items: center; }
+      #footer { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sparkles-container"></div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-grid-bg"></div>
+      <div class="hero-left-content">
+        <a class="hero-back" href="../projects.html">← volver a todos los proyectos</a>
+        <p class="hero-label">// proyecto 03 — 2025⊹2</p>
+        <h1 class="hero-name">Atrápame<span class="accent-green">Si</span>Puedes</h1>
+        <p class="hero-tagline">
+          un juego interactivo que frustra al usuario mediante
+          controles poco intuitivos. El jugador vive un "casi logro" constante.
+        </p>
+        <div class="hero-meta-row">
+          <span class="hero-meta-pill">p5.js</span>
+          <span class="hero-meta-pill">Arduino IDE</span>
+          <span class="hero-meta-pill">pixel art</span>
+        </div>
+        <div class="hero-scroll">scroll ↓</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="../assets/AtrapameSiPuedes/finalAtrapame.gif" alt="AtrápameSipuedes" />
+      <div class="hero-right-overlay"></div>
+      <span class="hero-right-label" style="color: var(--pink);">máquinas literarias</span>
+    </div>
+    <div class="scanner"></div>
+  </section>
+
+  <!-- GALERÍA -->
+  <div class="gallery-strip">
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/proyecto09.JPG" alt="proyecto" /></div>
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/proyecto02.JPG" alt="proyecto" /></div>
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/proyecto01.JPG" alt="proyecto" /></div>
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/ohNo.gif" alt="proyecto" /></div>
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/proyecto05.JPG" alt="proyecto" /></div>
+    <div class="gallery-item"><img src="../assets/AtrapameSiPuedes/pantallaFinal.gif" alt="proyecto" /></div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="page-content">
+
+    <!-- INTRO -->
+    <section class="intro-section">
+      <p class="section-label">// sobre el proyecto</p>
+      <div class="intro-grid">
+        <div class="intro-meta">
+          <div class="meta-item">
+            <div class="meta-key">// contexto</div>
+            <div class="meta-val">UDP · Máquinas Literarias</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// hardware</div>
+            <div class="meta-val">Arduino R4 Minima · FSR402 x2 · GY-291 ADXL345</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// software</div>
+            <div class="meta-val">p5.js · Arduino IDE · p5.webserial</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// duración</div>
+            <div class="meta-val">30 segundos</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// jugadores</div>
+            <div class="meta-val">1 persona a la vez</div>
+          </div>
+        </div>
+        <div class="intro-text">
+          <h2>Un juego diseñado para <span>frustrarte</span>.</h2>
+          <p>Atrápame si puedes es un juego interactivo diseñado para frustrar al usuario. El controlador es contraintuitivo, no tiene un manual claro ni lineal, y requiere mucha destreza para lograr tareas que parecen simples. Los personajes son inspirados en el equipo docente, funcionando como una parodia de la poca proporcionalidad que existe en la academia entre esfuerzo y resultados.</p>
+          <p>Inspirado en el mito de Sísifo y el castigo de Tántalo: el jugador vive un "casi logro" constante, donde cada intento parece acercarlo, pero nunca del todo.</p>
+          <p>El juego consiste en una pantalla con animaciones y dos controladores que deben usarse simultáneamente. El objetivo es atrapar hadas.</p>
+          <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ atrapar 1 hada te da un minúsculo bono... quedan 443 más.</p>
+        </div>
+        <div class="intro-deco">
+          <div class="intro-deco-num">03</div>
+          <div class="intro-deco-label">AtrápameSiPuedes</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INPUTS / OUTPUTS -->
+    <section class="io-section">
+      <p class="section-label">// inputs y outputs</p>
+      <div class="io-grid">
+        <div class="io-card inputs">
+          <p class="io-title green">Entradas</p>
+          <div class="io-list">
+            <div class="io-item"><div class="io-dot pink"></div>Presionar para comenzar</div>
+            <div class="io-item"><div class="io-dot pink"></div>Elegir un personaje (hada) con el mando</div>
+            <div class="io-item"><div class="io-dot pink"></div>Aplicar presión en los sensores de fuerza</div>
+            <div class="io-item"><div class="io-dot pink"></div>Activar el acelerómetro moviéndose</div>
+            <div class="io-item"><div class="io-dot pink"></div>Acción de atrapar durante el tiempo límite</div>
+          </div>
+        </div>
+        <div class="io-card outputs">
+          <p class="io-title green">Salidas</p>
+          <div class="io-list">
+            <div class="io-item"><div class="io-dot pink"></div>Pantalla inicial con nombre del juego</div>
+            <div class="io-item"><div class="io-dot pink"></div>Pantalla de selección de hadas</div>
+            <div class="io-item"><div class="io-dot pink"></div>Inicio del juego con instrucciones y timer</div>
+            <div class="io-item"><div class="io-dot pink"></div>Si atrapa: mensaje de éxito + 443 hadas restantes</div>
+            <div class="io-item"><div class="io-dot pink"></div>Si no atrapa: mensaje de derrota</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENTES -->
+    <section class="componentes-section">
+      <p class="section-label">// componentes utilizados</p>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>COMPONENTE</th>
+            <th>MODELO</th>
+            <th>FUNCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sensor de fuerza</td><td>FSR402 x2</td><td>Movimiento en ejes X e Y / click</td></tr>
+          <tr><td>Acelerómetro</td><td>GY-291 ADXL345</td><td>Detecta movimiento para atrapar el hada</td></tr>
+          <tr><td>Arduino UNO</td><td>R4 Minima</td><td>Controlador principal</td></tr>
+          <tr><td>Mini Protoboard</td><td>85 puntos x2</td><td>Conexión VCC GND al Arduino</td></tr>
+          <tr><td>Pantalla</td><td>14 pulgadas</td><td>Proyecta el juego</td></tr>
+          <tr><td>Carcasa</td><td>PLA x3</td><td>Mando tipo red atrapahadas (impresión 3D)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- HADAS -->
+    <section class="hadas-section">
+      <p class="section-label">// los personajes</p>
+      <div class="hadas-grid">
+        <div class="hada-card">
+          <img class="hada-img" src="../assets/AtrapameSiPuedes/aaronEstatico.gif" alt="Aarón" />
+          <div class="hada-name">Aarón</div>
+          <div class="hada-role">docente</div>
+        </div>
+        <div class="hada-card">
+          <img class="hada-img" src="../assets/AtrapameSiPuedes/misaEstatico.gif" alt="Misa" />
+          <div class="hada-name">Misa</div>
+          <div class="hada-role">docente</div>
+        </div>
+        <div class="hada-card">
+          <img class="hada-img" src="../assets/AtrapameSiPuedes/mateoEstatico.gif" alt="Mateo" />
+          <div class="hada-name">Mateo</div>
+          <div class="hada-role">docente</div>
+        </div>
+        <div class="hada-card">
+          <img class="hada-img" src="../assets/AtrapameSiPuedes/janisEstatica.gif" alt="Janis" />
+          <div class="hada-name">Janis</div>
+          <div class="hada-role">docente</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="proceso-section">
+      <p class="section-label">// dificultades y aprendizajes</p>
+      <div class="proceso-grid">
+        <div class="proceso-item">
+          <div class="proceso-num">01</div>
+          <div class="proceso-title">cambio de propuesta</div>
+          <p class="proceso-desc">La primera idea era un objeto que responde al contacto con las manos. Decidimos cambiarla porque no nos convencía. Partir desde cero fue el primer desafío real.</p>
+        </div>
+        <div class="proceso-item">
+          <div class="proceso-num">02</div>
+          <div class="proceso-title">conectar p5.js con Arduino</div>
+          <p class="proceso-desc">Usamos la librería p5.webserial de Gohai. Fue necesario entender el formato de datos seriales y sincronizar los valores del sensor con el sketch en tiempo real.</p>
+        </div>
+        <div class="proceso-item">
+          <div class="proceso-num">03</div>
+          <div class="proceso-title">el acelerómetro de 3 ejes</div>
+          <p class="proceso-desc">Al pasar el código a clases en Arduino IDE, el sensor dejaba de leer los valores. Requirió depuración y volver a estructurar el código en el archivo principal.</p>
+        </div>
+        <div class="proceso-item">
+          <div class="proceso-num">04</div>
+          <div class="proceso-title">sensor Y como botón y movimiento</div>
+          <p class="proceso-desc">Fue difícil darle dos funciones al mismo sensor: desplazamiento en Y y acción de click. Requirió calibrar umbrales precisos para distinguir ambos tipos de presión.</p>
+        </div>
+        <div class="proceso-item">
+          <div class="proceso-num">05</div>
+          <div class="proceso-title">diseño de la carcasa</div>
+          <p class="proceso-desc">Exploramos un mando retro con botones falsos y luego una carcasa con forma de hada. Finalmente elegimos diseñar la red atrapahadas como mando para que tuviera más lógica.</p>
+        </div>
+        <div class="proceso-item">
+          <div class="proceso-num">06</div>
+          <div class="proceso-title">pixel art de los personajes</div>
+          <p class="proceso-desc">Cada hada fue diseñada con pixel art en Pixilart, con versión volando y estática. La paleta incluye celestes, verdes, azules, rosados y amarillos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="video-section">
+      <p class="section-label">// videos de proceso</p>
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PL3fzND9R5FHDLYDBtv4JIqarJQSRjgctv"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="equipo-section">
+      <p class="section-label">// equipo las ratas ciegas de shrek</p>
+      <div class="equipo-grid">
+        <div class="equipo-card">
+          <div class="equipo-initial">Y</div>
+          <div class="equipo-name">Yamna Carrión</div>
+          <div class="equipo-role">github · investigación</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">V</div>
+          <div class="equipo-name">Valentina Chávez</div>
+          <div class="equipo-role">código p5.js</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">A</div>
+          <div class="equipo-name">Antonia Fuentealba</div>
+          <div class="equipo-role">gráficas · gifs</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">M</div>
+          <div class="equipo-name">Millaray Millar</div>
+          <div class="equipo-role">diseño · modelado 3D</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">S</div>
+          <div class="equipo-name">Sofía Pérez</div>
+          <div class="equipo-role">gráficas · gifs</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">V</div>
+          <div class="equipo-name">Valentina Ruz</div>
+          <div class="equipo-role">código Arduino · p5.js</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem; color:rgba(240,240,240,0.8); margin-top:24px; letter-spacing:2px; text-align:center;">
+        todas complementamos en todos los roles ⊹
+      </p>
+    </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <p class="footer-text">// contáctame ⊹</p>
+    <div class="footer-links">
+      <a href="mailto:valecamiruz@gmail.com">email</a>
+      <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
+      <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
+    </div>
+    <p class="footer-copy">made with github ⊹ 2026</p>
+  </footer>
+
+  <script>
+    // SPARKLES
+    const container = document.getElementById('sparkles-container');
+    function createSparkle() {
+      const s = document.createElement('div');
+      s.classList.add('sparkle');
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.top = Math.random() * 100 + 'vh';
+      const dur = 3 + Math.random() * 4;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      container.appendChild(s);
+      setTimeout(() => s.remove(), (dur + 3) * 1000);
+    }
+    setInterval(createSparkle, 1500);
+    for (let i = 0; i < 10; i++) createSparkle();
+  </script>
+</body>
+</html>
