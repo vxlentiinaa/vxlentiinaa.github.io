@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/addons/p5.sound.min.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portafolio</title>
+  <title>Portafolio - Valentina Ruz</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <!-- DESTELLOS -->
@@ -17,7 +17,6 @@
   <!-- MENÚ LATERAL -->
   <div id="side-menu">
     <div id="close-menu">✕</div>
-    <a href="#hero">home</a>
     <a href="aboutme.html">about me</a>
     <div class="menu-item" id="projects-toggle">
       <span class="indicator">⊹</span> projects
@@ -34,44 +33,76 @@
   <!-- INDICADOR MENÚ -->
   <div id="menu-hint">☰</div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-content">
-      <p class="hero-label">// portafolio</p>
-      <h1 class="hero-name"><span class="accent-pink">VXLENTIINAA</span></h1>
-      <p class="hero-sub">diseñadora · desarrolladora · creativa</p>
-      <div class="hero-scroll">scroll ↓</div>
-    </div>
-    <div class="hero-grid"></div>
-  </section>
+  <a href="https://github.com/vxlentiinaa" target="_blank">
+  <img 
+    src="assets/valentina/logoletra.png" 
+    alt="logo" 
+    class="logo-label"
+  >
+</a>
 
-  <!-- PROYECTOS -->
-  <section id="projects">
-  <h2 class="section-title">// projects</h2>
-  
+  <!-- HERO -->
+<section id="hero">
+
+  <div class="hero-content">
+    <p class="hero-label">// portafolio ⊹ 2026</p>
+
+    <!-- NOMBRE COMO IMAGEN -->
+    <img 
+      src="assets/valentina/logonombre4.svg" 
+      alt="VXLENTIINAA" 
+      class="hero-name-img"
+    >
+
+    <div class="hero-scroll">scroll ↓</div>
+  </div>
+
+  <div class="hero-grid"></div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="projects">
   <div class="ver-mas-container">
     <a href="projects.html" class="ver-mas-btn">ver todos los proyectos ⊹</a>
   </div>
-</section>
 
-  <div class="visuals-grid">
-  <div class="visual-item">
-    <div id="andy-canvas" class="visual-canvas"></div>
-    <span class="visual-label">01. AND-Y</span>
+  <div class="visuals-carousel">
+    <button class="carousel-btn carousel-prev" id="carousel-prev">←</button>
+
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track" id="carousel-track">
+
+        <div class="carousel-slide">
+          <div class="carousel-label">01. AtrápameSipuedes</div>
+          <div id="AtrapameSiPuedes-canvas" class="visual-canvas"></div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-label">02. sPIral</div>
+          <div id="sPIral-canvas" class="visual-canvas"></div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-label">03. AND-Y</div>
+          <div id="andy-canvas" class="visual-canvas"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="carousel-btn carousel-next" id="carousel-next">→</button>
   </div>
-  <div class="visual-item">
-    <div id="sPIral-canvas" class="visual-canvas"></div>
-    <span class="visual-label">02. sPIral</span>
+
+  <div class="carousel-dots">
+    <span class="dot active" data-index="0"></span>
+    <span class="dot" data-index="1"></span>
+    <span class="dot" data-index="2"></span>
   </div>
-  <div class="visual-item visual-full">
-    <div id="AtrapameSiPuedes-canvas" class="visual-canvas"></div>
-    <span class="visual-label">03. AtrápameSiPuedes</span>
-  </div>
-</div>
+</section>
 
   <!-- FOOTER -->
   <footer id="footer">
-    <p class="footer-text">// let's connect</p>
+    <p class="footer-text">// contáctame ⊹</p>
     <div class="footer-links">
       <a href="mailto:valecamiruz@gmail.com">email</a>
       <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
