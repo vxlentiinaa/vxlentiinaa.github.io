@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penguin Lamp — Portafolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #22ff7b;
+      --pink: #ff1d9e;
+      --black: #000000;
+      --dark: #0a0a0a;
+      --white: #f0f0f0;
+      --mono: 'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--mono);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    #hero, .gallery-strip, .page-content, #footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SPARKLES */
+    #sparkles-container {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .sparkle {
+      position: absolute; width: 4px; height: 4px;
+      background: rgba(34,255,123,0.1);
+      filter: drop-shadow(0 0 4px rgba(34,255,123,0.1));
+      animation: sparkleMove linear infinite;
+    }
+    .sparkle::before {
+      content: ""; position: absolute;
+      width: 4px; height: 12px; top: -4px; left: 0;
+      background: rgba(34,255,123,0.1);
+    }
+    .sparkle::after {
+      content: ""; position: absolute;
+      width: 12px; height: 4px; top: 0; left: -4px;
+      background: rgba(34,255,123,0.1);
+    }
+    @keyframes sparkleMove {
+      0%   { opacity: 0; transform: translateX(0) scale(1); }
+      20%  { opacity: 1; transform: scale(2); }
+      50%  { opacity: 1; transform: translateX(30px) scale(1); }
+      100% { opacity: 0; transform: translateX(60px) scale(1); }
+    }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 50px 60px 60px;
+      position: relative; z-index: 2;
+      border-right: 1px solid rgba(34,255,123,0.1);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(34,255,123,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,255,123,0.04) 1px, transparent 1px);
+      background-size: 60px 60px; z-index: 0;
+    }
+    .hero-left-content {
+      position: relative; z-index: 2;
+      animation: heroFadeIn 1.2s ease forwards;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-back {
+      font-size: 0.72rem; color: rgba(34,255,123,0.8);
+      letter-spacing: 2px; margin-bottom: 48px;
+      display: inline-block; text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .hero-back:hover { color: var(--green); text-shadow: 0 0 8px var(--green); }
+    .hero-label { font-size: 0.72rem; color: var(--pink); letter-spacing: 4px; margin-bottom: 16px; opacity: 1; }
+    .hero-name {
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 700; line-height: 0.9;
+      letter-spacing: -3px; color: var(--white);
+      text-transform: uppercase; margin-bottom: 32px;
+    }
+    .hero-name .accent-green { color: var(--green); text-shadow: 0 0 40px rgba(34,255,123,0.35); }
+    .hero-name .accent-pink { color: var(--pink); text-shadow: 0 0 40px rgba(255,29,158,0.35); }
+    .hero-tagline {
+      font-size: 0.78rem; color: rgba(255,255,255,0.8);
+      letter-spacing: 2px; font-style: normal;
+      line-height: 1.8; max-width: 360px; margin-bottom: 48px;
+    }
+    .hero-meta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-meta-pill {
+      font-size: 0.65rem; color: var(--green);
+      border: 1px solid rgba(34,255,123,0.25);
+      padding: 5px 12px; letter-spacing: 2px;
+    }
+    .hero-scroll {
+      font-size: 0.72rem; color: var(--green);
+      letter-spacing: 2px; margin-top: 40px; opacity: 0.4;
+      animation: scrollBlink 2s ease-in-out infinite;
+    }
+    @keyframes scrollBlink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+    .hero-right {
+      position: relative; overflow: hidden;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: contain; display: block; margin: 0 auto;
+      filter: brightness(0.8); transition: filter 0.4s ease;
+    }
+    .hero-right:hover img { filter: brightness(1); }
+    .hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .hero-right-label {
+      position: absolute; bottom: 24px; right: 24px;
+      font-size: 0.62rem; color: var(--pink);
+      letter-spacing: 3px; z-index: 2;
+      writing-mode: vertical-rl;
+    }
+    .scanner {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      animation: scan 4s ease-in-out infinite; z-index: 3;
+    }
+    @keyframes scan {
+      0%, 100% { opacity: 0; transform: scaleX(0.2); }
+      50% { opacity: 0.6; transform: scaleX(1); }
+    }
+
+    /* GALERÍA */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* ← cambia el número de columnas */
+      gap: 2px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+    .gallery-strip .gallery-item { overflow: hidden; aspect-ratio: 3/4; transition: opacity 0.3s; }
+    .gallery-strip:hover .gallery-item { opacity: 0.5; }
+    .gallery-strip .gallery-item:hover { opacity: 1; }
+    .gallery-strip .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .gallery-strip .gallery-item:hover img { transform: scale(1.06); }
+
+    /* CONTENIDO */
+    .page-content { max-width: 1100px; margin: 0 auto; padding: 100px 60px; position: relative; z-index: 2; }
+    .section-label { font-size: 0.75rem; color: var(--pink); letter-spacing: 4px; opacity: 1; margin-bottom: 40px; }
+
+    /* INTRO */
+    .intro-section { padding-bottom: 100px; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .intro-grid { display: grid; grid-template-columns: 200px 1fr 180px; gap: 60px; align-items: start; }
+    .intro-meta { display: flex; flex-direction: column; gap: 24px; }
+    .meta-item { border-left: 2px solid rgba(34,255,123,0.5); padding-left: 16px; }
+    .meta-key { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 0.8; margin-bottom: 6px; }
+    .meta-val { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.6; }
+    .meta-val.green { color: var(--green); }
+    .intro-text h2 { font-size: 1.5rem; color: var(--white); font-weight: 700; margin-bottom: 24px; letter-spacing: -1px; line-height: 1.3; }
+    .intro-text h2 span { color: var(--pink); }
+    .intro-text p { font-size: 0.83rem; color: rgba(255,255,255,0.8); line-height: 2; margin-bottom: 16px; }
+    .intro-deco { text-align: right; padding-top: 8px; }
+    .intro-deco-num { font-size: 6rem; font-weight: 700; color: rgba(34,255,123,0.5); line-height: 1; letter-spacing: -4px; user-select: none; }
+    .intro-deco-label { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 1; margin-top: 8px; }
+
+    /* TARJETAS GENÉRICAS — para fases, proceso, características, etc. */
+    .cards-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; }
+    /* ↑ cambia repeat(3,1fr) a repeat(2,1fr) o repeat(4,1fr) según necesites */
+    .card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.08);
+      padding: 40px 30px; transition: border-color 0.3s; position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--green); opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { border-color: rgba(34,255,123,0.3); }
+    .card:hover::before { opacity: 1; }
+    .card-num { font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; margin-bottom: 20px; opacity: 0.8; }
+    .card-title { font-size: 0.9rem; color: var(--green); margin-bottom: 16px; letter-spacing: 1px; }
+    .card-desc { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.9; }
+    .card-tag { font-size: 0.65rem; color: var(--green); border: 1px solid rgba(34,255,123,0.2); padding: 4px 10px; letter-spacing: 2px; display: inline-block; margin-top: 16px; }
+
+    /* TABLA GENÉRICA — para materiales, componentes, etc. */
+    .tabla-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .comp-table { margin-top: 48px; width: 100%; border-collapse: collapse; }
+    .comp-table th {
+      font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; text-align: left;
+      padding: 0 0 20px 0; opacity: 0.7; border-bottom: 1px solid rgba(34,255,123,0.15);
+    }
+    .comp-table td {
+      font-size: 0.78rem; color: rgba(240,240,240,0.8); padding: 18px 0;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(34,255,123,0.08); vertical-align: top;
+    }
+    .comp-table td:first-child { color: var(--green); padding-right: 30px; }
+    .comp-table td:last-child { color: rgba(240,240,240,0.8); font-size: 0.7rem; }
+
+    /* GALERÍA GRANDE — para mostrar imágenes en grid */
+    .fotos-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .fotos-grid { display: grid; grid-template-columns: repeat(1,1fr); margin-right: auto; gap: 8px; margin-top: 48px; }
+    .foto-item { overflow: hidden; border: 1px solid rgba(34,255,123,0.08); transition: border-color 0.3s; }
+    .foto-item:hover { border-color: rgba(34,255,123,0.3); }
+    .foto-item img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85); transition: transform 0.5s, filter 0.3s; }
+    .foto-item:hover img { transform: scale(1.04); filter: brightness(1); }
+
+    /* VIDEO */
+    .video-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .video-wrap { margin-top: 48px; border: 1px solid rgba(34,255,123,0.1); overflow: hidden; aspect-ratio: 16/9; max-width: 800px; }
+    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* EQUIPO */
+    .equipo-section { padding: 100px 0; }
+    .equipo-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 48px; }
+    /* ↑ cambia repeat(4,1fr) según el número de integrantes */
+    .equipo-card { background: var(--dark); border: 1px solid rgba(34,255,123,0.06); padding: 30px 20px; text-align: center; transition: border-color 0.3s; }
+    .equipo-card:hover { border-color: rgba(34,255,123,0.25); }
+    .equipo-initial { font-size: 2rem; color: var(--green); font-weight: 700; margin-bottom: 16px; text-shadow: 0 0 20px rgba(34,255,123,0.3); }
+    .equipo-name { font-size: 0.7rem; color: rgba(240,240,240,0.6); letter-spacing: 1px; margin-bottom: 8px; }
+    .equipo-role { font-size: 0.62rem; color: var(--pink); letter-spacing: 2px; opacity: 0.6; }
+
+    /* RECONOCIMIENTOS / PREMIOS */
+
+    .reconocimiento-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 48px;
+}
+    .reconocimiento-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.reconocimiento-titulo span {
+  color: var(--green);
+  text-shadow: 0 0 20px rgba(34,255,123,0.3);
+}
+
+.reconocimiento-desc {
+  font-size: 0.82rem;
+  color: rgba(240,240,240,0.8);
+  line-height: 2;
+}
+
+    /* FOOTER */
+    #footer { border-top: 1px solid rgba(34,255,123,0.1); padding: 80px 60px; text-align: center; position: relative; z-index: 2; }
+    .footer-text { font-size: 0.8rem; color: var(--green); letter-spacing: 4px; margin-bottom: 40px; opacity: 0.7; }
+    .footer-links { display: flex; gap: 40px; justify-content: center; margin-bottom: 50px; }
+    .footer-links a { color: var(--pink); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; opacity: 0.7; transition: opacity 0.2s, text-shadow 0.2s; }
+    .footer-links a:hover { opacity: 1; text-shadow: 0 0 8px var(--pink); }
+    .footer-copy { font-size: 0.7rem; color: rgba(240,240,240,0.5); letter-spacing: 2px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-right { height: 60vw; }
+      .hero-left { padding: 80px 24px 48px; }
+      .gallery-strip { grid-template-columns: repeat(3,1fr); }
+      .page-content { padding: 60px 24px; }
+      .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+      .intro-deco { display: none; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .fotos-grid { grid-template-columns: 1fr; }
+      .equipo-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-links { flex-direction: column; gap: 20px; align-items: center; }
+      #footer { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sparkles-container"></div>
+
+  <!-- ========================================
+       HERO
+       ======================================== -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-grid-bg"></div>
+      <div class="hero-left-content">
+
+        <!-- cambia ../projects.html si el archivo está en otra carpeta -->
+        <a class="hero-back" href="../projects.html">← volver a todos los proyectos</a>
+
+        <p class="hero-label">// proyecto 06 — 2023⊹2</p>
+
+        <!-- TÍTULO: usa .accent-green o .accent-pink para colorear parte del nombre -->
+        <h1 class="hero-name">Penguin<span class="accent-green">Lamp</span></h1>
+
+        <p class="hero-tagline">
+          Lámpara inspirada en la silueta de un pingüino, hecha con madera laminada y curvada. 
+        </p>
+
+        <!-- agrega o elimina pills según las herramientas usadas -->
+        <div class="hero-meta-row">
+          <span class="hero-meta-pill">terciado</span>
+          <span class="hero-meta-pill">curvado</span>
+          <span class="hero-meta-pill">laminado</span>
+        </div>
+
+        <div class="hero-scroll">scroll ↓</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- imagen principal del proyecto -->
+      <img src="../assets/penguinLamp/penguin2.JPG" alt="penguin lamp" />
+      <div class="hero-right-overlay"></div>
+      <span class="hero-right-label">maquetas y materiales</span>
+    </div>
+
+    <div class="scanner"></div>
+  </section>
+
+  <!-- ========================================
+       GALERÍA HORIZONTAL
+       agrega o elimina .gallery-item según las fotos que tengas
+       ======================================== -->
+  <div class="gallery-strip">
+    <div class="gallery-item"><img src="../assets/penguinLamp/penguin1.JPG" alt="penguin lamp" /></div>
+    <div class="gallery-item"><img src="../assets/penguinLamp/penguin3.JPG" alt="penguin lamp" /></div>
+    <div class="gallery-item"><img src="../assets/penguinLamp/penguin4.JPG" alt="penguin lamp" /></div>
+    <div class="gallery-item"><img src="../assets/penguinLamp/penguin5.JPG" alt="penguin lamp" /></div>
+  </div>
+
+  <!-- ========================================
+       CONTENIDO PRINCIPAL
+       ======================================== -->
+  <div class="page-content">
+
+    <!-- INTRO / SOBRE EL PROYECTO -->
+    <section class="intro-section">
+      <p class="section-label">// sobre el proyecto</p>
+      <div class="intro-grid">
+
+        <!-- columna izquierda: datos técnicos -->
+        <div class="intro-meta">
+          <div class="meta-item">
+            <div class="meta-key">// contexto</div>
+            <div class="meta-val">UDP · Maquetas y Materiales</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// materiales</div>
+            <div class="meta-val">Terciado · Pegamento</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// herramientas</div>
+            <div class="meta-val">Curvado · Laminado</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// evento</div>
+            <div class="meta-val">Exhibida en Diseño Abierto UDP</div>
+          </div>
+          <!-- agrega más .meta-item según necesites -->
+        </div>
+
+        <!-- columna central: descripción -->
+        <div class="intro-text">
+          <h2>Lámpara en forma de pingüino, <span>curvado</span> con terciado.</h2>
+          <p>Este proyecto consiste en el diseño y fabricación de una lámpara inspirada en la silueta de un pingüino, realizada en terciado laminado y curvado.</p>
+          <p>El proceso se basó en la unión de 3 capas de terciado, moldeadas en base a una guía; además se utilizaron distintas uniones para las piezas. La iluminación se ubica en el centro de la estructura, permitiendo que acentúe las curvas de la lámpara</p>
+          <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ Se explora la relación entre forma, materialidad e iluminación.</p>
+        </div>
+
+        <!-- columna derecha: número decorativo -->
+        <div class="intro-deco">
+          <div class="intro-deco-num">06</div>
+          <div class="intro-deco-label">Penguin Lamp</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================
+         SECCIÓN DE TARJETAS
+         útil para: fases, características, etapas, aprendizajes
+         duplica o elimina .card según necesites
+         cambia cards-grid a repeat(2,1fr) o repeat(4,1fr) en el CSS
+         ======================================== -->
+    <section class="cards-section">
+      <p class="section-label">// procesos de fabricación</p>
+      <div class="cards-grid">
+
+        <div class="card">
+          <div class="card-num">01</div>
+          <div class="card-title">Exploración y diseño</div>
+          <p class="card-desc">Se desarrolló la idea conceptual de la lámpara, tomando como referencia la silueta de un pingüino, adaptándola de una forma simple.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-num">02</div>
+          <div class="card-title">Fabricación y laminado</div>
+          <p class="card-desc">Se realizó el corte de las láminas de terciado y el proceso de curvado del terciado. Cada capa fue moldeada cuidadosamente, utilizando presión y adhesión entre láminas.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-num">03</div>
+          <div class="card-title">Ensamblaje e iluminación</div>
+          <p class="card-desc">Se realizó el ensamblaje de las piezas y el montaje del sistema de iluminación. Se aplicaron los acabados finales para darle la forma y funcionalidad deseada.</p>
+        </div>
+
+        <!-- agrega más .card si necesitas -->
+
+      </div>
+    </section>
+
+    <!-- ========================================
+         TABLA
+         útil para: materiales, componentes, presupuesto
+         agrega o elimina columnas <th> y <td> según necesites
+         ======================================== -->
+    <section class="tabla-section">
+      <p class="section-label">// materiales</p>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>NOMBRE</th>
+            <th>DETALLE</th>
+            <th>FUNCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Terciado</td>
+            <td>3 mm</td>
+            <td>Base de la lámpara</td>
+          </tr>
+          <tr>
+            <td>Cola fría</td>
+            <td>Pegamento para madera</td>
+            <td>Unir las láminas de terciado</td>
+          </tr>
+          <tr>
+            <td>Ampolleta</td>
+            <td>E 27 / 4 W</td>
+            <td>Iluminación</td>
+          </tr>
+          <tr>
+            <td>Cable e interruptor</td>
+            <td>Conexión eléctrica</td>
+            <td>Iluminación</td>
+          </tr>
+          <!-- agrega más filas <tr> según necesites -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ========================================
+         GALERÍA GRANDE DE FOTOS
+         útil para mostrar proceso o resultado en más detalle
+         puedes eliminar esta sección si no la necesitas
+         ======================================== -->
+    <section class="fotos-section">
+      <p class="section-label">// reconocimiento</p>
+      <div class="reconocimiento-grid">
+      <div class="reconocimiento-texto">
+      <h2 class="reconocimiento-titulo">Diseño <span>Abierto</span> UDP 2023</h2>
+      <p class="reconocimiento-desc">Expositora seleccionada por Carolina Kusanovich para mostrar mi lámpara en Diseño abierto.</p>
+    </div>
+      <div class="fotos-grid">
+        <div class="foto-item"><img src="../assets/penguinLamp/peguin6.jpg" alt="proceso" /></div>
+    </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <p class="footer-text">// contáctame ⊹</p>
+    <div class="footer-links">
+      <a href="mailto:valecamiruz@gmail.com">email</a>
+      <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
+      <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
+    </div>
+    <p class="footer-copy">made with github ⊹ 2026</p>
+  </footer>
+
+  <script>
+    // SPARKLES
+    const container = document.getElementById('sparkles-container');
+    function createSparkle() {
+      const s = document.createElement('div');
+      s.classList.add('sparkle');
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.top = Math.random() * 100 + 'vh';
+      const dur = 3 + Math.random() * 4;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      container.appendChild(s);
+      setTimeout(() => s.remove(), (dur + 3) * 1000);
+    }
+    setInterval(createSparkle, 1500);
+    for (let i = 0; i < 5; i++) createSparkle();
+  </script>
+
+</body>
+</html>
