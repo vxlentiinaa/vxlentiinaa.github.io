@@ -15,7 +15,6 @@ window.addEventListener("load", function () {
       container.appendChild(s);
     }
   }
-
   // =============================================
   // MENÚ LATERAL
   // =============================================
@@ -91,6 +90,23 @@ window.addEventListener("load", function () {
     observer.observe(block);
   });
 
+  // MODO CLARO / OSCURO
+const themeToggle = document.getElementById("theme-toggle");
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+  document.body.classList.add("light-mode");
+  themeToggle.textContent = "◐";
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    const isLight = document.body.classList.contains("light-mode");
+    themeToggle.textContent = isLight ? "◐" : "◐";
+    localStorage.setItem("theme", isLight ? "◐" : "◐");
+  });
+}
   // =============================================
   // CURSOR PERSONALIZADO (opcional)
   // =============================================
@@ -103,7 +119,7 @@ new p5(function(p) {
   let fondo, hada, x = 0, y = 0, particulas = [];
 
   p.preload = function() {
-    fondo = p.loadImage("assets/AtrapameSiPuedes/fondo.gif");
+    fondo = p.loadImage("assets/AtrapameSiPuedes/fondo1.gif");
     hada  = p.loadImage("assets/AtrapameSiPuedes/janisEstatica.gif");
   };
 
@@ -166,14 +182,14 @@ new p5(function(p) {
 };
 
   p.draw = function() {
-    p.background(0);
+    p.background(10, 10, 10);
     p.translate(p.width / 2, p.height / 2);
 
     for (let l of letrasDibujadas) {
       p.push();
       p.translate(l.x, l.y);
       p.rotate(l.angulo);
-      p.fill(255);
+      p.fill(255, 29, 158);
       p.text(l.char, 0, 0);
       p.pop();
     }
@@ -221,8 +237,8 @@ new p5(function(p) {
 // VISUALIZACIÓN AND-Y RUNNER
 new p5(function(p) {
   let andy;
-  let gravedad = 0.9;
-  let velocidadY = 0;
+  let gravedad = 1;
+  let velocidadY = -2;
   let sueloY;
   let sparkles = [];
   let obstaculos = [];
@@ -238,38 +254,37 @@ new p5(function(p) {
   };
 
   p.setup = function() {
-    let container = document.getElementById('andy-canvas');
-    let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
-    canvas.parent('andy-canvas');
-    sueloY = p.height - 100;
-    andy = { x: 100, y: sueloY, size: 25, enSuelo: true };
-    for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
+  let contenedor = document.getElementById('andy-canvas');
+  let lienzo = p.createCanvas(contenedor.offsetWidth, contenedor.offsetWidth * 0.5625);
+  lienzo.parent('andy-canvas');
+  sueloY = p.height - 60;
+  andy = { x: 100, y: sueloY, size: 25, enSuelo: true };
+  for (let i = 0; i < 60; i++) sparkles.push(new Sparkle());
 
-    canvas.elt.addEventListener('click', function() {
-      e.stopPropagation();
-      
-      if (!juegoIniciado) {
-        juegoIniciado = true;
-        return;
-      }
-      if (gameOver) {
-        gameOver = false;
-        score = 0;
-        speed = 6;
-        obstaculos = [];
-        frameSpawn = 0;
-        andy.y = sueloY;
-        velocidadY = 0;
-        andy.enSuelo = true;
-      } else if (andy.enSuelo) {
-        velocidadY = -15;
-        andy.enSuelo = false;
-      }
-    });
-  };
+  lienzo.elt.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!juegoIniciado) {
+      juegoIniciado = true;
+      return;
+    }
+    if (gameOver) {
+      gameOver = false;
+      score = 0;
+      speed = 6;
+      obstaculos = [];
+      frameSpawn = 0;
+      andy.y = sueloY;
+      velocidadY = 0;
+      andy.enSuelo = true;
+    } else if (andy.enSuelo) {
+      velocidadY = -15;
+      andy.enSuelo = false;
+    }
+  });
+};
 
   p.draw = function() {
-    p.background(255, 240, 120);
+    p.background(10, 10, 10);
 
     if (!juegoIniciado) {
       for (let s of sparkles) { s.update(); s.show(); }
@@ -372,4 +387,25 @@ new p5(function(p) {
   }
 
 }, 'andy-canvas');
+});
+
+// CARRUSEL
+const track = document.getElementById("carousel-track");
+const prevBtn = document.getElementById("carousel-prev");
+const nextBtn = document.getElementById("carousel-next");
+const dots = document.querySelectorAll(".dot");
+let currentSlide = 0;
+const totalSlides = 3;
+
+function goToSlide(index) {
+  currentSlide = (index + totalSlides) % totalSlides;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  dots.forEach(d => d.classList.remove("active"));
+  dots[currentSlide].classList.add("active");
+}
+
+if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentSlide - 1));
+if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentSlide + 1));
+dots.forEach(dot => {
+  dot.addEventListener("click", () => goToSlide(parseInt(dot.dataset.index)));
 });
