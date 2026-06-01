@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>about me — Valentina Ruz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* =============================================
+       ABOUT ME — layout vertical
+       ============================================= */
+
+    .about-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image: repeating-linear-gradient(
+        -45deg, transparent, transparent 60px,
+        rgba(34,255,123,0.015) 60px, rgba(34,255,123,0.015) 61px
+      );
+    }
+
+    #about-page {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* NAV */
+    .about-nav {
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(34,255,123,0.07);
+    }
+
+    .back-link {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      opacity: 0.7;
+      transition: opacity 0.2s, text-shadow 0.2s;
+    }
+
+    .back-link:hover { opacity: 1; text-shadow: 0 0 8px var(--green); }
+
+    .nav-label {
+      font-size: 0.68rem;
+      color: rgba(240,240,240,0.25);
+      letter-spacing: 3px;
+    }
+
+    /* =============================================
+       HERO — nombre grande + foto
+       ============================================= */
+    .about-hero {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      min-height: 90vh;
+      align-items: center;
+      padding: 80px 60px;
+      border-bottom: 1px solid rgba(34,255,123,0.07);
+    }
+
+    .about-hero-left {
+      padding-right: 80px;
+      border-right: 1px solid rgba(34,255,123,0.08);
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-eyebrow {
+      font-size: 0.68rem;
+      color: var(--pink);
+      letter-spacing: 5px;
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .about-name {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -3px;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .about-name .accent { color: var(--green); text-shadow: 0 0 40px rgba(34,255,123,0.25); }
+
+    .about-desc {
+      font-size: 0.85rem;
+      color: rgba(240,240,240,0.8);
+      line-height: 2;
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+
+    .about-desc em { color: var(--pink); font-style: italic; }
+
+    /* tags */
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .interest-tag {
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      padding: 5px 12px;
+      border: 1px solid rgba(34,255,123,0.2);
+      color: rgba(34,255,123,0.6);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .interest-tag:hover {
+      border-color: var(--green);
+      color: var(--green);
+      text-shadow: 0 0 6px rgba(34,255,123,0.3);
+    }
+
+    /* FOTO */
+    .about-hero-right {
+      padding-left: 60px;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+
+    .photo-inner {
+      width: 100%; height: 100%;
+      border: 1px solid rgba(34,255,123,0.15);
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .photo-inner:hover { border-color: rgba(34,255,123,0.4); }
+
+    .photo-inner::before, .photo-inner::after {
+      content: ''; position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--green); border-style: solid; opacity: 0.4; z-index: 2;
+    }
+
+    .photo-inner::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .photo-inner::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    .photo-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: brightness(0.9);
+      transition: filter 0.3s;
+    }
+
+    .photo-inner:hover img { filter: brightness(1); }
+
+    /* datos rápidos bajo foto */
+    .quick-info {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(34,255,123,0.06);
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+    }
+
+    .info-label { color: var(--pink); opacity: 0.8; }
+    .info-value { color: rgba(240,240,240,0.8); text-align: right; }
+
+    /* =============================================
+       SECCIÓN HABILIDADES
+       ============================================= */
+    .skills-section {
+      padding: 100px 60px;
+      border-bottom: 1px solid rgba(34,255,123,0.07);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      color: var(--pink);
+      letter-spacing: 5px;
+      margin-bottom: 60px;
+      display: block;
+    }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .skills-col-title {
+      font-size: 0.65rem;
+      color: rgba(240,240,240,0.3);
+      letter-spacing: 4px;
+      margin-bottom: 32px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+
+    /* LISTA DE HABILIDADES */
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .skill-item {
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .skill-name {
+      font-size: 0.78rem;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .skill-level {
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+    }
+
+    .skill-level.basico   { color: rgba(34,255,123,0.4); }
+    .skill-level.intermedio { color: rgba(34,255,123,0.7); }
+    .skill-level.avanzado { color: var(--green); }
+
+    /* BARRA DE NIVEL */
+    .skill-bar {
+      width: 100%;
+      height: 2px;
+      background: rgba(34,255,123,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      background: linear-gradient(90deg, var(--pink), var(--green));
+      transition: width 1s ease;
+      opacity: 0.5;
+    }
+
+    .skill-fill.basico     { width: 33%; }
+    .skill-fill.intermedio { width: 66%; }
+    .skill-fill.avanzado   { width: 100%; }
+  }
+
+    /* HERRAMIENTAS SIN NIVEL */
+    .tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tool-tag {
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      border: 1px solid rgba(34,255,123,0.15);
+      color: rgba(34,255,123,0.5);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .tool-tag:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    .about-footer {
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(34,255,123,0.07);
+    }
+
+    .footer-links-about { display: flex; gap: 30px; }
+
+    .footer-links-about a {
+      color: var(--pink);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      opacity: 0.8;
+      transition: opacity 0.2s, text-shadow 0.2s;
+    }
+
+    .footer-links-about a:hover { opacity: 1; text-shadow: 0 0 8px var(--pink); }
+
+    .footer-copy-about {
+      font-size: 0.62rem;
+      color: rgba(240,240,240,0.5);
+      letter-spacing: 2px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-hero {
+        grid-template-columns: 1fr;
+        padding: 60px 24px;
+        min-height: auto;
+        gap: 60px;
+      }
+      .about-hero-left { padding-right: 0; border-right: none; }
+      .about-hero-right { padding-left: 0; }
+      .photo-frame { max-width: 340px; margin: 0 auto; }
+      .skills-section { padding: 60px 24px; }
+      .skills-layout { grid-template-columns: 1fr; gap: 48px; }
+      .about-nav { padding: 20px 24px; }
+      .about-footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+      .footer-links-about { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- <button id="theme-toggle"><span style="font-size:1.1rem;">◐</span> light</button> -->
+  <div id="sparkles-container"></div>
+  <div class="about-bg"></div>
+
+  <div id="about-page">
+
+    <!-- NAV -->
+    <nav class="about-nav">
+      <a href="index.html" class="back-link">← volver</a>
+      <span class="nav-label">// about me</span>
+    </nav>
+
+    <!-- HERO -->
+    <section class="about-hero">
+
+      <div class="about-hero-left">
+        <span class="about-eyebrow">// who am i</span>
+        <h1 class="about-name">
+          Valentina<br><span class="accent">Ruz</span>
+        </h1>
+        <p class="about-desc">
+          Soy estudiante de 4to año de <em>Diseño, mención Industrial</em>, en la
+          Universidad Diego Portales. En este tiempo me ha gustado mucho el
+          diseño de interacción, aprender nuevas tecnologías y cómo
+          nos relacionamos con ella.
+        </p>
+        <div class="interests">
+          <span class="interest-tag">diseño industrial</span>
+          <span class="interest-tag">modelado 3D</span>
+          <span class="interest-tag">prototipado</span>
+          <span class="interest-tag">sketch</span>
+          <span class="interest-tag">UX / UI</span>
+          <span class="interest-tag">diseño de interacción</span>
+          <span class="interest-tag">nuevas tecnologías</span>
+          
+        </div>
+      </div>
+
+      <div class="about-hero-right">
+        <div class="photo-frame">
+          <div class="photo-inner">
+            <img src="assets/valentina/mifoto.jpg" alt="Valentina Ruz" />
+          </div>
+        </div>
+        <div class="quick-info">
+          <div class="info-row">
+            <span class="info-label">universidad</span>
+            <span class="info-value">Diego Portales</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">carrera</span>
+            <span class="info-value">Diseño Industrial</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">año</span>
+            <span class="info-value">4to año</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">ubicación</span>
+            <span class="info-value">Santiago, Chile</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- HABILIDADES -->
+    <section class="skills-section">
+      <span class="section-eyebrow">// habilidades y programas</span>
+
+      <div class="skills-layout">
+
+        <!-- COLUMNA IZQUIERDA: programas con nivel -->
+        <div>
+          <p class="skills-col-title">software de diseño ⊹</p>
+          <div class="skill-list">
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Adobe Illustrator</span>
+                <span class="skill-level basico">básico</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill basico"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Adobe InDesign</span>
+                <span class="skill-level basico">básico</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill basico"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Adobe Photoshop</span>
+                <span class="skill-level basico">básico</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill basico"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">SketchbookPro</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+          </div>
+
+          <p class="skills-col-title" style="margin-top: 48px;">modelado y fabricación ⊹</p>
+          <div class="skill-list">
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Rhinoceros</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Autodesk Inventor</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">AutoCAD</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: código + herramientas -->
+        <div>
+          <p class="skills-col-title">código e interacción ⊹</p>
+          <div class="skill-list">
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Arduino IDE</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">p5.js</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">KiCad</span>
+                <span class="skill-level intermedio">intermedio</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill intermedio"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Visual Studio Code</span>
+                <span class="skill-level basico">básico</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill basico"></div></div>
+            </div>
+
+          </div>
+
+          <p class="skills-col-title" style="margin-top: 48px;">otras herramientas ⊹</p>
+          <div class="tools-grid">
+            <span class="tool-tag">GitHub</span>
+            <span class="tool-tag">Adafruit IO</span>
+            <span class="tool-tag">Falstad</span>
+            <span class="tool-tag">HTML · CSS · JS</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="about-footer">
+      <div class="footer-links-about">
+        <a href="mailto:valecamiruz@gmail.com">email</a>
+        <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
+        <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
+      </div>
+      <span class="footer-copy-about">made with github ⊹ 2026</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    // SPARKLES
+    // (ya están en script.js, este bloque es solo por si usas el archivo independiente)
+
+    // ANIMACIÓN BARRAS al hacer scroll
+    const fills = document.querySelectorAll(".skill-fill");
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.width = entry.target.classList.contains("basico")
+            ? "33%" : entry.target.classList.contains("intermedio")
+            ? "66%" : "100%";
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    fills.forEach(fill => {
+      fill.style.width = "0%";
+      barObserver.observe(fill);
+    });
+  </script>
+
+</body>
+</html>
