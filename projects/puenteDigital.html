@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Puente Digital — Proyecto 12</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #22ff7b;
+      --pink: #ff1d9e;
+      --black: #000000;
+      --dark: #0a0a0a;
+      --white: #f0f0f0;
+      --mono: 'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--mono);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    #hero, .gallery-strip, .page-content, #footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SPARKLES */
+    #sparkles-container {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sparkle {
+      position: absolute; width: 4px; height: 4px;
+      background: rgba(34,255,123,0.1);
+      filter: drop-shadow(0 0 4px rgba(34,255,123,0.1));
+      animation: sparkleMove linear infinite;
+    }
+    .sparkle::before {
+      content: ""; position: absolute;
+      width: 4px; height: 12px; top: -4px; left: 0;
+      background: rgba(34,255,123,0.1);
+    }
+    .sparkle::after {
+      content: ""; position: absolute;
+      width: 12px; height: 4px; top: 0; left: -4px;
+      background: rgba(34,255,123,0.1);
+    }
+    @keyframes sparkleMove {
+      0%   { opacity: 0; transform: translateX(0) scale(1); }
+      20%  { opacity: 1; transform: scale(2); }
+      50%  { opacity: 1; transform: translateX(30px) scale(1); }
+      100% { opacity: 0; transform: translateX(60px) scale(1); }
+    }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 50px 60px 60px;
+      position: relative; z-index: 2;
+      border-right: 1px solid rgba(34,255,123,0.1);
+    }
+    
+    .hero-left-content {
+      position: relative; z-index: 2;
+      animation: heroFadeIn 1.2s ease forwards;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-back {
+      font-size: 0.72rem; color: rgba(34,255,123,0.8);
+      letter-spacing: 2px; margin-bottom: 48px;
+      display: inline-block; text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .hero-back:hover { color: var(--green); text-shadow: 0 0 8px var(--green); }
+    .hero-label {
+      font-size: 0.72rem; color: var(--pink);
+      letter-spacing: 4px; margin-bottom: 16px; opacity: 1;
+    }
+    .hero-name {
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 700; line-height: 0.88;
+      letter-spacing: -3px; color: var(--white);
+      margin-bottom: 32px;
+    }
+    .hero-name .accent-green { color: var(--green); text-shadow: 0 0 40px rgba(34,255,123,0.35); }
+    .hero-tagline {
+      font-size: 0.78rem; color: rgba(255,255,255,0.8);
+      letter-spacing: 2px; font-style: normal;
+      line-height: 1.8; max-width: 360px; margin-bottom: 48px;
+    }
+    .hero-meta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-meta-pill {
+      font-size: 0.65rem; color: var(--green);
+      border: 1px solid rgba(34,255,123,0.25);
+      padding: 5px 12px; letter-spacing: 2px;
+    }
+    .hero-scroll {
+      font-size: 0.72rem; color: var(--green);
+      letter-spacing: 2px; margin-top: 40px; opacity: 0.4;
+      animation: scrollBlink 2s ease-in-out infinite;
+    }
+    @keyframes scrollBlink {
+      0%, 100% { opacity: 0.2; } 50% { opacity: 0.6; }
+    }
+    .hero-right { position: relative; overflow: hidden; background: var(--dark); display: flex; align-items: center; justify-content: center; }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: contain; display: block; margin: 0 auto;
+      filter: brightness(0.8); transition: filter 0.4s ease;
+    }
+    .hero-right:hover img { filter: brightness(1); }
+    .hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .hero-right-label {
+      position: absolute; bottom: 24px; right: 24px;
+      font-size: 0.62rem; color: rgba(34,255,123,0.5);
+      letter-spacing: 3px; z-index: 2;
+      writing-mode: vertical-rl;
+    }
+    .scanner {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      animation: scan 4s ease-in-out infinite; z-index: 3;
+    }
+    @keyframes scan {
+      0%, 100% { opacity: 0; transform: scaleX(0.2); }
+      50% { opacity: 0.6; transform: scaleX(1); }
+    }
+
+    /* GALERÍA */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+      border-bottom: 1px solid rgba(34,255,123,0.08);
+    }
+    .gallery-strip .gallery-item { overflow: hidden; aspect-ratio: 3/4; transition: opacity 0.3s; }
+    .gallery-strip:hover .gallery-item { opacity: 0.5; }
+    .gallery-strip .gallery-item:hover { opacity: 1; }
+    .gallery-strip .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .gallery-strip .gallery-item:hover img { transform: scale(1.06); }
+
+    /* CONTENIDO */
+    .page-content { max-width: 1100px; margin: 0 auto; padding: 100px 60px; position: relative; z-index: 2; }
+    .section-label { font-size: 0.75rem; color: var(--pink); letter-spacing: 4px; opacity: 1; margin-bottom: 40px; }
+
+    /* INTRO */
+    .intro-section { padding-bottom: 100px; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .intro-grid { display: grid; grid-template-columns: 200px 1fr 180px; gap: 60px; align-items: start; }
+    .intro-meta { display: flex; flex-direction: column; gap: 24px; }
+    .meta-item { border-left: 2px solid rgba(34,255,123,0.5); padding-left: 16px; }
+    .meta-key { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 0.8; margin-bottom: 6px; }
+    .meta-val { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.6; }
+    .meta-val.green { color: var(--green); }
+    .intro-text h2 { font-size: 1.5rem; color: var(--white); font-weight: 700; margin-bottom: 24px; letter-spacing: -1px; line-height: 1.3; }
+    .intro-text h2 span { color: var(--pink); }
+    .intro-text p { font-size: 0.83rem; color: rgba(255,255,255,0.8); line-height: 2; margin-bottom: 16px; }
+    .intro-deco { text-align: right; padding-top: 8px; }
+    .intro-deco-num { font-size: 6rem; font-weight: 700; color: rgba(34,255,123,0.5); line-height: 1; letter-spacing: -4px; user-select: none; }
+    .intro-deco-label { font-size: 0.6rem; color: var(--pink); letter-spacing: 3px; opacity: 1; margin-top: 8px; }
+
+    /* HAIKUS */
+    .haikus-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .haikus-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 48px; }
+    .haiku-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 48px 40px; transition: border-color 0.3s; position: relative; overflow: hidden;
+    }
+    .haiku-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--green); opacity: 0; transition: opacity 0.3s;
+    }
+    .haiku-card:hover { border-color: rgba(34,255,123,0.25); }
+    .haiku-card:hover::before { opacity: 1; }
+    .haiku-num { font-size: 0.62rem; color: var(--pink); letter-spacing: 3px; opacity: 0.8; margin-bottom: 28px; }
+    .haiku-text {
+      font-size: 1rem; color: var(--white); line-height: 2;
+      font-style: italic; margin-bottom: 24px; letter-spacing: 0.5px;
+    }
+    .haiku-autor { font-size: 0.7rem; color: var(--green); letter-spacing: 2px; opacity: 0.7; }
+
+    /* FASES */
+    .fases-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .fases-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; }
+    .fase-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 40px 30px; transition: border-color 0.3s; position: relative; overflow: hidden;
+    }
+    .fase-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--green); opacity: 0; transition: opacity 0.3s;
+    }
+    .fase-card:hover { border-color: rgba(34,255,123,0.3); }
+    .fase-card:hover::before { opacity: 1; }
+    .fase-num { font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; margin-bottom: 24px; opacity: 0.8; }
+    .fase-title { font-size: 0.9rem; color: var(--green); margin-bottom: 16px; letter-spacing: 1px; }
+    .fase-desc { font-size: 0.75rem; color: rgba(240,240,240,0.8); line-height: 1.9; }
+
+     /* PSEUDOCÓDIGO */
+    .pseudo-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .pseudo-flow {
+      display: grid; grid-template-columns: 1fr 140px 1fr; gap: 0;
+      margin-top: 48px; align-items: start;
+    }
+    .pseudo-module {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.1);
+      padding: 32px 28px; position: relative;
+    }
+    .pseudo-module.mod-a { border-top: 2px solid var(--green); }
+    .pseudo-module.mod-b { border-top: 2px solid var(--pink); }
+    .pseudo-module-title { font-size: 0.62rem; letter-spacing: 3px; margin-bottom: 6px; }
+    .mod-a .pseudo-module-title { color: var(--green); }
+    .mod-b .pseudo-module-title { color: var(--pink); }
+    .pseudo-module-sub { font-size: 0.7rem; color: rgba(240,240,240,0.5); margin-bottom: 28px; letter-spacing: 1px; }
+    .pseudo-steps { display: flex; flex-direction: column; align-items: stretch; }
+    .pseudo-step {
+      font-size: 0.72rem; color: rgba(240,240,240,0.8);
+      border: 1px solid rgba(34,255,123,0.2);
+      padding: 10px 14px; text-align: center; letter-spacing: 1px;
+      background: rgba(34,255,123,0.03);
+    }
+    .mod-b .pseudo-step { border-color: rgba(255,29,158,0.25); background: rgba(255,29,158,0.03); }
+    .pseudo-step.decision {
+      border-style: dashed; color: var(--green);
+      border-color: rgba(34,255,123,0.5);
+    }
+    .mod-b .pseudo-step.decision { color: var(--pink); border-color: rgba(255,29,158,0.5); }
+    .pseudo-down { text-align: center; color: rgba(240,240,240,0.25); font-size: 0.8rem; line-height: 1.6; }
+    .pseudo-branch { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .pseudo-branch .pseudo-step { padding: 8px 6px; font-size: 0.62rem; }
+    .pseudo-branch .verde { border-color: rgba(0,255,0,0.5); color: #00ff00; background: rgba(0,255,0,0.04); }
+    .pseudo-branch .amarillo { border-color: rgba(255,255,0,0.5); color: #ffff00; background: rgba(255,255,0,0.04); }
+    .pseudo-branch .rojo { border-color: rgba(255,0,0,0.6); color: #ff4d4d; background: rgba(255,0,0,0.05); }
+    .pseudo-bridge {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; padding: 0 8px; align-self: center; text-align: center;
+    }
+    .pseudo-bridge-arrow { color: rgba(34,255,123,0.35); font-size: 1.1rem; }
+    .pseudo-feed {
+      font-size: 0.6rem; color: #ffcc00; letter-spacing: 2px;
+      border: 1px solid rgba(255,204,0,0.4); background: rgba(255,204,0,0.05);
+      padding: 12px 8px; line-height: 1.6;
+    }
+    .pseudo-feed span { display: block; color: rgba(240,240,240,0.5); font-size: 0.58rem; margin-top: 4px; letter-spacing: 1px; }
+ 
+    .pseudo-tabs { display: flex; flex-wrap: wrap; margin-top: 64px; border-bottom: 1px solid rgba(34,255,123,0.15); }
+    .pseudo-tab-btn {
+      font-family: var(--mono); font-size: 0.7rem; color: rgba(34,255,123,0.4);
+      letter-spacing: 2px; padding: 12px 24px; background: none; border: none;
+      cursor: pointer; transition: color 0.2s; border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .pseudo-tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .pseudo-tab-btn:hover { color: var(--green); }
+    .pseudo-block { display: none; background: var(--dark); border: 1px solid rgba(34,255,123,0.08); border-top: none; padding: 40px; overflow-x: auto; }
+    .pseudo-block.active { display: block; }
+    .pseudo-block pre { font-family: var(--mono); font-size: 0.72rem; color: rgba(240,240,240,0.75); line-height: 1.9; white-space: pre-wrap; word-break: break-word; }
+    .pseudo-block .kw { color: var(--pink); }
+    .pseudo-block .var { color: var(--green); }
+    .pseudo-block .cm { color: rgba(240,240,240,0.28); }
+ 
+    /* CÓDIGO */
+    .codigo-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .codigo-tabs { display: flex; gap: 0; margin-top: 48px; border-bottom: 1px solid rgba(34,255,123,0.15); flex-wrap: wrap; }
+    .tab-btn {
+      font-family: var(--mono); font-size: 0.7rem; color: rgba(34,255,123,0.4);
+      letter-spacing: 2px; padding: 12px 24px; background: none; border: none;
+      cursor: pointer; transition: color 0.2s; border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-btn:hover { color: var(--green); }
+    .code-block { display: none; background: var(--dark); border: 1px solid rgba(34,255,123,0.08); border-top: none; padding: 40px; overflow-x: auto; }
+    .code-block.active { display: block; }
+    .code-block pre { font-family: var(--mono); font-size: 0.72rem; color: rgba(34,255,123,0.7); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+    .comment { color: rgba(240,240,240,0.25); }
+    .keyword { color: var(--pink); }
+ 
+    /* PROCESO */
+    .proceso-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .proceso-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 48px; }
+    .proceso-item {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.08);
+      padding: 40px; transition: border-color 0.3s;
+    }
+    .proceso-item:hover { border-color: rgba(34,255,123,0.2); }
+    .proceso-num { font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; margin-bottom: 20px; opacity: 0.7; }
+    .proceso-title { font-size: 0.9rem; color: var(--white); margin-bottom: 16px; letter-spacing: 1px; }
+    .proceso-desc { font-size: 0.75rem; color: rgba(240,240,240,0.55); line-height: 1.9; }
+ 
+    /* FÓRMULA */
+    .formula-box {
+      margin-top: 48px; background: var(--dark);
+      border: 1px solid rgba(34,255,123,0.1); padding: 48px;
+      display: flex; align-items: center; gap: 60px;
+    }
+    .formula-math {
+      font-size: 2.5rem; color: var(--green);
+      font-weight: 700; letter-spacing: -1px;
+      white-space: nowrap;
+      text-shadow: 0 0 20px rgba(34,255,123,0.2);
+    }
+    .formula-desc { font-size: 0.78rem; color: rgba(240,240,240,0.8); line-height: 2; }
+    .formula-desc span { color: var(--green); }
+
+    /* COMPONENTES */
+    .componentes-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .comp-table { margin-top: 48px; width: 100%; border-collapse: collapse; }
+    .comp-table th {
+      font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; text-align: left;
+      padding: 0 0 20px 0; opacity: 0.7; border-bottom: 1px solid rgba(34,255,123,0.15);
+    }
+    .comp-table td {
+      font-size: 0.78rem; color: rgba(240,240,240,0.8); padding: 18px 0;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(34,255,123,0.08); vertical-align: top;
+    }
+    .comp-table td:first-child { color: var(--green); padding-right: 30px; }
+    .comp-table td:last-child { color: rgba(240,240,240,0.8); font-size: 0.78rem; }
+
+     /* CONEXIONES */
+    .conexiones-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .cone-table { margin-top: 48px; width: 100%; border-collapse: collapse; }
+    .cone-table th {
+      font-size: 0.65rem; color: var(--pink); letter-spacing: 3px; text-align: left;
+      padding: 0 0 20px 0; opacity: 0.7; border-bottom: 1px solid rgba(34,255,123,0.15);
+    }
+    .cone-table td {
+      font-size: 0.78rem; color: rgba(240,240,240,0.8); padding: 18px 0;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(34,255,123,0.08); vertical-align: top;
+    }
+    .cone-table td:first-child { color: var(--green); padding-right: 30px; }
+    .cone-table td:last-child { color: rgba(240,240,240,0.8); font-size: 0.78rem; }
+
+
+    /* VIDEO */
+    .video-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.1); }
+    .video-wrap { margin-top: 48px; border: 1px solid rgba(34,255,123,0.1); overflow: hidden; aspect-ratio: 16/9; max-width: 800px; }
+    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* FLUJO */
+    .flujo-section { padding: 100px 0; border-bottom: 1px solid rgba(34,255,123,0.08); }
+    .flujo-grid { display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; gap: 0; margin-top: 48px; align-items: center; }
+    .flujo-card {
+      background: var(--dark); border: 1px solid rgba(34,255,123,0.08);
+      padding: 40px 28px; position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .flujo-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .flujo-card.entrada::before { background: var(--green); }
+    .flujo-card.medio::before { background: #ffcc00; }
+    .flujo-card.salida::before { background: var(--pink); }
+    .flujo-card:hover { border-color: rgba(34,255,123,0.25); }
+    .flujo-card:hover::before { opacity: 1; }
+    .flujo-tag { font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 16px; opacity: 0.7; }
+    .flujo-tag.verde { color: var(--green); }
+    .flujo-tag.amarillo { color: #ffcc00; }
+    .flujo-tag.rosa { color: var(--pink); }
+    .flujo-icon { font-size: 2rem; margin-bottom: 16px; }
+    .flujo-title { font-size: 0.85rem; color: var(--white); margin-bottom: 12px; letter-spacing: 1px; font-weight: 700; }
+    .flujo-desc { font-size: 0.72rem; color: rgba(240,240,240,0.55); line-height: 1.8; }
+    .flujo-arrow { text-align: center; font-size: 1.2rem; color: rgba(34,255,123,0.3); }
+
+
+    /* EQUIPO */
+    .equipo-section { padding: 100px 0; }
+    .equipo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; }
+    .equipo-card { background: var(--dark); border: 1px solid rgba(34,255,123,0.1); padding: 30px 20px; text-align: center; transition: border-color 0.3s; }
+    .equipo-card:hover { border-color: rgba(34,255,123,0.25); }
+    .equipo-initial { font-size: 2rem; color: var(--green); font-weight: 700; margin-bottom: 16px; text-shadow: 0 0 20px rgba(34,255,123,0.5); }
+    .equipo-name { font-size: 0.7rem; color: rgba(240,240,240,0.8); letter-spacing: 1px; margin-bottom: 8px; }
+    .equipo-role { font-size: 0.62rem; color: var(--pink); letter-spacing: 2px; opacity: 0.8; }
+
+    /* FOOTER */
+    #footer { border-top: 1px solid rgba(34,255,123,0.1); padding: 80px 60px; text-align: center; position: relative; z-index: 2; }
+    .footer-text { font-size: 0.8rem; color: var(--green); letter-spacing: 4px; margin-bottom: 40px; opacity: 0.7; }
+    .footer-links { display: flex; gap: 40px; justify-content: center; margin-bottom: 50px; }
+    .footer-links a { color: var(--pink); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; opacity: 0.7; transition: opacity 0.2s, text-shadow 0.2s; }
+    .footer-links a:hover { opacity: 1; text-shadow: 0 0 8px var(--pink); }
+    .footer-copy { font-size: 0.7rem; color: rgba(240,240,240,0.5); letter-spacing: 2px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-right { height: 40vw; }
+      .hero-left { padding: 80px 24px 48px; }
+      .gallery-strip { grid-template-columns: repeat(3,1fr); }
+      .page-content { padding: 60px 24px; }
+      .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+      .intro-deco { display: none; }
+      .haikus-grid { grid-template-columns: 1fr; }
+      .fases-grid { grid-template-columns: 1fr; }
+      .equipo-grid { grid-template-columns: repeat(2,1fr); }
+      .formula-box { flex-direction: column; gap: 24px; }
+      .footer-links { flex-direction: column; gap: 20px; align-items: center; }
+      #footer { padding: 60px 24px; }
+      .codigo-tabs { flex-wrap: wrap; }
+    }
+
+    /* =============================================
+   RESPONSIVE MÓVIL
+   ============================================= */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero-name-img {
+    width: 90vw;
+  }
+
+  .hero-label {
+    font-size: 0.7rem;
+  }
+
+  /* CARRUSEL */
+  .visuals-carousel {
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .visual-canvas {
+    aspect-ratio: 4/3;
+  }
+
+  /* VER MÁS BTN */
+  .ver-mas-container {
+    padding: 40px 24px 20px;
+  }
+
+  .ver-mas-btn {
+    padding: 12px 24px;
+    font-size: 0.72rem;
+  }
+
+  /* MENÚ */
+  #menu-hint {
+    font-size: 1.4rem;
+  }
+
+  /* LOGO */
+  .logo-label {
+    width: 30px;
+    top: 14px;
+    right: 8px;
+  }
+
+  /* PROJECTS SECTION */
+  #projects {
+    padding: 60px 16px;
+  }
+
+  /* FOOTER */
+  #footer {
+    padding: 60px 24px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+}
+
+/* PANTALLAS MUY PEQUEÑAS */
+@media (max-width: 400px) {
+  .hero-name-img {
+    width: 95vw;
+  }
+
+  .ver-mas-btn {
+    padding: 10px 16px;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div id="sparkles-container"></div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-grid-bg"></div>
+      <div class="hero-left-content">
+        <a class="hero-back" href="../projects.html">← volver a todos los proyectos</a>
+        <p class="hero-label">// proyecto 12 — 2026⊹1</p>
+        <h1 class="hero-name">Puente<span class="accent-green"> Digital</span></h1>
+        <p class="hero-tagline">
+          dispositivo inalámbrico que permite llevar el conteo de las personas que ingresan a un espacio
+          físico a tavés de un sensor y se muestra en un anillo LED.
+        </p>
+        <div class="hero-meta-row">
+          <span class="hero-meta-pill">Arduino IDE</span>
+          <span class="hero-meta-pill">Anillo LED</span>
+          <span class="hero-meta-pill">Raspberry Pi</span>
+        </div>
+        <div class="hero-scroll">scroll ↓</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="../assets/puenteDigital/final6.jpeg" alt="Puente Digital" />
+      <div class="hero-right-overlay"></div>
+      <span class="hero-right-label" style="color: var(--pink);">interacciones inalámbricas</span>
+    </div>
+    <div class="scanner"></div>
+  </section>
+
+  <!-- GALERÍA -->
+  <div class="gallery-strip">
+    <div class="gallery-item"><img src="../assets/puenteDigital/final1.jpeg " alt="Puente Digital" /></div>
+    <div class="gallery-item"><img src="../assets/puenteDigital/video1.gif " alt="Puente Digital" /></div>
+    <div class="gallery-item"><img src="../assets/puenteDigital/final3.jpeg " alt="Puente Digital" /></div>
+    <div class="gallery-item"><img src="../assets/puenteDigital/final4.jpeg " alt="Puente Digital" /></div>
+    <div class="gallery-item"><img src="../assets/puenteDigital/video7.gif " alt="Puente Digital" /></div>
+    <div class="gallery-item"><img src="../assets/puenteDigital/final6.jpeg " alt="Puente Digital" /></div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="page-content">
+
+    <!-- INTRO -->
+    <section class="intro-section">
+      <p class="section-label">// sobre el proyecto</p>
+      <div class="intro-grid">
+        <div class="intro-meta">
+          <div class="meta-item">
+            <div class="meta-key">// contexto</div>
+            <div class="meta-val">UDP · Interacciones Inalámbricas</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// hardware</div>
+            <div class="meta-val">Arduino R4 Minima · Anillo LED · Raspberry PI Pico 2 W</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// software</div>
+            <div class="meta-val">Arduino IDE · Adafruit GFX · Adafruit SSD1306</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// anillo </div>
+            <div class="meta-val">16 LEDS</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-key">// raspberry pi</div>
+            <div class="meta-val">Sensor infrarrojo evasor de obstáculos</div>
+          </div>
+        </div>
+        <div class="intro-text">
+          <h2>Dispositivo de conteo de personas<span> inalámbrico</span>.</h2>
+          <p>Nuestro proyecto parte desde la pregunta ¿Cuántos habitan los lugares de trabajo?, nos interesa capturar el conteo de personas que entran al lugar de trabajo en la Universidad; y visualizarlo en el otro edificio. 
+            En este caso, ver cuanta gente entra al LID en Salvador Sanfuentes y visualizarlo en Rep180. 
+            Dos edificios, dos espacios de trabajo que coexisten sin saber cuánta gente entra en cada una. 
+            En la puerta del LID se instala un Sensor Infrarrojo Evasor de Obstáculos conectado a una Raspberry PI Pico 2W, que mide el flujo de gente que entra a este espacio; esto lo denominaremos entrada. Esta información se envía de manera inalámbrica a través de wifi a una base de datos (API o Adafruit) 
+            que lleva el conteo de la gente. Finalmente, en Rep180, el sistema responde encendiendo y completando cada píxel de un Anillo LED RGB WS2812 de 16 leds conectada al Arduino UNO R4 wifi; de esta manera, las personas que están en Rep180 pueden ver mediante una señal visual qué tan rápido se va llenando el LID, 
+            esto lo denominaremos salida. El mensaje que queremos transmitir es hacer visible el ritmo con que los espacios se llenan, los momentos en que el LID se desborda; es una fluctuación constante que todos vivimos pero nadie registra.</p>
+          <p style="color:rgba(34,255,123,0.6); font-size:0.78rem; margin-top:24px;">⊹ inspirado en el laboratorio de interacción digital</p>
+        </div>
+        <div class="intro-deco">
+          <div class="intro-deco-num">12</div>
+          <div class="intro-deco-label">Puente Digital</div>
+        </div>
+      </div>
+    </section>
+
+       <!-- FLUJO DEL SISTEMA -->
+    <section class="flujo-section">
+      <p class="section-label">// cómo funciona el sistema</p>
+      <div class="flujo-grid">
+        <div class="flujo-card entrada">
+          <div class="flujo-tag verde">// entrada — LID</div>
+          <div class="flujo-icon"></div>
+          <div class="flujo-title">Sensor Infrarrojo</div>
+          <p class="flujo-desc">Raspberry Pi Pico 2W detecta cada persona que cruza. Cada cruce suma +1 al conteo, con un máximo de 16 (igual al número de LEDs).</p>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-card medio">
+          <div class="flujo-tag amarillo">// medio — nube</div>
+          <div class="flujo-icon"></div>
+          <div class="flujo-title">Adafruit IO</div>
+          <p class="flujo-desc">El conteo viaja por WiFi vía MQTT al feed "lid-conteo" en Adafruit IO. Canal intermedio entre ambos edificios.</p>
+        </div>
+        <div class="flujo-arrow">→</div>
+        <div class="flujo-card salida">
+          <div class="flujo-tag rosa">// salida — Rep180</div>
+          <div class="flujo-icon"></div>
+          <div class="flujo-title">Anillo LED WS2812</div>
+          <p class="flujo-desc">Arduino R4 WiFi recibe el conteo y enciende los LEDs uno a uno. El color cambia según la ocupación: verde, amarillo o rojo.</p>
+        </div>
+      </div>
+    </section>
+
+ <!-- PSEUDOCÓDIGO -->
+    <section class="pseudo-section">
+      <p class="section-label">// pseudocódigo</p>
+ 
+      <div class="pseudo-flow">
+ 
+        <!-- MÓDULO A -->
+        <div class="pseudo-module mod-a">
+          <p class="pseudo-module-title">MÓDULO A</p>
+          <p class="pseudo-module-sub">Raspberry Pi Pico 2 W · LID</p>
+          <div class="pseudo-steps">
+            <div class="pseudo-step">Sensor infrarrojo</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step">Detectar persona</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step">Esperar que el sensor quede libre</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step">conteo = conteo + 1</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step decision">¿conteo &gt; 16?</div>
+            <div class="pseudo-down">sí → conteo = 16 &nbsp;|&nbsp; no ↓</div>
+            <div class="pseudo-step">Publicar conteo</div>
+          </div>
+        </div>
+ 
+        <!-- PUENTE ADAFRUIT -->
+        <div class="pseudo-bridge">
+          <span class="pseudo-bridge-arrow">→</span>
+          <div class="pseudo-feed">ADAFRUIT IO<span>feed: lid-conteo</span></div>
+          <span class="pseudo-bridge-arrow">→</span>
+        </div>
+ 
+        <!-- MÓDULO B -->
+        <div class="pseudo-module mod-b">
+          <p class="pseudo-module-title">MÓDULO B</p>
+          <p class="pseudo-module-sub">Arduino UNO R4 WiFi · Rep180</p>
+          <div class="pseudo-steps">
+            <div class="pseudo-step">Recibir conteo</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step">Mapear conteo a LEDs activos</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step decision">¿cantidad de LEDs?</div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-branch">
+              <div class="pseudo-step verde">Verde<br>0–5</div>
+              <div class="pseudo-step amarillo">Amarillo<br>6–10</div>
+              <div class="pseudo-step rojo">Rojo<br>11–16</div>
+            </div>
+            <div class="pseudo-down">↓</div>
+            <div class="pseudo-step">Actualizar anillo WS2812</div>
+          </div>
+        </div>
+ 
+      </div>
+
+       <!-- PSEUDOCÓDIGO EN TEXTO -->
+      <div class="pseudo-tabs">
+        <button class="pseudo-tab-btn active" onclick="showPseudo('modA', this)">01. módulo A · pico</button>
+        <button class="pseudo-tab-btn" onclick="showPseudo('modB', this)">02. módulo B · arduino</button>
+        <button class="pseudo-tab-btn" onclick="showPseudo('io', this)">03. adafruit io</button>
+      </div>
+ 
+      <div id="pseudo-modA" class="pseudo-block active">
+        <pre><span class="cm">// Raspberry Pi Pico 2 W — Sensor Infrarrojo (LID)</span>
+ 
+<span class="kw">VARIABLES:</span>
+  <span class="var">conteo</span>        ← 0
+  <span class="var">umbral</span>        ← 16        <span class="cm">// máximo del anillo LED</span>
+  <span class="var">estadoSensor</span>  ← LIBRE
+ 
+<span class="kw">INICIALIZAR:</span>
+  conectar WiFi (SSID, PASSWORD)
+  conectar Adafruit IO (usuario, clave, feed: "lid-conteo")
+  configurar pin sensor infrarrojo como ENTRADA
+ 
+<span class="kw">BUCLE PRINCIPAL:</span>
+  LEER <span class="var">estadoSensor</span> ← sensor infrarrojo
+ 
+  <span class="kw">SI</span> estadoSensor == OBSTRUIDO:
+    esperar hasta estadoSensor == LIBRE   <span class="cm">// persona cruzó completamente</span>
+    <span class="var">conteo</span> ← conteo + 1
+ 
+    <span class="kw">SI</span> conteo &gt; umbral:
+      <span class="var">conteo</span> ← umbral                    <span class="cm">// tope máximo: 16 LEDs</span>
+ 
+    PUBLICAR conteo → Adafruit IO (feed: "lid-conteo")
+    esperar 500ms                        <span class="cm">// evitar lecturas duplicadas</span></pre>
+      </div>
+ 
+      <div id="pseudo-modB" class="pseudo-block">
+        <pre><span class="cm">// Arduino UNO R4 WiFi — Anillo LED (Rep180)</span>
+ 
+<span class="kw">VARIABLES:</span>
+  <span class="var">conteo</span>        ← 0
+  <span class="var">totalLeds</span>     ← 16
+  <span class="var">ledsActivos</span>   ← 0
+ 
+<span class="kw">INICIALIZAR:</span>
+  conectar WiFi (SSID, PASSWORD)
+  conectar Adafruit IO (usuario, clave, feed: "lid-conteo")
+  configurar anillo LED WS2812 (16 LEDs)
+  apagar todos los LEDs
+ 
+<span class="kw">BUCLE PRINCIPAL:</span>
+  SUSCRIBIR a Adafruit IO (feed: "lid-conteo")
+ 
+  <span class="kw">SI</span> llega nuevo valor:
+    <span class="var">conteo</span> ← valor recibido
+    <span class="var">ledsActivos</span> ← MAPEAR(conteo, 0, 16, 0, totalLeds)
+ 
+    <span class="kw">PARA</span> i <span class="kw">DESDE</span> 0 <span class="kw">HASTA</span> totalLeds - 1:
+      <span class="kw">SI</span> i &lt; ledsActivos:
+        <span class="kw">SI</span> ledsActivos &lt;= 5:
+          encender LED[i] → color VERDE      <span class="cm">// poco ocupado</span>
+        <span class="kw">SI</span> ledsActivos &lt;= 10:
+          encender LED[i] → color AMARILLO   <span class="cm">// ocupación media</span>
+        <span class="kw">SI</span> ledsActivos &lt;= 16:
+          encender LED[i] → color ROJO       <span class="cm">// casi lleno o lleno</span>
+      <span class="kw">SINO:</span>
+        apagar LED[i]</pre>
+      </div>
+ 
+      <div id="pseudo-io" class="pseudo-block">
+        <pre><span class="cm">// ADAFRUIT IO — canal intermedio entre los dos edificios</span>
+ 
+  <span class="var">Feed:</span> "lid-conteo"
+ 
+  Módulo A  <span class="kw">publica</span>  → conteo actualizado
+  Módulo B  <span class="kw">escucha</span>  → recibe conteo y actualiza LEDs
+ 
+<span class="cm">// EDIFICIO A → LID (Salvador Sanfuentes)</span>
+<span class="cm">// EDIFICIO B → Rep180 (oficina Aarón)</span></pre>
+      </div>
+    </section>
+
+    <!-- COMPONENTES -->
+    <section class="componentes-section">
+      <p class="section-label">// componentes utilizados</p>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>COMPONENTE</th>
+            <th>MODELO</th>
+            <th>FUNCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Arduino UNO</td><td>R4 WIFI</td><td>Controla el anillo de 16 LEDs</td></tr>
+          <tr><td>Raspberry Pi Pico</td><td>2 W</td><td>Capta datos de entrada y salida del sensor</td></tr>
+          <tr><td>Anillo LED RGB de 16 LEDs</td><td>WS2812</td><td>Muestra la información visual</td></tr>
+          <tr><td>Sensor Infrarrojo</td><td>evasor</td><td>Detecta la salida y entrada de personas</td></tr>
+          <tr><td>Protoboard</td><td>1</td><td>Conecta todos los componentes</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- CONEXIONES -->
+    <section class="conexiones-section">
+      <p class="section-label">// conexiones</p>
+      <div class="meta-item">
+            <div class="meta-val">Sensor IR → Raspberry Pi Pico 2 W</div>
+          </div>
+      <table class="cone-table">
+        <thead>
+          <tr>
+            <th>PIN DEL SENSOR</th>
+            <th>PIN DE LA PICO 2 W</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>VCC</td><td>3.3V (PIN 36)</td></tr>
+          <tr><td>GND</td><td>GND</td></tr>
+          <tr><td>OUT (SEÑAL DIGITAL)</td><td>GP15 (PIN 20)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="meta-item">
+            <div class="meta-val">Anillo LED WS2812 → Arduino UNO R4 WIFI</div>
+          </div>
+      <table class="cone-table">
+        <thead>
+          <tr>
+            <th>PIN DEL ANILLO</th>
+            <th>PIN DEL ARDUINO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>VCC (5V)</td><td>5V</td></tr>
+          <tr><td>GND</td><td>GND</td></tr>
+          <tr><td>DIN (DATO)</td><td>PIN DIGITAL 6</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="equipo-section">
+      <p class="section-label">// equipo</p>
+      <div class="equipo-grid">
+        <div class="equipo-card">
+          <div class="equipo-initial">S</div>
+          <div class="equipo-name">Sofía Cartes</div>
+          <div class="equipo-role">github · investigación</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">M</div>
+          <div class="equipo-name">Monserrat Paredes</div>
+          <div class="equipo-role">github · investigación</div>
+        </div>
+        <div class="equipo-card">
+          <div class="equipo-initial">V</div>
+          <div class="equipo-name">Valentina Ruz</div>
+          <div class="equipo-role">código · github</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem; color:rgba(240,240,240,0.8); margin-top:24px; letter-spacing:2px; text-align:center;">
+        todas complementamos en todos los roles ⊹
+      </p>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <p class="footer-text">// contáctame ⊹</p>
+    <div class="footer-links">
+      <a href="mailto:valecamiruz@gmail.com">email</a>
+      <a href="https://github.com/vxlentiinaa" target="_blank">github</a>
+      <a href="https://www.instagram.com/vxlentiinaa" target="_blank">instagram</a>
+    </div>
+    <p class="footer-copy">made with github ⊹ 2026</p>
+  </footer>
+
+  <script>
+    // SPARKLES
+    const container = document.getElementById('sparkles-container');
+    function createSparkle() {
+      const s = document.createElement('div');
+      s.classList.add('sparkle');
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.top = Math.random() * 100 + 'vh';
+      const dur = 3 + Math.random() * 4;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      container.appendChild(s);
+      setTimeout(() => s.remove(), (dur + 3) * 1000);
+    }
+    setInterval(createSparkle, 1500);
+    for (let i = 0; i < 10; i++) createSparkle();
+
+    // TABS
+    function showTab(id, btn) {
+      document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+     // TABS PSEUDOCÓDIGO
+    function showPseudo(id, btn) {
+      document.querySelectorAll('.pseudo-block').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.pseudo-tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('pseudo-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
